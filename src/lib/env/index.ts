@@ -11,7 +11,9 @@ export const env = createEnv({
             .enum(["development", "production", "test"])
             .default("development"),
         API_BASE_URL: z.string().url(),
+        FRONTEND_URL: z.string().url(),
         JWT_SECRET: z.string().min(32),
+        ADSENSE_ID: z.string().min(1),
     },
 
     /**
@@ -21,6 +23,7 @@ export const env = createEnv({
     client: {
         NEXT_PUBLIC_DOMAIN: z.string().url(),
         NEXT_PUBLIC_ADSENSE_ID: z.string().min(1),
+        NEXT_PUBLIC_API_BASE_URL: z.string().url(),
     },
 
     /**
@@ -33,6 +36,9 @@ export const env = createEnv({
         JWT_SECRET: process.env.JWT_SECRET,
         NEXT_PUBLIC_DOMAIN: process.env.NEXT_PUBLIC_DOMAIN,
         NEXT_PUBLIC_ADSENSE_ID: process.env.NEXT_PUBLIC_ADSENSE_ID,
+        ADSENSE_ID: process.env.ADSENSE_ID,
+        NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+        FRONTEND_URL: process.env.FRONTEND_URL,
     },
 
     /**

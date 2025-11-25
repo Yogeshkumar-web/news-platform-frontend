@@ -120,7 +120,7 @@ axiosInstance.interceptors.response.use(
             customError.code = "REQUEST_ERROR";
         }
 
-        if (process.env.NODE_ENV === "development") {
+        if (env.NODE_ENV === "development") {
             console.error("[API Error]", customError);
         }
 

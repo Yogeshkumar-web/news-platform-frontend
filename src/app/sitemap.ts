@@ -4,7 +4,7 @@ import type { Article, Category } from "@/types";
 import { env } from "@/lib/env";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com";
+    const baseUrl = env.FRONTEND_URL || "https://meaupost18.com";
 
     // Fetch all articles
     const articles = await serverGet<Article[]>(

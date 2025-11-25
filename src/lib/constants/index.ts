@@ -47,7 +47,7 @@ export const ROUTES = {
 // ==================== APP INFO ====================
 export const APP_NAME = "Meaupost18";
 export const APP_DESCRIPTION = "Modern News & Article Platform";
-export const APP_URL = env.NEXT_PUBLIC_DOMAIN || "http://localhost:3000";
+export const APP_URL = env.FRONTEND_URL || "http://localhost:3000";
 
 // ==================== API CONFIG ====================
 export const API_TIMEOUT = 30000; // 30 seconds
