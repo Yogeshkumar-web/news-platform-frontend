@@ -2,8 +2,9 @@
 
 import { requireAuth } from "@/lib/auth/session";
 import { cookies } from "next/headers";
+import { env } from "@/lib/env";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type ActionState = {
     success: boolean;
@@ -34,7 +35,12 @@ export async function uploadArticleImageAction(
         // Debug: Log FormData contents
         console.log("Article Image FormData entries:");
         for (const [key, value] of formData.entries()) {
-            console.log(`  ${key}:`, value instanceof File ? `File(${value.name}, ${value.size} bytes)` : value);
+            console.log(
+                `  ${key}:`,
+                value instanceof File
+                    ? `File(${value.name}, ${value.size} bytes)`
+                    : value
+            );
         }
 
         // Call backend
@@ -63,7 +69,7 @@ export async function uploadArticleImageAction(
         }
 
         // Try different possible paths for the URL
-        const extractedUrl = 
+        const extractedUrl =
             result.data?.url ||
             result.url ||
             result.data?.imageUrl ||
@@ -73,7 +79,10 @@ export async function uploadArticleImageAction(
         console.log("Extracted Image URL:", extractedUrl);
 
         if (!extractedUrl) {
-            console.error("Could not extract URL from response. Full result:", result);
+            console.error(
+                "Could not extract URL from response. Full result:",
+                result
+            );
             return {
                 success: false,
                 message: "Image uploaded but URL not found in response",

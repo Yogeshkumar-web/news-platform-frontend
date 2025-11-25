@@ -1,15 +1,20 @@
 import { MetadataRoute } from "next";
 import { serverGet } from "@/lib/api/server";
 import type { Article, Category } from "@/types";
+import { env } from "@/lib/env";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com";
+    const baseUrl = env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com";
 
     // Fetch all articles
-    const articles = await serverGet<Article[]>("/api/articles?limit=1000").catch(() => []);
-    
+    const articles = await serverGet<Article[]>(
+        "/api/articles?limit=1000"
+    ).catch(() => []);
+
     // Fetch all categories
-    const categories = await serverGet<Category[]>("/api/categories").catch(() => []);
+    const categories = await serverGet<Category[]>("/api/categories").catch(
+        () => []
+    );
 
     // Static routes
     const routes = [

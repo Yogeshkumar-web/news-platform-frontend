@@ -1,5 +1,6 @@
 import { QueryClient, DefaultOptions } from "@tanstack/react-query";
 import { isAuthError } from "@/lib";
+import { env } from "@/lib/env";
 
 /**
  * Default options for React Query
@@ -38,7 +39,7 @@ const queryConfig: DefaultOptions = {
 
         // Log errors in development
         onError: (error) => {
-            if (process.env.NODE_ENV === "development") {
+            if (env.NODE_ENV === "development") {
                 console.error("[Mutation Error]", error);
             }
         },

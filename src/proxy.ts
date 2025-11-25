@@ -2,21 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { isProtectedRoute, getRedirectUrl } from "@/lib";
 
 /**
- * Next.js Middleware
+ * Next.js Proxy (formerly Middleware)
  * Handles route protection - only checks token existence
- * Actual validation happens in Server Components
+ * Actual validation happens in Server Components/Actions
+ *
+ *  Security Note: This is a lightweight check for routing only.
+ * Critical auth validation MUST happen in Server Components/Actions
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    console.log("Middleware - Pathname:", pathname);
+    // console.log("Proxy - Pathname:", pathname);
 
     // Check if route needs protection
     if (!isProtectedRoute(pathname)) {
         return NextResponse.next();
     }
 
-    // Check for token 
+    // Check for token existence (not validation)
     const token = request.cookies.get("token")?.value;
 
     if (!token) {

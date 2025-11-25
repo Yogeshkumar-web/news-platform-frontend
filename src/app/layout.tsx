@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { QueryProvider } from "@/lib";
 import { GoogleAdSense } from "@/components/ads/GoogleAdSense";
+import { env } from "@/lib/env";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     description: "Stay updated with latest news, articles, and insights",
     keywords: ["news", "articles", "blog", "technology", "latest updates"],
     authors: [{ name: "Meaupost18" }],
-    metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com"),
+    metadataBase: new URL(env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com"),
     alternates: {
         canonical: "/",
     },
@@ -55,49 +56,57 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
             >
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "WebSite",
                             name: "Meaupost18",
-                            url: process.env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com",
+                            url:
+                                env.NEXT_PUBLIC_DOMAIN ||
+                                "https://meaupost18.com",
                             potentialAction: {
                                 "@type": "SearchAction",
                                 target: {
                                     "@type": "EntryPoint",
                                     urlTemplate: `${
-                                        process.env.NEXT_PUBLIC_DOMAIN ||
+                                        env.NEXT_PUBLIC_DOMAIN ||
                                         "https://meaupost18.com"
                                     }/search?q={search_term_string}`,
                                 },
-                                "query-input": "required name=search_term_string",
+                                "query-input":
+                                    "required name=search_term_string",
                             },
                         }),
                     }}
                 />
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "Organization",
                             name: "Meaupost18",
-                            url: process.env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com",
-                            logo: `${process.env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com"}/logo.png`,
+                            url:
+                                env.NEXT_PUBLIC_DOMAIN ||
+                                "https://meaupost18.com",
+                            logo: `${
+                                env.NEXT_PUBLIC_DOMAIN ||
+                                "https://meaupost18.com"
+                            }/logo.png`,
                             sameAs: [
                                 "https://facebook.com/meaupost18",
                                 "https://twitter.com/meaupost18",
                                 "https://instagram.com/meaupost18",
-                                "https://linkedin.com/company/meaupost18"
+                                "https://linkedin.com/company/meaupost18",
                             ],
                             contactPoint: {
                                 "@type": "ContactPoint",
                                 telephone: "+91-XXXXXXXXXX",
                                 contactType: "customer service",
                                 areaServed: "IN",
-                                availableLanguage: ["en", "hi"]
-                            }
+                                availableLanguage: ["en", "hi"],
+                            },
                         }),
                     }}
                 />

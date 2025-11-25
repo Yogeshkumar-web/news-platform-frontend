@@ -2,8 +2,9 @@
 
 import { requireAuth } from "@/lib/auth/session";
 import { cookies } from "next/headers";
+import { env } from "@/lib/env";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type ActionState = {
     success: boolean;
@@ -34,7 +35,12 @@ export async function uploadAvatarAction(
         // Debug: Log FormData contents
         console.log("FormData entries:");
         for (const [key, value] of formData.entries()) {
-            console.log(`  ${key}:`, value instanceof File ? `File(${value.name}, ${value.size} bytes)` : value);
+            console.log(
+                `  ${key}:`,
+                value instanceof File
+                    ? `File(${value.name}, ${value.size} bytes)`
+                    : value
+            );
         }
 
         // Call backend
@@ -65,18 +71,21 @@ export async function uploadAvatarAction(
         }
 
         // Try different possible paths for the URL
-        const extractedUrl = 
-            result.data?.url ||           // Standard: { data: { url: "..." } }
-            result.url ||                 // Alternative: { url: "..." }
-            result.data?.imageUrl ||      // Alternative: { data: { imageUrl: "..." } }
-            result.data?.path ||          // Alternative: { data: { path: "..." } }
-            result.imageUrl;              // Alternative: { imageUrl: "..." }
+        const extractedUrl =
+            result.data?.url || // Standard: { data: { url: "..." } }
+            result.url || // Alternative: { url: "..." }
+            result.data?.imageUrl || // Alternative: { data: { imageUrl: "..." } }
+            result.data?.path || // Alternative: { data: { path: "..." } }
+            result.imageUrl; // Alternative: { imageUrl: "..." }
 
         console.log("Extracted URL:", extractedUrl);
         console.log("result.data:", result.data);
 
         if (!extractedUrl) {
-            console.error("Could not extract URL from response. Full result:", result);
+            console.error(
+                "Could not extract URL from response. Full result:",
+                result
+            );
             return {
                 success: false,
                 message: "Avatar uploaded but URL not found in response",

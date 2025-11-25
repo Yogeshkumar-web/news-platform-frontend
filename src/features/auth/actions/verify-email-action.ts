@@ -1,13 +1,17 @@
 "use server";
 
-const API_URL = process.env.SERVER_API_BASE_URL || "http://localhost:5000";
+import { env } from "@/lib/env";
+
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type VerificationResult = {
     success: boolean;
     message: string;
 };
 
-export async function verifyEmailAction(token: string): Promise<VerificationResult> {
+export async function verifyEmailAction(
+    token: string
+): Promise<VerificationResult> {
     try {
         const response = await fetch(`${API_URL}/api/auth/verify-email`, {
             method: "POST",
@@ -22,7 +26,9 @@ export async function verifyEmailAction(token: string): Promise<VerificationResu
         if (!response.ok || !result.success) {
             return {
                 success: false,
-                message: result.message || "Verification failed. Invalid or expired token.",
+                message:
+                    result.message ||
+                    "Verification failed. Invalid or expired token.",
             };
         }
 

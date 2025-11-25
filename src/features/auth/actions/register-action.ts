@@ -5,8 +5,9 @@ import {
     registerSchema,
     type RegisterFormData,
 } from "@/lib/validation/schemas/auth-schema";
+import { env } from "@/lib/env";
 
-const API_URL = process.env.SERVER_API_BASE_URL || "http://localhost:5000";
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type ActionResult = {
     success: boolean;
@@ -58,10 +59,14 @@ export async function registerAction(
 
         if (!response.ok || !result.success) {
             let errorMessage = result.message || "Registration failed";
-            
+
             // Sanitize technical errors
-            if (errorMessage.includes("db.user.findUnique") || errorMessage.includes("invocation")) {
-                errorMessage = "This email is already registered or unavailable.";
+            if (
+                errorMessage.includes("db.user.findUnique") ||
+                errorMessage.includes("invocation")
+            ) {
+                errorMessage =
+                    "This email is already registered or unavailable.";
             }
 
             return {

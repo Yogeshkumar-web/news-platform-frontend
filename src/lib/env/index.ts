@@ -1,35 +1,42 @@
+import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-const envSchema = z.object({
-    NODE_ENV: z.enum(["development", "production", "test"]),
-    NEXT_PUBLIC_API_URL: z.string().url(),
-    NEXT_PUBLIC_BACKEND_API_URL: z.string().url().optional(),
-    SERVER_API_BASE_URL: z.string().url().optional(),
-    JWT_SECRET: z.string().min(32).optional(), // Only if you handle JWT client-side
-});
+export const env = createEnv({
+    /**
+     * Server-side environment variables schema
+     * Never exposed to the client
+     */
+    server: {
+        NODE_ENV: z
+            .enum(["development", "production", "test"])
+            .default("development"),
+        API_BASE_URL: z.string().url(),
+        JWT_SECRET: z.string().min(32),
+    },
 
-const parseEnv = () => {
-    const parsed = envSchema.safeParse({
+    /**
+     * Client-side environment variables schema
+     * Exposed to the client (must start with NEXT_PUBLIC_)
+     */
+    client: {
+        NEXT_PUBLIC_DOMAIN: z.string().url(),
+        NEXT_PUBLIC_ADSENSE_ID: z.string().min(1),
+    },
+
+    /**
+     * Manual destructuring for Next.js
+     * You can't use process.env.X in here due to Next.js internals
+     */
+    runtimeEnv: {
         NODE_ENV: process.env.NODE_ENV,
-        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-        NEXT_PUBLIC_BACKEND_API_URL: process.env.NEXT_PUBLIC_BACKEND_API_URL,
-        SERVER_API_BASE_URL: process.env.SERVER_API_BASE_URL,
+        API_BASE_URL: process.env.API_BASE_URL,
         JWT_SECRET: process.env.JWT_SECRET,
-    });
+        NEXT_PUBLIC_DOMAIN: process.env.NEXT_PUBLIC_DOMAIN,
+        NEXT_PUBLIC_ADSENSE_ID: process.env.NEXT_PUBLIC_ADSENSE_ID,
+    },
 
-    if (!parsed.success) {
-        console.error(
-            "❌ Invalid environment variables:",
-            parsed.error.flatten().fieldErrors
-        );
-        throw new Error("Invalid environment variables");
-    }
-
-    return parsed.data;
-};
-
-export const env = parseEnv();
-
-// // Usage:
-// import { env } from "@/lib/env";
-// const apiUrl = env.NEXT_PUBLIC_API_URL; // Type-safe and validated
+    /**
+     * Skip validation during build (optional)
+     */
+    skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+});

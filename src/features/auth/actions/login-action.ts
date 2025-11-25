@@ -6,8 +6,9 @@ import {
     loginSchema,
     type LoginFormData,
 } from "@/lib/validation/schemas/auth-schema";
+import { env } from "@/lib/env";
 
-const API_URL = process.env.SERVER_API_BASE_URL || "http://localhost:5000";
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type ActionResult = {
     success: boolean;
@@ -69,7 +70,7 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
                     name: "token",
                     value: tokenMatch[1],
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === "production",
+                    secure: env.NODE_ENV === "production",
                     sameSite: "lax",
                     path: "/",
                     maxAge: 7 * 24 * 60 * 60, // 7 days

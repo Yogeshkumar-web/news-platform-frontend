@@ -1,5 +1,7 @@
 "use client";
 
+import { env } from "@/lib/env";
+
 import Script from "next/script";
 
 interface GoogleAdSenseProps {
@@ -7,7 +9,7 @@ interface GoogleAdSenseProps {
 }
 
 export function GoogleAdSense({ publisherId }: GoogleAdSenseProps) {
-    const pId = publisherId || process.env.NEXT_PUBLIC_ADSENSE_ID;
+    const pId = publisherId || env.NEXT_PUBLIC_ADSENSE_ID;
 
     if (!pId) {
         return null;
@@ -17,8 +19,8 @@ export function GoogleAdSense({ publisherId }: GoogleAdSenseProps) {
         <Script
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${pId}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
+            crossOrigin='anonymous'
+            strategy='afterInteractive'
         />
     );
 }

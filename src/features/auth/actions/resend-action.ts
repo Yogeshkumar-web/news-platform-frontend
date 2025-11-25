@@ -1,28 +1,36 @@
 "use server";
 
-const API_URL = process.env.SERVER_API_BASE_URL || "http://localhost:5000";
+import { env } from "@/lib/env";
+
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type ResendResult = {
     success: boolean;
     message: string;
 };
 
-export async function resendVerificationAction(email: string): Promise<ResendResult> {
+export async function resendVerificationAction(
+    email: string
+): Promise<ResendResult> {
     try {
-        const response = await fetch(`${API_URL}/api/auth/resend-verification`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-        });
+        const response = await fetch(
+            `${API_URL}/api/auth/resend-verification`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            }
+        );
 
         const result = await response.json();
 
         if (!response.ok || !result.success) {
             return {
                 success: false,
-                message: result.message || "Failed to resend verification email.",
+                message:
+                    result.message || "Failed to resend verification email.",
             };
         }
 

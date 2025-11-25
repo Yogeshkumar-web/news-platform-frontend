@@ -1,13 +1,11 @@
 import type { ApiResponse } from "@/types";
 import { CustomAxiosError } from "./client";
+import { env } from "@/lib/env";
 
 // Server-side API base URL (can be internal)
-const SERVER_API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_URL ||
-    process.env.NEXT_PUBLIC_BACKEND_API_URL ||
-    "http://localhost:5000";
+const API_BASE_URL = env.API_BASE_URL || "http://localhost:5000";
 
-if (!SERVER_API_BASE_URL) {
+if (!API_BASE_URL) {
     throw new Error("CRITICAL: Server API URL not configured");
 }
 
@@ -83,7 +81,7 @@ export async function serverFetch<T = unknown>(
 ): Promise<T> {
     // eslint-disable-next-line
     const { cookies } = require("next/headers");
-    const url = joinUrl(SERVER_API_BASE_URL, path);
+    const url = joinUrl(API_BASE_URL, path);
 
     try {
         // Get cookies for authentication
@@ -110,7 +108,7 @@ export async function serverFetch<T = unknown>(
                 : undefined;
 
         // Log request in development
-        if (process.env.NODE_ENV === "development") {
+        if (env.NODE_ENV === "development") {
             console.log(
                 `[Server Fetch] ${options.method || "GET"} ${path}`,
                 body ? "with body" : ""
@@ -135,7 +133,7 @@ export async function serverFetch<T = unknown>(
             error.data = errorData;
             error.errors = errorData.errors;
 
-            if (process.env.NODE_ENV === "development") {
+            if (env.NODE_ENV === "development") {
                 console.error(`[Server Fetch Error] ${response.status}`, error);
             }
 
@@ -144,13 +142,13 @@ export async function serverFetch<T = unknown>(
 
         const data = await response.json();
 
-        if (process.env.NODE_ENV === "development") {
+        if (env.NODE_ENV === "development") {
             console.log(`[Server Fetch Success] ${response.status} ${path}`);
         }
 
         return extractData<T>(data);
     } catch (error) {
-        if (process.env.NODE_ENV === "development") {
+        if (env.NODE_ENV === "development") {
             console.error(`[Server Fetch Error] ${path}:`, error);
         }
         throw error;

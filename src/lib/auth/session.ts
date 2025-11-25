@@ -2,6 +2,8 @@
 import { serverGet } from "@/lib";
 import type { User } from "@/types";
 
+import { env } from "@/lib/env";
+
 /**
  * Get current user session (Server-side only)
  * Uses backend /api/auth/me endpoint
@@ -23,7 +25,7 @@ export async function getSession(): Promise<User | null> {
         return user.user;
     } catch (error) {
         // Token invalid/expired or other error
-        if (process.env.NODE_ENV === "development") {
+        if (env.NODE_ENV === "development") {
             console.warn("[Session] Failed to get session:", error);
         }
 

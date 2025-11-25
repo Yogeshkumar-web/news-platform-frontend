@@ -1,5 +1,7 @@
 "use client";
 
+import { env } from "@/lib/env";
+
 import { useEffect, useRef } from "react";
 
 interface AdUnitProps {
@@ -31,7 +33,7 @@ export function AdUnit({
     }, []);
 
     // Development placeholder
-    if (process.env.NODE_ENV === "development") {
+    if (env.NODE_ENV === "development") {
         return (
             <div
                 className={`bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 text-sm font-mono p-4 ${className}`}
@@ -45,9 +47,9 @@ export function AdUnit({
     return (
         <div className={className} style={{ overflow: "hidden" }}>
             <ins
-                className="adsbygoogle"
+                className='adsbygoogle'
                 style={{ display: "block", ...style }}
-                data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_ID}
+                data-ad-client={env.NEXT_PUBLIC_ADSENSE_ID}
                 data-ad-slot={slot}
                 data-ad-format={format}
                 data-full-width-responsive={responsive ? "true" : "false"}

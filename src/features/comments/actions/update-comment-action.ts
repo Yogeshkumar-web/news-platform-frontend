@@ -4,8 +4,9 @@ import { updateCommentSchema } from "@/lib";
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { env } from "@/lib/env";
 
-const API_URL = process.env.SERVER_API_BASE_URL || "http://localhost:3001";
+const API_URL = env.API_BASE_URL || "http://localhost:5000";
 
 type ActionResult = {
     success: boolean;

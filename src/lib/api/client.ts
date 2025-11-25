@@ -1,15 +1,13 @@
 import { ApiResponse, ValidationError } from "@/types";
 import axios, { type AxiosResponse, isAxiosError } from "axios";
+import { env } from "@/lib/env";
 
 // NOTE: Aapko yeh types aapki file mein define/import karne honge
 // import type { ApiResponse, ValidationError } from "@/types";
 
 // --- Configuration ---
 
-const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_URL ||
-    process.env.NEXT_PUBLIC_BACKEND_API_URL ||
-    "http://localhost:5000";
+const API_BASE_URL = env.API_BASE_URL;
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: API Base URL is not configured");
@@ -22,7 +20,7 @@ if (!API_BASE_URL) {
  * @description Hum AxiosError ko extend nahi kar rahe, balki ek naya custom type bana rahe hain.
  */
 export interface CustomAxiosError extends Error {
-    status?: number; 
+    status?: number;
     code?: string;
     data?: unknown;
     errors?: ValidationError[];

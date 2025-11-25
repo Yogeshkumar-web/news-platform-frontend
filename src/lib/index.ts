@@ -104,14 +104,6 @@ export {
 } from "./utils/format";
 
 export {
-    buildImageKitUrl,
-    getArticleThumbnail,
-    getProfileImage,
-    getImagePlaceholder,
-    uploadToImageKit,
-} from "./utils/imagekit";
-
-export {
     API_ENDPOINTS,
     ROUTES,
     APP_NAME,
