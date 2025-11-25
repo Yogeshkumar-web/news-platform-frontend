@@ -7,7 +7,7 @@ import { env } from "@/lib/env";
 
 // --- Configuration ---
 
-const API_BASE_URL = env.API_BASE_URL;
+const API_BASE_URL = env.NEXT_PUBLIC_API_BASE_URL;
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: API Base URL is not configured");
@@ -49,7 +49,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     // type AxioxRequestConfig ka use, InternalAxiosRequestConfig ki jagah
     (config) => {
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.log(
                 `[API Request] ${config.method?.toUpperCase()} ${config.url}`,
                 config.data ? "with data" : ""
@@ -58,7 +58,7 @@ axiosInstance.interceptors.request.use(
         return config;
     },
     (error) => {
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.error("[API Request Error]", error);
         }
         return Promise.reject(error);
@@ -70,7 +70,7 @@ axiosInstance.interceptors.request.use(
  */
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.log(
                 `[API Response] ${response.status} ${response.config.url}`
             );

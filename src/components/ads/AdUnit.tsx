@@ -33,7 +33,7 @@ export function AdUnit({
     }, []);
 
     // Development placeholder
-    if (env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development") {
         return (
             <div
                 className={`bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 text-sm font-mono p-4 ${className}`}
