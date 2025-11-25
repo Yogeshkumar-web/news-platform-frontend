@@ -13,7 +13,7 @@ export const env = createEnv({
         API_BASE_URL: z.string().url(),
         FRONTEND_URL: z.string().url(),
         JWT_SECRET: z.string().min(32),
-        ADSENSE_ID: z.string().min(1),
+        ADSENSE_ID: z.string().min(1).optional(),
     },
 
     /**
