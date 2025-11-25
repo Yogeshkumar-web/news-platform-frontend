@@ -1,4 +1,3 @@
-// import { cookies } from "next/headers";
 import { serverGet } from "@/lib";
 import type { User } from "@/types";
 

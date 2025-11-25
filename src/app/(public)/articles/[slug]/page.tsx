@@ -78,7 +78,7 @@ export default async function ArticleDetailPage({
 
     const readingTime = calculateReadingTime(article.content);
 
-    const domain = process.env.NEXT_PUBLIC_DOMAIN || "http://localhost:3000";
+    const domain = process.env.FRONTEND_URL || "http://localhost:3000";
 
     // JSON-LD Structured Data
     const newsArticleJsonLd = {

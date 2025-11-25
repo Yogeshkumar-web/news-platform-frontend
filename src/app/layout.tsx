@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: "Stay updated with latest news, articles, and insights",
     keywords: ["news", "articles", "blog", "technology", "latest updates"],
     authors: [{ name: "Meaupost18" }],
-    metadataBase: new URL(env.NEXT_PUBLIC_DOMAIN || "https://meaupost18.com"),
+    metadataBase: new URL(env.FRONTEND_URL || "https://meaupost18.com"),
     alternates: {
         canonical: "/",
     },
@@ -63,14 +63,14 @@ export default function RootLayout({
                             "@type": "WebSite",
                             name: "Meaupost18",
                             url:
-                                env.NEXT_PUBLIC_DOMAIN ||
+                                env.FRONTEND_URL ||
                                 "https://meaupost18.com",
                             potentialAction: {
                                 "@type": "SearchAction",
                                 target: {
                                     "@type": "EntryPoint",
                                     urlTemplate: `${
-                                        env.NEXT_PUBLIC_DOMAIN ||
+                                        env.FRONTEND_URL ||
                                         "https://meaupost18.com"
                                     }/search?q={search_term_string}`,
                                 },
@@ -88,10 +88,10 @@ export default function RootLayout({
                             "@type": "Organization",
                             name: "Meaupost18",
                             url:
-                                env.NEXT_PUBLIC_DOMAIN ||
+                                env.FRONTEND_URL ||
                                 "https://meaupost18.com",
                             logo: `${
-                                env.NEXT_PUBLIC_DOMAIN ||
+                                env.FRONTEND_URL ||
                                 "https://meaupost18.com"
                             }/logo.png`,
                             sameAs: [

@@ -1,6 +1,6 @@
 "use client";
 
-import { env } from "@/lib/env";
+// import { env } from "@/lib/env";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -45,7 +45,7 @@ export default function Error({
                     occurred.
                 </p>
 
-                {env.NODE_ENV === "development" && (
+                {process.env.NODE_ENV === "development" && (
                     <div className='mb-6 p-4 bg-red-50 rounded-lg text-left'>
                         <p className='text-sm font-mono text-red-800 break-all'>
                             {error.message}
