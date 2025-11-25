@@ -3,7 +3,7 @@ import { CustomAxiosError } from "./client";
 import { env } from "@/lib/env";
 
 // Server-side API base URL (can be internal)
-const API_BASE_URL = env.API_BASE_URL || "http://localhost:5000";
+const API_BASE_URL = env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: Server API URL not configured");
@@ -108,7 +108,7 @@ export async function serverFetch<T = unknown>(
                 : undefined;
 
         // Log request in development
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.log(
                 `[Server Fetch] ${options.method || "GET"} ${path}`,
                 body ? "with body" : ""
@@ -133,7 +133,7 @@ export async function serverFetch<T = unknown>(
             error.data = errorData;
             error.errors = errorData.errors;
 
-            if (env.NODE_ENV === "development") {
+            if (process.env.NODE_ENV === "development") {
                 console.error(`[Server Fetch Error] ${response.status}`, error);
             }
 
@@ -142,13 +142,13 @@ export async function serverFetch<T = unknown>(
 
         const data = await response.json();
 
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.log(`[Server Fetch Success] ${response.status} ${path}`);
         }
 
         return extractData<T>(data);
     } catch (error) {
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.error(`[Server Fetch Error] ${path}:`, error);
         }
         throw error;

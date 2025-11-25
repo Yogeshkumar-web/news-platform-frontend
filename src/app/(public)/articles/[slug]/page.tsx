@@ -11,6 +11,7 @@ import { ArticleContent } from "@/components/article/ArticleContent";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { AdUnit } from "@/components/ads/AdUnit";
+import { env } from "@/lib/env";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -78,7 +79,7 @@ export default async function ArticleDetailPage({
 
     const readingTime = calculateReadingTime(article.content);
 
-    const domain = process.env.FRONTEND_URL || "http://localhost:3000";
+    const domain = env.FRONTEND_URL || "http://localhost:3000";
 
     // JSON-LD Structured Data
     const newsArticleJsonLd = {
