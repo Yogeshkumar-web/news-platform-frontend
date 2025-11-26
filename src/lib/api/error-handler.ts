@@ -1,7 +1,5 @@
 import { CustomAxiosError } from "./client";
 
-import { env } from "@/lib/env";
-
 /**
  * User-friendly error messages for common HTTP status codes
  */
@@ -134,7 +132,7 @@ export function isNetworkError(error: unknown): boolean {
  * Log error to console (development) or monitoring service (production)
  */
 export function logError(error: unknown, context?: Record<string, any>) {
-    if (env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development") {
         console.error("[Error]", error, context);
     } else {
         // In production, send to monitoring service (Sentry, etc.)

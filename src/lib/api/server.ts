@@ -1,9 +1,9 @@
 import type { ApiResponse } from "@/types";
 import { CustomAxiosError } from "./client";
-import { env } from "@/lib/env";
 
 // Server-side API base URL (can be internal)
-const API_BASE_URL = env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: Server API URL not configured");

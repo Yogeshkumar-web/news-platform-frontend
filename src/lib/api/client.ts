@@ -1,13 +1,13 @@
 import { ApiResponse, ValidationError } from "@/types";
 import axios, { type AxiosResponse, isAxiosError } from "axios";
-import { env } from "@/lib/env";
+// import { env } from "@/lib/env";
 
 // NOTE: Aapko yeh types aapki file mein define/import karne honge
 // import type { ApiResponse, ValidationError } from "@/types";
 
 // --- Configuration ---
 
-const API_BASE_URL = env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: API Base URL is not configured");
@@ -120,7 +120,7 @@ axiosInstance.interceptors.response.use(
             customError.code = "REQUEST_ERROR";
         }
 
-        if (env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development") {
             console.error("[API Error]", customError);
         }
 
