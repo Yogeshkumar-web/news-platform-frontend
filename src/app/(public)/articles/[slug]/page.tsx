@@ -23,9 +23,7 @@ export async function generateMetadata({
 }) {
     const { slug } = await params;
     try {
-        const article = await serverGet<Article>(
-            `/api/articles/${slug}`
-        );
+        const article = await serverGet<Article>(`/api/articles/${slug}`);
 
         return {
             title: article.title,
@@ -61,7 +59,7 @@ export default async function ArticleDetailPage({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
-    
+
     // Fetch article and user first
     const [article, user] = await Promise.all([
         serverGet<Article>(`/api/articles/${slug}`).catch(() => null),
@@ -80,6 +78,7 @@ export default async function ArticleDetailPage({
     const readingTime = calculateReadingTime(article.content);
 
     const domain = env.FRONTEND_URL || "http://localhost:3000";
+    const adClient = env.NEXT_PUBLIC_ADSENSE_ID;
 
     // JSON-LD Structured Data
     const newsArticleJsonLd = {
@@ -107,37 +106,43 @@ export default async function ArticleDetailPage({
     const breadcrumbJsonLd = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": [
+        itemListElement: [
             {
                 "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": domain
+                position: 1,
+                name: "Home",
+                item: domain,
             },
             {
                 "@type": "ListItem",
-                "position": 2,
-                "name": article.categories[0]?.label || "Articles",
-                "item": `${domain}/category/${article.categories[0]?.key || 'all'}`
+                position: 2,
+                name: article.categories[0]?.label || "Articles",
+                item: `${domain}/category/${
+                    article.categories[0]?.key || "all"
+                }`,
             },
             {
                 "@type": "ListItem",
-                "position": 3,
-                "name": article.title,
-                "item": `${domain}/articles/${article.slug}`
-            }
-        ]
+                position: 3,
+                name: article.title,
+                item: `${domain}/articles/${article.slug}`,
+            },
+        ],
     };
 
     return (
         <div className='min-h-screen bg-gray-50'>
             <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(newsArticleJsonLd) }}
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(newsArticleJsonLd),
+                }}
             />
             <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(breadcrumbJsonLd),
+                }}
             />
             {/* Header Navigation */}
             <Header />
@@ -211,22 +216,24 @@ export default async function ArticleDetailPage({
                 )}
 
                 {/* Top Ad */}
-                <AdUnit 
-                    slot="5555555555" 
-                    format="auto" 
-                    className="mb-8"
+                <AdUnit
+                    slot='5555555555'
+                    format='auto'
+                    className='mb-8'
                     style={{ minHeight: "100px" }}
+                    adClient={adClient}
                 />
 
                 {/* Content */}
                 <ArticleContent content={article.content} />
 
                 {/* Bottom Ad */}
-                <AdUnit 
-                    slot="6666666666" 
-                    format="auto" 
-                    className="my-8"
+                <AdUnit
+                    slot='6666666666'
+                    format='auto'
+                    className='my-8'
                     style={{ minHeight: "100px" }}
+                    adClient={adClient}
                 />
 
                 {/* Article Footer */}

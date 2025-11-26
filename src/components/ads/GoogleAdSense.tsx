@@ -1,7 +1,5 @@
 "use client";
 
-import { env } from "@/lib/env";
-
 import Script from "next/script";
 
 interface GoogleAdSenseProps {
@@ -9,7 +7,7 @@ interface GoogleAdSenseProps {
 }
 
 export function GoogleAdSense({ publisherId }: GoogleAdSenseProps) {
-    const pId = publisherId || env.NEXT_PUBLIC_ADSENSE_ID;
+    const pId = publisherId;
 
     if (!pId) {
         return null;

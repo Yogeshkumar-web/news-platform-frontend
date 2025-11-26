@@ -21,6 +21,8 @@ const playfair = Playfair_Display({
     subsets: ["latin"],
 });
 
+const adsenseId = env.NEXT_PUBLIC_ADSENSE_ID;
+
 export const metadata: Metadata = {
     title: {
         template: "%s | Meaupost18",
@@ -62,9 +64,7 @@ export default function RootLayout({
                             "@context": "https://schema.org",
                             "@type": "WebSite",
                             name: "Meaupost18",
-                            url:
-                                env.FRONTEND_URL ||
-                                "https://meaupost18.com",
+                            url: env.FRONTEND_URL || "https://meaupost18.com",
                             potentialAction: {
                                 "@type": "SearchAction",
                                 target: {
@@ -87,12 +87,9 @@ export default function RootLayout({
                             "@context": "https://schema.org",
                             "@type": "Organization",
                             name: "Meaupost18",
-                            url:
-                                env.FRONTEND_URL ||
-                                "https://meaupost18.com",
+                            url: env.FRONTEND_URL || "https://meaupost18.com",
                             logo: `${
-                                env.FRONTEND_URL ||
-                                "https://meaupost18.com"
+                                env.FRONTEND_URL || "https://meaupost18.com"
                             }/logo.png`,
                             sameAs: [
                                 "https://facebook.com/meaupost18",
@@ -111,7 +108,7 @@ export default function RootLayout({
                     }}
                 />
                 <QueryProvider>
-                    <GoogleAdSense />
+                    <GoogleAdSense publisherId={adsenseId} />
                     {children}
                     <Toaster position='top-right' richColors closeButton />
                 </QueryProvider>

@@ -1,7 +1,5 @@
 "use client";
 
-import { env } from "@/lib/env";
-
 import { useEffect, useRef } from "react";
 
 interface AdUnitProps {
@@ -11,6 +9,7 @@ interface AdUnitProps {
     style?: React.CSSProperties;
     className?: string;
     responsive?: boolean;
+    adClient: string;
 }
 
 export function AdUnit({
@@ -20,6 +19,7 @@ export function AdUnit({
     style,
     className,
     responsive = true,
+    adClient,
 }: AdUnitProps) {
     const adRef = useRef<HTMLModElement>(null);
 
@@ -49,7 +49,7 @@ export function AdUnit({
             <ins
                 className='adsbygoogle'
                 style={{ display: "block", ...style }}
-                data-ad-client={env.NEXT_PUBLIC_ADSENSE_ID}
+                data-ad-client={adClient}
                 data-ad-slot={slot}
                 data-ad-format={format}
                 data-full-width-responsive={responsive ? "true" : "false"}
