@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
     return {
         name: "Meaupost18",
-        short_name: "Meaupost18",
+        short_name: "meau",
         description: "Stay updated with latest news, articles, and insights",
         start_url: "/",
         display: "standalone",
