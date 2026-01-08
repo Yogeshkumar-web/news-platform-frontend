@@ -99,6 +99,19 @@ export async function serverFetch<T = unknown>(
         if (token) {
             headers.Cookie = `token=${token}`;
             headers.Authorization = `Bearer ${token}`;
+            
+            // Debug logging
+            if (process.env.NODE_ENV === "development") {
+                console.log(`[Server Fetch Auth] Token present: ${token.substring(0, 20)}...`);
+                console.log(`[Server Fetch Auth] Headers:`, {
+                    Authorization: headers.Authorization.substring(0, 30) + '...',
+                    Cookie: headers.Cookie.substring(0, 30) + '...'
+                });
+            }
+        } else {
+            if (process.env.NODE_ENV === "development") {
+                console.warn(`[Server Fetch Auth] NO TOKEN FOUND in cookies!`);
+            }
         }
 
         // Prepare body

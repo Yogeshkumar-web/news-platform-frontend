@@ -47,6 +47,8 @@ export const createArticleSchema = z.object({
         .max(5, "Maximum 5 categories allowed")
         .optional()
         .default([]),
+
+    authorId: z.string().min(1, "Author ID is required"), // ✅ Mandatory field
 });
 
 export type CreateArticleData = z.infer<typeof createArticleSchema>;

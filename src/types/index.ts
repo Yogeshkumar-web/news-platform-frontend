@@ -13,6 +13,8 @@ export interface User {
     role: UserRole;
     profileImage?: string | null;
     bio?: string | null;
+    isSubscriber?: boolean;
+    googleId?: string | null;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -22,6 +24,14 @@ export interface AuthState {
     isAuthenticated: boolean;
     isLoading: boolean;
     error?: string | null;
+}
+
+export type OAuthProvider = "google" | "github" | "facebook";
+
+export interface OAuthError {
+    type: "auth_failed" | "access_denied" | "network_error" | "unknown";
+    message: string;
+    provider: OAuthProvider;
 }
 
 // ==================== API RESPONSE TYPES ====================
@@ -241,10 +251,11 @@ export interface AdminUser extends User {
 
 export interface AdminCategory {
     id: string;
-    name: string;
-    slug: string;
+    label: string;        // Backend uses 'label' not 'name'
+    key: string;          // Backend uses 'key' not 'slug'
     description?: string;
-    articleCount: number;
+    count: number;        // Backend uses 'count' not 'articleCount'
+    isHidden?: boolean;
     createdAt: string;
     updatedAt: string;
 }

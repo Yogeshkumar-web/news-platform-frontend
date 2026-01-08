@@ -120,6 +120,7 @@ function ToolbarPlugin() {
             {/* Text Formatting */}
             <div className='flex items-center space-x-1 mr-4'>
                 <button
+                    type="button"
                     onClick={formatBold}
                     className={`p-2 rounded hover:bg-gray-200 transition-colors ${
                         isBold ? "bg-blue-100 text-blue-700" : "text-gray-700"
@@ -136,6 +137,7 @@ function ToolbarPlugin() {
                 </button>
 
                 <button
+                    type="button"
                     onClick={formatItalic}
                     className={`p-2 rounded hover:bg-gray-200 transition-colors ${
                         isItalic ? "bg-blue-100 text-blue-700" : "text-gray-700"
@@ -152,6 +154,7 @@ function ToolbarPlugin() {
                 </button>
 
                 <button
+                    type="button"
                     onClick={formatUnderline}
                     className={`p-2 rounded hover:bg-gray-200 transition-colors ${
                         isUnderline
@@ -173,6 +176,7 @@ function ToolbarPlugin() {
             {/* Headings */}
             <div className='flex items-center space-x-1 mr-4'>
                 <button
+                    type="button"
                     onClick={() => formatHeading("h1")}
                     className='p-2 rounded hover:bg-gray-200 transition-colors text-gray-700 font-bold text-lg'
                     title='Heading 1'
@@ -180,6 +184,7 @@ function ToolbarPlugin() {
                     H1
                 </button>
                 <button
+                    type="button"
                     onClick={() => formatHeading("h2")}
                     className='p-2 rounded hover:bg-gray-200 transition-colors text-gray-700 font-semibold'
                     title='Heading 2'
@@ -187,6 +192,7 @@ function ToolbarPlugin() {
                     H2
                 </button>
                 <button
+                    type="button"
                     onClick={() => formatHeading("h3")}
                     className='p-2 rounded hover:bg-gray-200 transition-colors text-gray-700 font-medium text-sm'
                     title='Heading 3'
@@ -198,6 +204,7 @@ function ToolbarPlugin() {
             {/* Block Elements */}
             <div className='flex items-center space-x-1 mr-4'>
                 <button
+                    type="button"
                     onClick={formatQuote}
                     className='p-2 rounded hover:bg-gray-200 transition-colors text-gray-700'
                     title='Quote'
@@ -212,6 +219,7 @@ function ToolbarPlugin() {
                 </button>
 
                 <button
+                    type="button"
                     onClick={formatCode}
                     className='p-2 rounded hover:bg-gray-200 transition-colors text-gray-700'
                     title='Code Block'
@@ -236,6 +244,7 @@ function ToolbarPlugin() {
                     className="hidden"
                 />
                 <button
+                    type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
                     className='p-2 rounded hover:bg-gray-200 transition-colors text-gray-700 disabled:opacity-50'

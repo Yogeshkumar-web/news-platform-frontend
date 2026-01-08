@@ -29,7 +29,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
 
     const openEditModal = (category: AdminCategory) => {
         setEditingCategory(category);
-        setFormData({ name: category.name, slug: category.slug, description: category.description || "" });
+        setFormData({ name: category.label, slug: category.key, description: category.description || "" });
         setIsModalOpen(true);
     };
 
@@ -88,18 +88,13 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
     const columns = [
         {
             header: "Name",
-            accessor: "name" as keyof AdminCategory,
+            accessor: "label" as keyof AdminCategory,
             className: "font-medium text-gray-900"
         },
         {
             header: "Slug",
-            accessor: "slug" as keyof AdminCategory,
+            accessor: "key" as keyof AdminCategory,
             className: "text-gray-500"
-        },
-        {
-            header: "Articles",
-            accessor: "articleCount" as keyof AdminCategory,
-            className: "text-center"
         },
         {
             header: "Created",

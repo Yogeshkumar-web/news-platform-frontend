@@ -15,8 +15,8 @@ export async function createArticleAction(
     formData: FormData
 ): Promise<ActionState<{ articleId: string }>> {
     try {
-        // Check authentication
-        await requireWriter();
+        // Check authentication and get user
+        const user = await requireWriter();
         
         // Extract and parse data
         const data = {
@@ -30,6 +30,7 @@ export async function createArticleAction(
             categories: JSON.parse(
                 (formData.get("categories") as string) || "[]"
             ),
+            authorId: user.id, // ✅ Mandatory field for backend
         };
 
         // Validate

@@ -11,18 +11,19 @@ export const getAdminUsers = async (page = 1, pageSize = 10, search = "", role =
     const queryParams = new URLSearchParams({
         page: page.toString(),
         pageSize: pageSize.toString(),
-        ...(search && { search }), // Only add if not empty
-        ...(role && { role })       // Only add if not empty
+        ...(search && { search }),
+        ...(role && { role })
     });
+    // serverGet already extracts data from ApiResponse
     return serverGet<{ users: AdminUser[], pagination: any }>(`/api/users?${queryParams.toString()}`);
 };
 
 // Category Management
 export const getAdminCategories = async (): Promise<AdminCategory[]> => {
     try {
-        const response = await serverGet<{ success: boolean; data: AdminCategory[] }>("/api/categories/admin/all");
-        // Backend returns { success: true, data: [...] }
-        return response.data || [];
+        // serverGet already extracts data from ApiResponse, so we get AdminCategory[] directly
+        const categories = await serverGet<AdminCategory[]>("/api/categories/admin/all");
+        return categories || [];
     } catch (error) {
         console.error("Failed to fetch admin categories:", error);
         return [];
