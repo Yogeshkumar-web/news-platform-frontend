@@ -7,7 +7,9 @@ import axios, { type AxiosResponse, isAxiosError } from "axios";
 
 // --- Configuration ---
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+// Use our Next.js edge middleware proxy for client-side requests!
+// This solves CORS issues and allows our middleware to automatically securely inject the httpOnly token as a Bearer auth header.
+const API_BASE_URL = "/api/proxy";
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: API Base URL is not configured");

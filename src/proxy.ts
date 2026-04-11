@@ -1,47 +1,56 @@
+// This file has been replaced by middleware.ts at the root of the src directory.
+// You can safely delete this file.
 import { NextRequest, NextResponse } from "next/server";
-import { isProtectedRoute, getRedirectUrl } from "@/lib";
+import { isProtectedRoute, getRedirectUrl } from "@/lib/auth/middleware-helper";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 /**
- * Next.js Proxy (formerly Middleware)
- * Handles route protection - only checks token existence
- * Actual validation happens in Server Components/Actions
- *
- *  Security Note: This is a lightweight check for routing only.
- * Critical auth validation MUST happen in Server Components/Actions
+ * Next.js Middleware
+ * Handles Route Protection and API Proxying for Client-Side Requests
  */
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
-
-    // console.log("Proxy - Pathname:", pathname);
-
-    // Check if route needs protection
-    if (!isProtectedRoute(pathname)) {
-        return NextResponse.next();
-    }
-
-    // Check for token existence (not validation)
     const token = request.cookies.get("token")?.value;
 
-    if (!token) {
-        // Redirect to login with return URL
-        const loginUrl = new URL("/login", request.url);
-        const redirectTo = getRedirectUrl(pathname);
-        loginUrl.searchParams.set("redirect", redirectTo);
+    // 1. API Proxying: Forward /api/proxy/* to backend and inject Authorization Header
+    if (pathname.startsWith("/api/proxy/")) {
+        const targetPath = pathname.replace(/^\/api\/proxy/, "/api");
+        const backendUrl = new URL(targetPath + request.nextUrl.search, BACKEND_URL);
 
-        return NextResponse.redirect(loginUrl);
+        const requestHeaders = new Headers(request.headers);
+        if (token) {
+            requestHeaders.set("Authorization", `Bearer ${token}`);
+            requestHeaders.set("Cookie", `token=${token}`); // Forward cookie as well just in case
+        }
+
+        return NextResponse.rewrite(backendUrl, {
+            request: {
+                headers: requestHeaders,
+            },
+        });
     }
 
-    // Token exists, allow through
-    // Server components will do actual validation
+    // 2. Route Protection: Check if the user is trying to access a protected page
+    if (isProtectedRoute(pathname)) {
+        if (!token) {
+            const loginUrl = new URL("/login", request.url);
+            const redirectTo = getRedirectUrl(pathname);
+            loginUrl.searchParams.set("redirect", redirectTo);
+            return NextResponse.redirect(loginUrl);
+        }
+    }
+
     return NextResponse.next();
 }
 
 export const config = {
     matcher: [
-        "/admin/:path*",
-        "/dashboard/:path*",
-        "/writer/:path*",
-        "/profile/:path*",
-        "/settings/:path*",
+        /*
+         * Match all request paths except for:
+         * - _next/static, _next/image, favicon.ico (static files)
+         * - public files
+         */
+        "/((?!_next/static|_next/image|favicon.ico).*)",
     ],
 };

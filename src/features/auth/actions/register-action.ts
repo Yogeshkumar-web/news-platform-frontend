@@ -7,7 +7,8 @@ import {
 } from "@/lib/validation/schemas/auth-schema";
 import { env } from "@/lib/env";
 
-const API_URL = env.API_BASE_URL || "http://localhost:5000";
+const API_URL =
+    env.NODE_ENV === "production" ? env.API_BASE_URL : "http://localhost:5000";
 
 type ActionResult = {
     success: boolean;
@@ -21,7 +22,7 @@ type ActionResult = {
  * Note: Backend doesn't set cookie on registration
  */
 export async function registerAction(
-    formData: FormData
+    formData: FormData,
 ): Promise<ActionResult> {
     try {
         // Extract form data

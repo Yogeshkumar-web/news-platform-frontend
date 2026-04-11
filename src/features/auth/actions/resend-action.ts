@@ -2,7 +2,8 @@
 
 import { env } from "@/lib/env";
 
-const API_URL = env.API_BASE_URL || "http://localhost:5000";
+const API_URL =
+    env.NODE_ENV === "production" ? env.API_BASE_URL : "http://localhost:5000";
 
 type ResendResult = {
     success: boolean;
@@ -10,7 +11,7 @@ type ResendResult = {
 };
 
 export async function resendVerificationAction(
-    email: string
+    email: string,
 ): Promise<ResendResult> {
     try {
         const response = await fetch(
@@ -21,7 +22,7 @@ export async function resendVerificationAction(
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email }),
-            }
+            },
         );
 
         const result = await response.json();
