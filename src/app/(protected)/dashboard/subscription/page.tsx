@@ -7,6 +7,11 @@ export const metadata = {
 
 export default async function SubscriptionPage() {
     const user = await requireSubscriber();
+    const nextBillingDate = user.createdAt
+        ? new Date(
+              new Date(user.createdAt).getTime() + 30 * 24 * 60 * 60 * 1000
+          ).toLocaleDateString()
+        : "Pending setup";
 
     // TODO: Fetch subscription details from API
     // const subscription = await serverGet<SubscriptionInfo>("/api/subscription");
@@ -73,9 +78,7 @@ export default async function SubscriptionPage() {
                     <div className="flex justify-between">
                         <span className="text-gray-600">Next Billing Date</span>
                         <span className="font-medium text-gray-900">
-                            {new Date(
-                                Date.now() + 30 * 24 * 60 * 60 * 1000
-                            ).toLocaleDateString()}
+                            {nextBillingDate}
                         </span>
                     </div>
                 </div>

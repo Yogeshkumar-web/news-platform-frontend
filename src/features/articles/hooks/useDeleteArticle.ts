@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/react-query/query-keys";
+import { invalidateArticleData } from "@/lib/react-query/invalidations";
 import { deleteArticle } from "../api/article-api";
 
 /**
@@ -13,17 +13,8 @@ export function useDeleteArticle() {
 
     const mutation = useMutation({
         mutationFn: deleteArticle,
-        onSuccess: () => {
-            // Invalidate article lists
-            queryClient.invalidateQueries({
-                queryKey: queryKeys.articles.lists(),
-            });
-            queryClient.invalidateQueries({
-                queryKey: queryKeys.articles.myArticles(),
-            });
-            queryClient.invalidateQueries({
-                queryKey: queryKeys.categories.list(),
-            });
+        onSuccess: async (_data, articleId) => {
+            await invalidateArticleData(queryClient, { articleId });
         },
     });
 

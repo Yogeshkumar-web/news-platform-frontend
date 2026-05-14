@@ -3,8 +3,6 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getQueryClient } from "./query-client";
-import { useState } from "react";
-
 
 /**
  * React Query Provider Component
@@ -23,9 +21,7 @@ import { useState } from "react";
  * }
  */
 export function QueryProvider({ children }: { children: React.ReactNode }) {
-    // Create stable QueryClient instance
-    // Using useState ensures client is created once per component mount
-    const [queryClient] = useState(() => getQueryClient());
+    const queryClient = getQueryClient();
 
     return (
         <QueryClientProvider client={queryClient}>

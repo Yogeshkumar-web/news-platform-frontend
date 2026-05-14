@@ -1,9 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/react-query/query-keys";
+import { commentQueries } from "@/lib/react-query/query-options";
 import {
-    getCommentsByArticle,
     type GetCommentsParams,
 } from "../api/comments-api";
 
@@ -14,17 +13,15 @@ import {
  * const { comments, pagination, isLoading } = useComments(articleId);
  */
 export function useComments(articleId: string, params: GetCommentsParams = {}) {
-    const { data, isLoading, error, refetch } = useQuery({
-        queryKey: queryKeys.comments.byArticle(articleId, params),
-        queryFn: () => getCommentsByArticle(articleId, params),
-        staleTime: 30 * 1000, // 30 seconds
-        enabled: !!articleId,
-    });
+    const { data, isLoading, isFetching, error, refetch } = useQuery(
+        commentQueries.byArticle(articleId, params)
+    );
 
     return {
         comments: data?.comments || [],
         pagination: data?.pagination || null,
         isLoading,
+        isFetching,
         error,
         refetch,
     };

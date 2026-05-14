@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/react-query/query-keys";
+import { clearPrivateData } from "@/lib/react-query/invalidations";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "../api/auth-api";
 
@@ -19,13 +20,11 @@ export function useLogout() {
 
     const mutation = useMutation({
         mutationFn: logoutUser,
-        onSuccess: () => {
+        onSuccess: async () => {
             // Clear all auth-related cache
             queryClient.setQueryData(queryKeys.auth.me(), null);
-            queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-            queryClient.invalidateQueries({
-                queryKey: queryKeys.articles.myArticles(),
-            });
+            await clearPrivateData(queryClient);
+            queryClient.setQueryData(queryKeys.auth.me(), null);
 
             // Redirect to home
             router.push("/");

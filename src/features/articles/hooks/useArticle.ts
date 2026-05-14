@@ -1,9 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/react-query/query-keys";
+import { articleQueries } from "@/lib/react-query/query-options";
 import { GetArticlesParams } from "@/types";
-import { getArticles } from "../api/article-api";
 
 /**
  * Articles Hook - Fetch articles with filters
@@ -15,16 +14,15 @@ import { getArticles } from "../api/article-api";
  * });
  */
 export function useArticles(params: GetArticlesParams = {}) {
-    const { data, isLoading, error, refetch } = useQuery({
-        queryKey: queryKeys.articles.list(params),
-        queryFn: () => getArticles(params),
-        staleTime: 30 * 1000, // 30 seconds
-    });
+    const { data, isLoading, isFetching, error, refetch } = useQuery(
+        articleQueries.list(params)
+    );
 
     return {
         articles: data?.articles || [],
         pagination: data?.pagination || null,
         isLoading,
+        isFetching,
         error,
         refetch,
     };

@@ -1,28 +1,20 @@
-import { QueryClient, DefaultOptions } from "@tanstack/react-query";
-import { isAuthError } from "@/lib";
-// import { env } from "@/lib/env";
+import { DefaultOptions, QueryClient } from "@tanstack/react-query";
+import {
+    queryPolicies,
+    retryDelay,
+    shouldRetryMutation,
+    shouldRetryQuery,
+} from "./policies";
 
 /**
  * Default options for React Query
  */
 const queryConfig: DefaultOptions = {
     queries: {
-        // Stale time: Data considered fresh for 30 seconds
-        staleTime: 30 * 1000, // 30 seconds
-
-        // Cache time: Keep unused data in cache for 5 minutes
-        gcTime: 5 * 60 * 1000, // 5 minutes (was cacheTime in v4)
-
-        // Retry failed requests
-        retry: (failureCount, error) => {
-            // Don't retry on auth errors
-            if (isAuthError(error)) return false;
-            // Retry max 2 times for other errors
-            return failureCount < 2;
-        },
-
-        // Retry delay (exponential backoff)
-        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        staleTime: queryPolicies.articles.list.staleTime,
+        gcTime: queryPolicies.articles.list.gcTime,
+        retry: shouldRetryQuery,
+        retryDelay,
 
         // Refetch on window focus (useful for real-time data)
         refetchOnWindowFocus: false,
@@ -34,8 +26,8 @@ const queryConfig: DefaultOptions = {
         refetchOnMount: false,
     },
     mutations: {
-        // Retry mutations only once
-        retry: 1,
+        retry: shouldRetryMutation,
+        retryDelay,
 
         // Log errors in development
         onError: (error) => {

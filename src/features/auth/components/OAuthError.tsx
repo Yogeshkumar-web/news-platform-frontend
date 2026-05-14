@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib";
 
 import { OAuthErrorType } from "../utils/oauth-utils";
@@ -34,6 +34,11 @@ export function OAuthError({
 }: OAuthErrorProps) {
     const [isVisible, setIsVisible] = useState(true);
 
+    const handleDismiss = useCallback(() => {
+        setIsVisible(false);
+        onDismiss?.();
+    }, [onDismiss]);
+
     useEffect(() => {
         if (autoDismiss && isVisible) {
             const timer = setTimeout(() => {
@@ -42,12 +47,7 @@ export function OAuthError({
 
             return () => clearTimeout(timer);
         }
-    }, [autoDismiss, autoDismissDelay, isVisible]);
-
-    const handleDismiss = () => {
-        setIsVisible(false);
-        onDismiss?.();
-    };
+    }, [autoDismiss, autoDismissDelay, handleDismiss, isVisible]);
 
     const handleRetry = () => {
         if (onRetry) {

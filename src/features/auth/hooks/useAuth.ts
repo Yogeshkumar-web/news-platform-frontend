@@ -1,8 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/react-query/query-keys";
-import { getCurrentUser } from "../api/auth-api";
+import { authQueries } from "@/lib/react-query/query-options";
 
 /**
  * Auth Hook - Get current user
@@ -15,18 +14,15 @@ export function useAuth() {
     const {
         data: user,
         isLoading,
+        isFetching,
         error,
         refetch,
-    } = useQuery({
-        queryKey: queryKeys.auth.me(),
-        queryFn: getCurrentUser,
-        retry: false, // Don't retry on auth errors
-        staleTime: 5 * 60 * 1000, // 5 minutes
-    });
+    } = useQuery(authQueries.me());
 
     return {
         user: user || null,
         isLoading,
+        isFetching,
         isAuthenticated: !!user,
         error,
         refetch,

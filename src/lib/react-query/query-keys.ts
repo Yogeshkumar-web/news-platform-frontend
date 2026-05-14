@@ -1,18 +1,32 @@
-/**
- * Centralized Query Keys Factory
- *
- * Benefits:
- * - Type-safe query keys
- * - Easy cache invalidation
- * - Consistent naming
- * - Easy refactoring
- *
- * Usage:
- * const { data } = useQuery({
- *   queryKey: queryKeys.articles.list({ page: 1, category: 'tech' }),
- *   queryFn: () => getArticles({ page: 1, category: 'tech' })
- * })
- */
+type ArticleListFilters = {
+    page?: number;
+    pageSize?: number;
+    category?: string;
+    status?: string;
+    featured?: boolean;
+    search?: string;
+};
+
+type MyArticleFilters = {
+    page?: number;
+    pageSize?: number;
+    status?: string;
+};
+
+type CommentFilters = {
+    page?: number;
+    limit?: number;
+    includeSpam?: boolean;
+    includeUnapproved?: boolean;
+};
+
+function cleanFilters<T extends Record<string, unknown>>(filters?: T) {
+    if (!filters) return {};
+
+    return Object.fromEntries(
+        Object.entries(filters).filter(([, value]) => value !== undefined)
+    ) as Partial<T>;
+}
 
 export const queryKeys = {
     // ==================== AUTH ====================
@@ -28,14 +42,8 @@ export const queryKeys = {
 
         // List with filters
         lists: () => [...queryKeys.articles.all, "list"] as const,
-        list: (filters?: {
-            page?: number;
-            pageSize?: number;
-            category?: string;
-            status?: string;
-            featured?: boolean;
-            search?: string;
-        }) => [...queryKeys.articles.lists(), filters] as const,
+        list: (filters?: ArticleListFilters) =>
+            [...queryKeys.articles.lists(), cleanFilters(filters)] as const,
 
         // Single article by slug
         details: () => [...queryKeys.articles.all, "detail"] as const,
@@ -43,11 +51,9 @@ export const queryKeys = {
             [...queryKeys.articles.details(), slug] as const,
 
         // User's articles
-        myArticles: (filters?: {
-            page?: number;
-            pageSize?: number;
-            status?: string;
-        }) => [...queryKeys.articles.all, "my", filters] as const,
+        my: () => [...queryKeys.articles.all, "my"] as const,
+        myArticles: (filters?: MyArticleFilters) =>
+            [...queryKeys.articles.my(), cleanFilters(filters)] as const,
 
         // Article for editing
         edit: (id: string) => [...queryKeys.articles.all, "edit", id] as const,
@@ -57,7 +63,13 @@ export const queryKeys = {
 
         // Category-specific
         byCategory: (category: string, filters?: { page?: number }) =>
-            [...queryKeys.articles.all, "category", category, filters] as const,
+            [
+                ...queryKeys.articles.all,
+                "category",
+                category,
+                cleanFilters(filters),
+            ] as const,
+        categories: () => [...queryKeys.articles.all, "category"] as const,
     },
 
     // ==================== COMMENTS ====================
@@ -65,23 +77,25 @@ export const queryKeys = {
         all: ["comments"] as const,
 
         // Comments by article
-        byArticle: (
-            articleId: string,
-            filters?: { page?: number; limit?: number }
-        ) =>
-            [...queryKeys.comments.all, "article", articleId, filters] as const,
+        article: (articleId: string) =>
+            [...queryKeys.comments.all, "article", articleId] as const,
+        byArticle: (articleId: string, filters?: CommentFilters) =>
+            [
+                ...queryKeys.comments.article(articleId),
+                cleanFilters(filters),
+            ] as const,
 
         // Comment stats
         stats: (articleId: string) =>
             [...queryKeys.comments.all, "stats", articleId] as const,
 
         // User's comments
+        user: (userId?: string) =>
+            [...queryKeys.comments.all, "user", userId || "me"] as const,
         byUser: (userId?: string, filters?: { page?: number }) =>
             [
-                ...queryKeys.comments.all,
-                "user",
-                userId || "me",
-                filters,
+                ...queryKeys.comments.user(userId),
+                cleanFilters(filters),
             ] as const,
 
         // Recent comments (admin)
@@ -114,17 +128,17 @@ export const queryInvalidations = {
     // After creating/updating/deleting article
     onArticleMutation: () => [
         queryKeys.articles.lists(),
-        queryKeys.articles.myArticles(),
+        queryKeys.articles.my(),
         queryKeys.categories.list(),
     ],
 
     // After creating/updating/deleting comment
-    onCommentMutation: (articleId: string) => [
+    onCommentMutation: (articleId: string, slug?: string) => [
         queryKeys.comments.byArticle(articleId),
         queryKeys.comments.stats(articleId),
-        queryKeys.articles.detail(articleId),
+        ...(slug ? [queryKeys.articles.detail(slug)] : []),
     ],
 
     // After login/logout
-    onAuthChange: () => [queryKeys.auth.me(), queryKeys.articles.myArticles()],
+    onAuthChange: () => [queryKeys.auth.me(), queryKeys.articles.my()],
 };
