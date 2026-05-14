@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+Abhi scrool karne par header scrool ho raha hai jo thik hai but jaise hi user scrool down kare to header dikhe, na ki pura page down hone ka wait kare. aur dusri bat ye ki jaise hi user scrool kare ye dono matlab header and tagline
+Meaupost18
+Democracy Dies in Darkness"
+"
+sticky ho jaye top par aur inhi height thodi kam ho yaye. aur jaise hi user scrool down kare to ye apni normao height mein aa jaye.

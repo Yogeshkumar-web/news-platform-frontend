@@ -1,12 +1,13 @@
 import { serverGet } from "@/lib/api/server";
 import type { Article, Category } from "@/types";
-import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AdUnit } from "@/components/ads/AdUnit";
 import { env } from "@/lib/env";
 import { CategoryLinks } from "@/components/layout/CategoryLinks";
 import { Button } from "@/components/ui/Button";
 import { getPublicCategories } from "@/features/categories/queries";
+import { getSession } from "@/lib/auth/session";
+import { HomeStickyHeader } from "@/components/layout/HomeStickyHeader";
 import {
     GridArticleCard,
     HeroArticleCard,
@@ -15,12 +16,13 @@ import {
 } from "@/components/article/ArticleCards";
 
 export default async function HomePage() {
-    const [featuredArticles, recentArticles, categories] = await Promise.all([
+    const [featuredArticles, recentArticles, categories, user] = await Promise.all([
         serverGet<Article[]>("/api/articles?featured=true&pageSize=5").catch(
             () => []
         ),
         serverGet<Article[]>("/api/articles?pageSize=12").catch(() => []),
         getPublicCategories(),
+        getSession(),
     ]);
 
     const mainFeatured = featuredArticles[0];
@@ -31,36 +33,7 @@ export default async function HomePage() {
 
     return (
         <div className='min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100'>
-            <Header categories={categories} />
-
-            <header className='py-5 md:py-6 text-center border-b border-gray-200'>
-                <div className='max-w-7xl mx-auto px-4'>
-                    <h1 className='font-serif text-4xl md:text-6xl text-gray-900 mb-2 tracking-tight'>
-                        Meaupost18
-                    </h1>
-                    <p className='text-gray-500 italic text-sm font-serif'>
-                        Democracy Dies in Darkness
-                    </p>
-                </div>
-            </header>
-
-            <nav
-                className='border-b border-gray-200 py-3 overflow-x-auto'
-                aria-label='Trending topics'
-            >
-                <div className='max-w-7xl mx-auto px-4 flex justify-center min-w-max'>
-                    <div className='flex gap-6 text-sm font-bold text-gray-500'>
-                        <span className='text-gray-900'>Trending</span>
-                        <CategoryLinks
-                            categories={categories}
-                            limit={8}
-                            variant='topic'
-                            className='contents'
-                            showMore={false}
-                        />
-                    </div>
-                </div>
-            </nav>
+            <HomeStickyHeader categories={categories} user={user} />
 
             <main className='max-w-7xl mx-auto px-4 py-8 md:py-12'>
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12'>
