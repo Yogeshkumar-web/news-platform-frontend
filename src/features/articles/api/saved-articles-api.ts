@@ -1,4 +1,5 @@
-import { serverGet, serverPost } from "@/lib/api/server";
+import { serverGetResponse, serverPost } from "@/lib/api/server";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 import type { Article } from "@/types";
 
 /**
@@ -9,10 +10,20 @@ export async function getSavedArticles(
     pageSize: number = 10
 ): Promise<{ articles: Article[]; total: number }> {
     try {
-        const response = await serverGet<{ articles: Article[]; total: number }>(
-            `/api/users/saved-articles?page=${page}&pageSize=${pageSize}`
+        const response = await serverGetResponse<Article[]>(
+            `${API_ENDPOINTS.users.savedArticles}?page=${page}&pageSize=${pageSize}`
         );
-        return response;
+        if (
+            typeof response === "object" &&
+            response !== null &&
+            "success" in response
+        ) {
+            return {
+                articles: response.data || [],
+                total: response.pagination?.total || 0,
+            };
+        }
+        return { articles: [], total: 0 };
     } catch (error) {
         console.error("Failed to fetch saved articles:", error);
         return { articles: [], total: 0 };

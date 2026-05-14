@@ -2,10 +2,7 @@
 
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { env } from "@/lib/env";
-
-const API_URL = env.API_BASE_URL || "http://localhost:5000";
+import { serverPost } from "@/lib/api/server";
 
 type ActionResult = {
     success: boolean;
@@ -25,40 +22,18 @@ export async function toggleLikeAction(
         // Check authentication
         await requireAuth();
 
-        // Get token
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
-
-        // Call backend
-        const response = await fetch(
-            `${API_URL}/api/articles/${articleId}/like`,
-            {
-                method: "POST",
-                headers: {
-                    Cookie: `token=${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            return {
-                success: false,
-                isLiked: false,
-                likeCount: 0,
-                message: result.message || "Failed to update like",
-            };
-        }
+        const result = await serverPost<{
+            isLiked: boolean;
+            likeCount: number;
+        }>(`/api/articles/${articleId}/like`);
 
         // Revalidate article page
         revalidatePath(`/articles/${articleId}`);
 
         return {
             success: true,
-            isLiked: result.data.isLiked,
-            likeCount: result.data.likeCount,
+            isLiked: result.isLiked,
+            likeCount: result.likeCount,
         };
     } catch (error: any) {
         console.error("[Toggle Like Action] Error:", error);

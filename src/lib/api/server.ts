@@ -3,7 +3,9 @@ import { CustomAxiosError } from "./client";
 
 // Server-side API base URL (can be internal)
 const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+    process.env.API_BASE_URL ||
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:5000";
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: Server API URL not configured");
@@ -58,7 +60,7 @@ function extractData<T>(response: ApiResponse<T> | T): T {
             throw error;
         }
 
-        if (response.data === undefined || response.data === null) {
+        if (response.data === undefined) {
             throw new Error("API returned success but no data");
         }
 
@@ -79,6 +81,14 @@ export async function serverFetch<T = unknown>(
     path: string,
     options: ServerFetchOptions = {}
 ): Promise<T> {
+    const response = await serverFetchResponse<T>(path, options);
+    return extractData<T>(response);
+}
+
+export async function serverFetchResponse<T = unknown>(
+    path: string,
+    options: ServerFetchOptions = {}
+): Promise<ApiResponse<T> | T> {
     // eslint-disable-next-line
     const { cookies } = require("next/headers");
     const url = joinUrl(API_BASE_URL, path);
@@ -128,13 +138,23 @@ export async function serverFetch<T = unknown>(
             );
         }
 
-        const response = await fetch(url, {
+        const fetchOptions: RequestInit & Pick<ServerFetchOptions, "next"> = {
             method: options.method || "GET",
             headers,
             body,
-            cache: options.cache || "no-store", // Default: no cache
-            next: options.next,
-        });
+        };
+
+        if (options.cache) {
+            fetchOptions.cache = options.cache;
+        } else if (!options.next) {
+            fetchOptions.cache = "no-store";
+        }
+
+        if (options.next) {
+            fetchOptions.next = options.next;
+        }
+
+        const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
@@ -159,7 +179,7 @@ export async function serverFetch<T = unknown>(
             console.log(`[Server Fetch Success] ${response.status} ${path}`);
         }
 
-        return extractData<T>(data);
+        return data as ApiResponse<T> | T;
     } catch (error) {
         if (process.env.NODE_ENV === "development") {
             console.error(`[Server Fetch Error] ${path}:`, error);
@@ -175,6 +195,11 @@ export const serverGet = <T = unknown>(
     path: string,
     options?: Omit<ServerFetchOptions, "method" | "body">
 ) => serverFetch<T>(path, { ...options, method: "GET" });
+
+export const serverGetResponse = <T = unknown>(
+    path: string,
+    options?: Omit<ServerFetchOptions, "method" | "body">
+) => serverFetchResponse<T>(path, { ...options, method: "GET" });
 
 export const serverPost = <T = unknown>(
     path: string,

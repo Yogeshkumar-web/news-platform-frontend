@@ -1,9 +1,7 @@
 "use server";
 
-import { env } from "@/lib/env";
-
-const API_URL =
-    env.NODE_ENV === "production" ? env.API_BASE_URL : "http://localhost:5000";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { serverPost } from "@/lib/api/server";
 
 type ResendResult = {
     success: boolean;
@@ -14,26 +12,7 @@ export async function resendVerificationAction(
     email: string,
 ): Promise<ResendResult> {
     try {
-        const response = await fetch(
-            `${API_URL}/api/auth/resend-verification`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
-            },
-        );
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            return {
-                success: false,
-                message:
-                    result.message || "Failed to resend verification email.",
-            };
-        }
+        await serverPost(API_ENDPOINTS.auth.resendVerification, { email });
 
         return {
             success: true,
@@ -43,7 +22,10 @@ export async function resendVerificationAction(
         console.error("[Resend Verification Action] Error:", error);
         return {
             success: false,
-            message: "An unexpected error occurred.",
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An unexpected error occurred.",
         };
     }
 }

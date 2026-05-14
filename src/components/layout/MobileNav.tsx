@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { User, Category } from "@/types";
+import { Menu, X } from "lucide-react";
+import { LinkButton } from "@/components/ui/Button";
 
 interface MobileNavProps {
     user: User | null;
@@ -24,23 +26,20 @@ export function MobileNav({ user, categories }: MobileNavProps) {
             {/* Hamburger Button */}
             <button
                 onClick={toggleMenu}
-                className="p-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-950 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-expanded={isOpen}
                 aria-label="Toggle menu"
             >
                 {isOpen ? (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <X className="h-5 w-5" aria-hidden="true" />
                 ) : (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                    <Menu className="h-5 w-5" aria-hidden="true" />
                 )}
             </button>
 
             {/* Mobile Menu Overlay */}
             {isOpen && (
-                <div className="absolute top-16 left-0 w-full bg-white border-b shadow-lg z-50 animate-in slide-in-from-top-5 duration-200 max-h-[80vh] overflow-y-auto">
+                <div className="absolute left-0 top-full w-full bg-white border-b shadow-lg z-50 animate-in slide-in-from-top-5 duration-200 max-h-[80vh] overflow-y-auto">
                     <div className="px-4 py-4 space-y-3">
                         <div className="font-semibold text-gray-900 px-4 pb-2 border-b">
                             Menu
@@ -78,7 +77,7 @@ export function MobileNav({ user, categories }: MobileNavProps) {
 
                         {categories.map((category) => (
                             <Link
-                                key={category.id}
+                                key={category.key}
                                 href={`/category/${category.key}`}
                                 onClick={closeMenu}
                                 className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
@@ -93,20 +92,21 @@ export function MobileNav({ user, categories }: MobileNavProps) {
 
                         {!user && (
                             <div className="pt-4 border-t grid grid-cols-2 gap-4 mt-4">
-                                <Link
+                                <LinkButton
                                     href="/login"
                                     onClick={closeMenu}
-                                    className="flex justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50"
+                                    variant="outline"
+                                    className="rounded-lg"
                                 >
                                     Login
-                                </Link>
-                                <Link
+                                </LinkButton>
+                                <LinkButton
                                     href="/register"
                                     onClick={closeMenu}
-                                    className="flex justify-center px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700"
+                                    className="rounded-lg"
                                 >
                                     Sign Up
-                                </Link>
+                                </LinkButton>
                             </div>
                         )}
                     </div>

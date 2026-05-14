@@ -26,11 +26,14 @@ const adsenseId = env.NEXT_PUBLIC_ADSENSE_ID;
 export const metadata: Metadata = {
     title: {
         template: "%s | Meaupost18",
-        default: "Meaupost18 - Stay Updated with Latest News",
+        default: "Meaupost18 - Latest News, Analysis, and Opinions",
     },
-    description: "Stay updated with latest news, articles, and insights",
-    keywords: ["news", "articles", "blog", "technology", "latest updates"],
+    description:
+        "Read the latest news, analysis, opinions, and category-based coverage from Meaupost18.",
+    keywords: ["news", "analysis", "opinions", "politics", "culture", "health"],
     authors: [{ name: "Meaupost18" }],
+    creator: "Meaupost18",
+    publisher: "Meaupost18",
     metadataBase: new URL(env.FRONTEND_URL || "https://meaupost18.com"),
     alternates: {
         canonical: "/",
@@ -40,10 +43,25 @@ export const metadata: Metadata = {
         locale: "en_US",
         url: "/",
         siteName: "Meaupost18",
+        title: "Meaupost18 - Latest News, Analysis, and Opinions",
+        description:
+            "Read the latest news, analysis, opinions, and category-based coverage from Meaupost18.",
+        images: [
+            {
+                url: "/icon-512x512.png",
+                width: 512,
+                height: 512,
+                alt: "Meaupost18",
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
         site: "@meaupost18",
+        title: "Meaupost18 - Latest News, Analysis, and Opinions",
+        description:
+            "Read the latest news, analysis, opinions, and category-based coverage from Meaupost18.",
+        images: ["/icon-512x512.png"],
     },
 };
 

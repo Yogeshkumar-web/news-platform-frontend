@@ -2,10 +2,7 @@
 
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { env } from "@/lib/env";
-
-const API_URL = env.API_BASE_URL || "http://localhost:5000";
+import { serverDelete } from "@/lib/api/server";
 
 type ActionResult = {
     success: boolean;
@@ -24,26 +21,7 @@ export async function deleteCommentAction(
         // Check authentication
         await requireAuth();
 
-        // Get token
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
-
-        // Call backend
-        const response = await fetch(`${API_URL}/api/comments/${commentId}`, {
-            method: "DELETE",
-            headers: {
-                Cookie: `token=${token}`,
-            },
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            return {
-                success: false,
-                message: result.message || "Failed to delete comment",
-            };
-        }
+        await serverDelete(`/api/comments/${commentId}`);
 
         // Revalidate article page
         if (articleId) {

@@ -1,9 +1,7 @@
 "use server";
 
-import { env } from "@/lib/env";
-
-const API_URL =
-    env.NODE_ENV === "production" ? env.API_BASE_URL : "http://localhost:5000";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { serverPost } from "@/lib/api/server";
 
 type VerificationResult = {
     success: boolean;
@@ -14,24 +12,7 @@ export async function verifyEmailAction(
     token: string,
 ): Promise<VerificationResult> {
     try {
-        const response = await fetch(`${API_URL}/api/auth/verify-email`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token }),
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            return {
-                success: false,
-                message:
-                    result.message ||
-                    "Verification failed. Invalid or expired token.",
-            };
-        }
+        await serverPost(API_ENDPOINTS.auth.verifyEmail, { token });
 
         return {
             success: true,
@@ -41,7 +22,10 @@ export async function verifyEmailAction(
         console.error("[Verify Email Action] Error:", error);
         return {
             success: false,
-            message: "An unexpected error occurred during verification.",
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An unexpected error occurred during verification.",
         };
     }
 }

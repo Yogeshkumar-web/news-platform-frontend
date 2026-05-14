@@ -1,4 +1,5 @@
 import { serverGet } from "@/lib";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 import type { User } from "@/types";
 
 // import { env } from "@/lib/env";
@@ -20,7 +21,7 @@ export async function getSession(): Promise<User | null> {
             return null;
         }
 
-        const user = await serverGet<{ user: User }>("/api/auth/me");
+        const user = await serverGet<{ user: User }>(API_ENDPOINTS.auth.me);
         return user.user;
     } catch (error) {
         // Token invalid/expired or other error

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib";
 import { env } from "@/lib/env";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 
 interface GoogleLoginButtonProps {
     redirectTo?: string;
@@ -43,13 +44,11 @@ export function GoogleLoginButton({
         }
 
         // Build OAuth URL with redirect parameter
-        const oauthUrl = new URL("/api/auth/google", backendUrl);
+        const oauthUrl = new URL(API_ENDPOINTS.auth.google, backendUrl);
 
         if (redirectTo && redirectTo !== "/") {
             oauthUrl.searchParams.set("redirect", redirectTo);
         }
-
-        console.log("Redirecting to OAuth URL:", oauthUrl.toString());
 
         // Redirect to backend OAuth endpoint
         window.location.href = oauthUrl.toString();

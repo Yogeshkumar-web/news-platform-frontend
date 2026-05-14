@@ -3,13 +3,14 @@
 import { requireAdmin } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
 import { serverPatch, serverPost, serverPut, serverDelete } from "@/lib/api/server";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 
 import { ActionState, AdminCategory } from "@/types";
 
 // User Actions
 export async function updateUserRoleAction(userId: string, role: string): Promise<ActionState> {
     await requireAdmin();
-    const result = await serverPatch<ActionState>(`/api/users/${userId}/role`, { role });
+    const result = await serverPut<ActionState>(API_ENDPOINTS.users.role(userId), { role });
     revalidatePath("/admin/users");
     return result;
 }

@@ -1,5 +1,6 @@
 import { ApiResponse, OAuthError, User } from "@/types";
 import { axiosInstance, extractData } from "./client";
+import { API_ENDPOINTS } from "./endpoints";
 
 /**
  * Initiate Google OAuth login
@@ -15,7 +16,7 @@ export function initiateGoogleLogin(redirectTo?: string) {
         return;
     }
 
-    const url = new URL("/api/auth/google", backendUrl);
+    const url = new URL(API_ENDPOINTS.auth.google, backendUrl);
     
     if (redirectTo) {
         url.searchParams.set("redirect", redirectTo);
@@ -31,7 +32,9 @@ export function initiateGoogleLogin(redirectTo?: string) {
  * This is useful if we need to fetch the user immediately after redirect.
  */
 export async function fetchCurrentUser(): Promise<User> {
-    const response = await axiosInstance.get<ApiResponse<{ user: User }>>("/auth/me");
+    const response = await axiosInstance.get<ApiResponse<{ user: User }>>(
+        API_ENDPOINTS.auth.me
+    );
     return extractData(response.data).user;
 }
 
@@ -40,7 +43,7 @@ export async function fetchCurrentUser(): Promise<User> {
  * Clears the HttpOnly cookie
  */
 export async function logoutUser(): Promise<void> {
-    await axiosInstance.post("/auth/logout");
+    await axiosInstance.post(API_ENDPOINTS.auth.logout);
     window.location.href = "/login";
 }
 

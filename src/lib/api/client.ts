@@ -148,7 +148,7 @@ export function extractData<T>(response: ApiResponse<T> | T): T {
             throw new Error(apiResponse.message || "API request failed");
         }
 
-        if (apiResponse.data === undefined || apiResponse.data === null) {
+        if (apiResponse.data === undefined) {
             // Server side error: success: true but data: null
             // Is logic ko server side data structure ke hisaab se adjust kar sakte hain.
             throw new Error("API returned success but no data");

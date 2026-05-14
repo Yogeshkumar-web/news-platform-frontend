@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { serverPost } from "@/lib/api/server";
+import { authCookieOptions } from "@/lib/auth/cookies";
 
 /**
  * Frontend OAuth Callback Handler
@@ -11,14 +14,13 @@ import { cookies } from "next/headers";
  * 1. User clicks "Login with Google"
  * 2. Browser redirects to Backend (`/api/auth/google`)
  * 3. Backend talks to Google, authenticates user, generates a JWT token.
- * 4. Backend redirects back to THIS route: 
- *    `http://localhost:3000/api/auth/callback?token=YOUR_JWT_TOKEN`
- * 5. This Next.js route catches the token from the URL, sets the HTTP-only cookie securely,
+ * 4. Backend redirects back to THIS route with a short-lived one-time code.
+ * 5. This Next.js route exchanges the code server-side, sets the HTTP-only cookie securely,
  *    and redirects the user to the destination (or dashboard).
  */
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
-    const token = searchParams.get("token");
+    const code = searchParams.get("code");
     const redirectTo = searchParams.get("redirect") || "/";
     const error = searchParams.get("error");
 
@@ -29,24 +31,30 @@ export async function GET(request: NextRequest) {
         );
     }
 
-    if (!token) {
-        console.error("[OAuth Callback] Missing token in URL");
+    if (!code) {
+        console.error("[OAuth Callback] Missing OAuth code in URL");
         return NextResponse.redirect(
             new URL("/login?error=auth_failed", request.url)
         );
     }
 
-    // Set token in Next.js Secure HttpOnly Cookie
-    const cookieStore = await cookies();
-    cookieStore.set({
-        name: "token",
-        value: token,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60, // 7 days (ensure this matches backend token expiry)
-    });
+    try {
+        const result = await serverPost<{ token: string }>(
+            API_ENDPOINTS.auth.oauthExchange,
+            { code }
+        );
+
+        const cookieStore = await cookies();
+        cookieStore.set({
+            ...authCookieOptions(),
+            value: result.token,
+        });
+    } catch (exchangeError) {
+        console.error("[OAuth Callback] Code exchange failed", exchangeError);
+        return NextResponse.redirect(
+            new URL("/login?error=auth_failed", request.url)
+        );
+    }
 
     // Protect against open redirect attacks
     const safeRedirectPath = redirectTo.startsWith("/") ? redirectTo : "/";

@@ -42,20 +42,17 @@ export async function createCommentAction(
         }
 
         // Call backend using serverPost (handles URL, headers, and auth automatically)
-        console.log("[Create Comment] Calling serverPost /api/comments/create");
-        const result = await serverPost<{ success: boolean; data: any; message: string }>(
+        const result = await serverPost<{ id: string }>(
             "/api/comments/create",
             validation.data
         );
-
-        console.log("[Create Comment] Response:", result);
 
         // Revalidate article page to show new comment
         revalidatePath(`/articles/${data.articleId}`);
 
         return {
             success: true,
-            commentId: result.data?.id,
+            commentId: result.id,
             message: "Comment posted successfully",
         };
     } catch (error: any) {

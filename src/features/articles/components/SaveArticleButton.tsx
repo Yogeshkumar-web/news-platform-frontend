@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { axiosInstance } from "@/lib/api/client";
 
 interface SaveArticleButtonProps {
     articleId: string;
@@ -20,25 +21,14 @@ export function SaveArticleButton({
     const handleToggleSave = () => {
         startTransition(async () => {
             try {
-                const response = await fetch(
-                    `/api/articles/${articleId}/toggle-save`,
-                    {
-                        method: "POST",
-                        credentials: "include",
-                    }
+                await axiosInstance.post(`/api/articles/${articleId}/toggle-save`);
+                setIsSaved(!isSaved);
+                toast.success(
+                    isSaved
+                        ? "Article removed from saved"
+                        : "Article saved successfully"
                 );
-
-                if (response.ok) {
-                    setIsSaved(!isSaved);
-                    toast.success(
-                        isSaved
-                            ? "Article removed from saved"
-                            : "Article saved successfully"
-                    );
-                    router.refresh();
-                } else {
-                    toast.error("Failed to update saved status");
-                }
+                router.refresh();
             } catch (error) {
                 toast.error("An error occurred");
             }

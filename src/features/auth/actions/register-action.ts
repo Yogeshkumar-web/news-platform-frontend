@@ -5,10 +5,8 @@ import {
     registerSchema,
     type RegisterFormData,
 } from "@/lib/validation/schemas/auth-schema";
-import { env } from "@/lib/env";
-
-const API_URL =
-    env.NODE_ENV === "production" ? env.API_BASE_URL : "http://localhost:5000";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { serverPost } from "@/lib/api/server";
 
 type ActionResult = {
     success: boolean;
@@ -43,38 +41,11 @@ export async function registerAction(
             };
         }
 
-        // Call backend (exclude confirmPassword)
-        const response = await fetch(`${API_URL}/api/auth/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: validation.data.name,
-                email: validation.data.email,
-                password: validation.data.password,
-            }),
+        await serverPost(API_ENDPOINTS.auth.register, {
+            name: validation.data.name,
+            email: validation.data.email,
+            password: validation.data.password,
         });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            let errorMessage = result.message || "Registration failed";
-
-            // Sanitize technical errors
-            if (
-                errorMessage.includes("db.user.findUnique") ||
-                errorMessage.includes("invocation")
-            ) {
-                errorMessage =
-                    "This email is already registered or unavailable.";
-            }
-
-            return {
-                success: false,
-                message: errorMessage,
-            };
-        }
 
         return {
             success: true,
@@ -84,7 +55,10 @@ export async function registerAction(
         console.error("[Register Action] Error:", error);
         return {
             success: false,
-            message: "An unexpected error occurred",
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An unexpected error occurred",
         };
     }
 }

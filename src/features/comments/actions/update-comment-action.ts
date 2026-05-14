@@ -3,10 +3,7 @@
 import { updateCommentSchema } from "@/lib";
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { env } from "@/lib/env";
-
-const API_URL = env.API_BASE_URL || "http://localhost:5000";
+import { serverPut } from "@/lib/api/server";
 
 type ActionResult = {
     success: boolean;
@@ -26,10 +23,6 @@ export async function updateCommentAction(
         // Check authentication
         await requireAuth();
 
-        // Get token
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
-
         // Extract data
         const data = {
             content: formData.get("content") as string,
@@ -45,24 +38,7 @@ export async function updateCommentAction(
             };
         }
 
-        // Call backend
-        const response = await fetch(`${API_URL}/api/comments/${commentId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Cookie: `token=${token}`,
-            },
-            body: JSON.stringify(validation.data),
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            return {
-                success: false,
-                message: result.message || "Failed to update comment",
-            };
-        }
+        await serverPut(`/api/comments/${commentId}`, validation.data);
 
         // Revalidate to show updated comment
         const articleId = formData.get("articleId") as string;

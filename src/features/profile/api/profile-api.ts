@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 import { ApiResponse, User } from "@/types";
 
 /**
@@ -8,11 +9,11 @@ import { ApiResponse, User } from "@/types";
 export const updateProfile = async (
     data: Partial<Pick<User, "name" | "bio" | "profileImage">>
 ): Promise<User> => {
-    const response = await axiosInstance.patch<ApiResponse<User>>(
-        "/users/me",
+    const response = await axiosInstance.put<ApiResponse<{ user: User }>>(
+        API_ENDPOINTS.auth.profile,
         data
     );
-    return response.data.data!;
+    return response.data.data!.user;
 };
 
 /**
@@ -25,7 +26,7 @@ export const uploadAvatar = async (file: File): Promise<string> => {
     formData.append("avatar", file);
 
     const response = await axiosInstance.post<ApiResponse<{ url: string }>>(
-        "/auth/avatar",
+        API_ENDPOINTS.auth.avatar,
         formData,
         {
             headers: {
@@ -44,5 +45,5 @@ export const changePassword = async (data: {
     oldPassword: string;
     newPassword: string;
 }): Promise<void> => {
-    await axiosInstance.patch("/auth/change-password", data);
+    await axiosInstance.patch(API_ENDPOINTS.auth.passwordChange, data);
 };

@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib/api/client";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 import type { User, ApiResponse } from "@/types";
 
 /**
@@ -8,7 +9,7 @@ import type { User, ApiResponse } from "@/types";
 
 export async function getCurrentUser(): Promise<User> {
     const response = await axiosInstance.get<ApiResponse<{ user: User }>>(
-        "/api/auth/me"
+        API_ENDPOINTS.auth.me
     );
 
     if (!response.data.success || !response.data.data?.user) {
@@ -19,5 +20,5 @@ export async function getCurrentUser(): Promise<User> {
 }
 
 export async function logoutUser(): Promise<void> {
-    await axiosInstance.post("/api/auth/logout");
+    await axiosInstance.post(API_ENDPOINTS.auth.logout);
 }

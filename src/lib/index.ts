@@ -9,7 +9,9 @@ export type { CustomAxiosError } from "./api/client";
 
 export {
     serverFetch,
+    serverFetchResponse,
     serverGet,
+    serverGetResponse,
     serverPost,
     serverPut,
     serverPatch,

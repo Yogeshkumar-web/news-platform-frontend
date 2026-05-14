@@ -6,10 +6,9 @@ import {
     loginSchema,
     type LoginFormData,
 } from "@/lib/validation/schemas/auth-schema";
-import { env } from "@/lib/env";
-
-const API_URL =
-    env.NODE_ENV === "production" ? env.API_BASE_URL : "http://localhost:5000";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { serverPost } from "@/lib/api/server";
+import { authCookieOptions } from "@/lib/auth/cookies";
 
 type ActionResult = {
     success: boolean;
@@ -38,46 +37,19 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
             };
         }
 
-        // Call backend API
-        const response = await fetch(`${API_URL}/api/auth/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
+        const result = await serverPost<{ token: string }>(
+            API_ENDPOINTS.auth.login,
+            {
                 email: validation.data.email,
                 password: validation.data.password,
-            }),
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            return {
-                success: false,
-                message: result.message || "Login failed",
-            };
-        }
-
-        // Extract cookie from response
-        const setCookieHeader = response.headers.get("set-cookie");
-        if (setCookieHeader) {
-            // Parse and set cookie
-            const cookieStore = await cookies();
-            const tokenMatch = setCookieHeader.match(/token=([^;]+)/);
-
-            if (tokenMatch) {
-                cookieStore.set({
-                    name: "token",
-                    value: tokenMatch[1],
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === "production",
-                    sameSite: "lax",
-                    path: "/",
-                    maxAge: 7 * 24 * 60 * 60, // 7 days
-                });
             }
-        }
+        );
+
+        const cookieStore = await cookies();
+        cookieStore.set({
+            ...authCookieOptions(),
+            value: result.token,
+        });
 
         return {
             success: true,
@@ -87,7 +59,10 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
         console.error("[Login Action] Error:", error);
         return {
             success: false,
-            message: "An unexpected error occurred",
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An unexpected error occurred",
         };
     }
 }

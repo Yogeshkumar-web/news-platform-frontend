@@ -1,17 +1,29 @@
 import Link from "next/link";
-import React from "react";
+import type { Category } from "@/types";
+import { CategoryLinks } from "./CategoryLinks";
+import { Container } from "@/components/ui/Container";
 
-export function Footer() {
+interface FooterProps {
+    categories?: Category[];
+}
+
+export function Footer({ categories = [] }: FooterProps) {
     return (
-        <footer className='bg-gray-900 text-white py-12'>
-            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
+        <footer className='bg-gray-950 text-white py-12'>
+            <Container>
+                <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
                     <div>
-                        <h3 className='text-2xl font-bold mb-4'>Meaupost18</h3>
-                        <p className='text-gray-400'>
-                            Your trusted source for news and insights
+                        <h3 className='text-2xl font-bold mb-3'>
+                            Meaupost18
+                        </h3>
+                        <p className='text-sm italic text-gray-400'>
+                            Democracy Dies in Darkness
+                        </p>
+                        <p className='mt-4 text-gray-400'>
+                            Your trusted source for news and insights.
                         </p>
                     </div>
+
                     <div>
                         <h4 className='font-semibold mb-4'>Quick Links</h4>
                         <ul className='space-y-2 text-gray-400'>
@@ -41,6 +53,26 @@ export function Footer() {
                             </li>
                         </ul>
                     </div>
+
+                    <div>
+                        <h4 className='font-semibold mb-4'>Categories</h4>
+                        {categories.length > 0 ? (
+                            <CategoryLinks
+                                categories={categories}
+                                limit={6}
+                                variant='footer'
+                                className='flex flex-col gap-2'
+                            />
+                        ) : (
+                            <Link
+                                href='/categories'
+                                className='text-gray-400 hover:text-white'
+                            >
+                                Browse Categories
+                            </Link>
+                        )}
+                    </div>
+
                     <div>
                         <h4 className='font-semibold mb-4'>Legal</h4>
                         <ul className='space-y-2 text-gray-400'>
@@ -62,17 +94,12 @@ export function Footer() {
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 className='font-semibold mb-4'>Connect</h4>
-                        <p className='text-gray-400'>
-                            Stay updated with our latest stories
-                        </p>
-                    </div>
                 </div>
+
                 <div className='border-t border-gray-800 mt-8 pt-8 text-center text-gray-400'>
                     <p>&copy; 2024 Meaupost18. All rights reserved.</p>
                 </div>
-            </div>
+            </Container>
         </footer>
     );
 }

@@ -1,5 +1,6 @@
-import { serverGet } from "@/lib/api/server";
-import { AdminCategory, AdminUser, ApiResponse, SystemStats } from "@/types";
+import { serverGet, serverGetResponse } from "@/lib/api/server";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { AdminCategory, AdminUser, SystemStats } from "@/types";
 
 // System Stats
 export const getSystemStats = async (): Promise<SystemStats> => {
@@ -14,8 +15,11 @@ export const getAdminUsers = async (page = 1, pageSize = 10, search = "", role =
         ...(search && { search }),
         ...(role && { role })
     });
-    // serverGet already extracts data from ApiResponse
-    return serverGet<{ users: AdminUser[], pagination: any }>(`/api/users?${queryParams.toString()}`);
+    const response = await serverGetResponse<AdminUser[]>(`/api/users?${queryParams.toString()}`);
+    if (typeof response === "object" && response !== null && "success" in response) {
+        return { users: response.data || [], pagination: response.pagination };
+    }
+    return { users: [], pagination: undefined };
 };
 
 // Category Management
@@ -37,7 +41,11 @@ export const getAdminArticles = async (page = 1, limit = 10, status = ""): Promi
         limit: limit.toString(),
         status
     });
-    return serverGet<{ articles: any[], pagination: any }>(`/api/articles/admin/all?${queryParams.toString()}`);
+    const response = await serverGetResponse<any[]>(`/api/articles/admin/all?${queryParams.toString()}`);
+    if (typeof response === "object" && response !== null && "success" in response) {
+        return { articles: response.data || [], pagination: response.pagination };
+    }
+    return { articles: [], pagination: undefined };
 };
 
 export const getAdminComments = async (page = 1, limit = 10, status = "PENDING"): Promise<{ comments: any[], pagination: any }> => {
@@ -46,6 +54,9 @@ export const getAdminComments = async (page = 1, limit = 10, status = "PENDING")
         limit: limit.toString(),
         status
     });
-    // Assuming this endpoint exists based on pattern
-    return serverGet<{ comments: any[], pagination: any }>(`/api/comments/admin/all?${queryParams.toString()}`);
+    const response = await serverGetResponse<any[]>(`${API_ENDPOINTS.comments.adminAll}?${queryParams.toString()}`);
+    if (typeof response === "object" && response !== null && "success" in response) {
+        return { comments: response.data || [], pagination: response.pagination };
+    }
+    return { comments: [], pagination: undefined };
 };
