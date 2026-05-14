@@ -2,6 +2,7 @@ import { getSession } from "@/lib/auth/session";
 import type { Category } from "@/types";
 import { HeaderClient } from "./HeaderClient";
 import { getPublicCategories } from "@/features/categories/queries";
+import { PublicMasthead } from "./PublicMasthead";
 
 interface HeaderProps {
     categories?: Category[];
@@ -21,5 +22,10 @@ export async function Header({ categories: providedCategories }: HeaderProps = {
         getSession(),
     ]); 
 
-    return <HeaderClient categories={categories} user={user} />;
+    return (
+        <>
+            <HeaderClient categories={categories} user={user} />
+            <PublicMasthead />
+        </>
+    );
 }

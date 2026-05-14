@@ -6,6 +6,8 @@ import { AuthStatus } from "./AuthStatus";
 import { MobileNav } from "./MobileNav";
 import { CategoryLinks } from "./CategoryLinks";
 import { Container } from "@/components/ui/Container";
+import { cn } from "@/lib/utils";
+import { useScrollHeader } from "./useScrollHeader";
 
 interface HeaderClientProps {
     categories: Category[];
@@ -13,8 +15,15 @@ interface HeaderClientProps {
 }
 
 export function HeaderClient({ categories, user }: HeaderClientProps) {
+    const { isHidden } = useScrollHeader();
+
     return (
-        <header className='relative z-40 bg-white border-b border-gray-200'>
+        <header
+            className={cn(
+                "sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur transition-transform duration-300 ease-out supports-[backdrop-filter]:bg-white/90",
+                isHidden ? "-translate-y-full" : "translate-y-0"
+            )}
+        >
             <Container className='px-3 sm:px-6 lg:px-8'>
                 <div className='flex min-h-14 items-center justify-between gap-3 py-2 md:min-h-16 md:py-0'>
                     <Link

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Category, User } from "@/types";
 import { AuthStatus } from "./AuthStatus";
@@ -8,6 +7,8 @@ import { CategoryLinks } from "./CategoryLinks";
 import { MobileNav } from "./MobileNav";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
+import { useScrollHeader } from "./useScrollHeader";
+import { PublicMasthead } from "./PublicMasthead";
 
 interface HomeStickyHeaderProps {
     categories: Category[];
@@ -15,21 +16,16 @@ interface HomeStickyHeaderProps {
 }
 
 export function HomeStickyHeader({ categories, user }: HomeStickyHeaderProps) {
-    const [isCompact, setIsCompact] = useState(false);
-
-    useEffect(() => {
-        const updateHeader = () => {
-            setIsCompact(window.scrollY > 8);
-        };
-
-        updateHeader();
-        window.addEventListener("scroll", updateHeader, { passive: true });
-        return () => window.removeEventListener("scroll", updateHeader);
-    }, []);
+    const { isHidden, isCompact } = useScrollHeader();
 
     return (
-        <div className='sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90'>
-            <header className='border-b border-gray-200'>
+        <>
+            <header
+                className={cn(
+                    "sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur transition-transform duration-300 ease-out supports-[backdrop-filter]:bg-white/90",
+                    isHidden ? "-translate-y-full" : "translate-y-0"
+                )}
+            >
                 <Container className='px-3 sm:px-6 lg:px-8'>
                     <div
                         className={cn(
@@ -85,31 +81,7 @@ export function HomeStickyHeader({ categories, user }: HomeStickyHeaderProps) {
                 </Container>
             </header>
 
-            <div
-                className={cn(
-                    "text-center transition-all duration-200",
-                    isCompact ? "py-2" : "py-5 md:py-6"
-                )}
-            >
-                <div className='mx-auto max-w-7xl px-4'>
-                    <h1
-                        className={cn(
-                            "font-serif tracking-tight text-gray-900 transition-all duration-200",
-                            isCompact ? "text-2xl md:text-3xl" : "text-4xl md:text-6xl"
-                        )}
-                    >
-                        Meaupost18
-                    </h1>
-                    <p
-                        className={cn(
-                            "font-serif text-sm italic text-gray-500 transition-all duration-200",
-                            isCompact ? "mt-0 text-xs" : "mt-2"
-                        )}
-                    >
-                        Democracy Dies in Darkness
-                    </p>
-                </div>
-            </div>
-        </div>
+            <PublicMasthead />
+        </>
     );
 }
