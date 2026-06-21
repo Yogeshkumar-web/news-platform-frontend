@@ -4,6 +4,7 @@ import { updateCommentSchema } from "@/lib";
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
 import { serverPut } from "@/lib/api/server";
+import { getErrorMessage } from "@/lib/utils/error";
 
 type ActionResult = {
     success: boolean;
@@ -50,11 +51,11 @@ export async function updateCommentAction(
             success: true,
             message: "Comment updated successfully",
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[Update Comment Action] Error:", error);
         return {
             success: false,
-            message: error.message || "An unexpected error occurred",
+            message: getErrorMessage(error),
         };
     }
 }

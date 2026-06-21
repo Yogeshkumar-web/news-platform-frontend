@@ -2,9 +2,9 @@
 
 import { requireAuth } from "@/lib/auth/session";
 import { cookies } from "next/headers";
-import { env } from "@/lib/env";
+import { getServerApiBaseUrl } from "@/lib/api/base-url";
 
-const API_URL = env.API_BASE_URL || "http://localhost:5000";
+const API_URL = getServerApiBaseUrl();
 
 type ActionState = {
     success: boolean;

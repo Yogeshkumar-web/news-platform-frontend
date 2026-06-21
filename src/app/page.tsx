@@ -1,5 +1,5 @@
 import { serverGet } from "@/lib/api/server";
-import type { Article, Category } from "@/types";
+import type { Article } from "@/types";
 import { Footer } from "@/components/layout/Footer";
 import { AdUnit } from "@/components/ads/AdUnit";
 import { env } from "@/lib/env";
@@ -32,7 +32,7 @@ export default async function HomePage() {
     const adsenseId = env.NEXT_PUBLIC_ADSENSE_ID;
 
     return (
-        <div className='min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100'>
+        <div className='min-h-screen bg-white text-gray-900 font-sans selection:bg-[#fde2e2]'>
             <HomeStickyHeader categories={categories} user={user} />
 
             <main className='max-w-7xl mx-auto px-4 py-8 md:py-12'>
@@ -86,7 +86,7 @@ export default async function HomePage() {
 
                     <aside className='lg:col-span-3 lg:border-l lg:border-gray-200 lg:pl-8'>
                         <div className='lg:sticky lg:top-6'>
-                            <h3 className='text-blue-600 font-bold uppercase text-sm tracking-wider mb-6 flex items-center gap-2'>
+                            <h3 className='text-[#d95353] font-bold uppercase text-sm tracking-wider mb-6 flex items-center gap-2'>
                                 <span>Opinions</span>
                                 <span className='text-gray-400 text-xs' aria-hidden='true'>
                                     &rsaquo;

@@ -185,7 +185,7 @@ export const ImageResizer: React.FC<ImageResizerProps> = ({
                 src={src}
                 alt={altText}
                 className={`max-w-full h-auto rounded-lg transition-all ${
-                    isSelected ? "ring-2 ring-blue-500" : ""
+                    isSelected ? "ring-2 ring-[#fff5f5]0" : ""
                 }`}
                 style={{
                     width: dimensions.width || "100%",

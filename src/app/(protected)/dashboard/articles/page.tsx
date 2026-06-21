@@ -2,13 +2,14 @@ import { requireWriter } from "@/lib/auth/session";
 import { serverGet } from "@/lib/api/server";
 import type { Article } from "@/types";
 import Link from "next/link";
+import { DashboardArticleActions } from "@/features/articles/components/DashboardArticleActions";
 
 export const metadata = {
     title: "My Articles - Dashboard",
 };
 
 export default async function ArticlesPage() {
-    const user = await requireWriter();
+    await requireWriter();
 
     // Fetch all user's articles
     const articles = await serverGet<Article[]>(
@@ -35,7 +36,7 @@ export default async function ArticlesPage() {
                 </div>
                 <Link
                     href="/dashboard/articles/create"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors"
+                    className="px-4 py-2 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f] font-medium transition-colors"
                 >
                     Create New Article
                 </Link>
@@ -101,7 +102,7 @@ export default async function ArticlesPage() {
                         <div className="mt-6">
                             <Link
                                 href="/dashboard/articles/create"
-                                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors"
+                                className="inline-flex items-center px-4 py-2 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f] font-medium transition-colors"
                             >
                                 Create Article
                             </Link>
@@ -119,7 +120,7 @@ export default async function ArticlesPage() {
                                         <div className="flex items-center gap-3">
                                             <Link
                                                 href={`/articles/${article.slug}`}
-                                                className="font-medium text-gray-900 hover:text-blue-600"
+                                                className="font-medium text-gray-900 hover:text-[#d95353]"
                                             >
                                                 {article.title}
                                             </Link>
@@ -159,14 +160,11 @@ export default async function ArticlesPage() {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="ml-4 flex items-center gap-2">
-                                        <Link
-                                            href={`/dashboard/articles/edit/${article.id}`}
-                                            className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                        >
-                                            Edit
-                                        </Link>
-                                    </div>
+                                    <DashboardArticleActions
+                                        articleId={article.id}
+                                        slug={article.slug}
+                                        status={article.status}
+                                    />
                                 </div>
                             </div>
                         ))}

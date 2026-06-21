@@ -11,7 +11,7 @@ export default async function SavedArticlesPage({
 }: {
     searchParams: Promise<{ page?: string }>;
 }) {
-    const user = await requireAuth();
+    await requireAuth();
     const params = await searchParams;
     const page = Number(params.page) || 1;
 

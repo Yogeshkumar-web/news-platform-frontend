@@ -24,7 +24,7 @@ export function CategoryNav({ categories }: CategoryNavProps) {
 
     // Show top 8 categories
     const displayCategories = categories.slice(0, 8);
- 
+
     return (
         <nav className='border-b bg-white relative group'>
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -72,13 +72,13 @@ export function CategoryNav({ categories }: CategoryNavProps) {
                         {categories.length > 8 && (
                             <Link
                                 href='/categories'
-                                className='flex-shrink-0 px-4 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-full transition-all'
+                                className='flex-shrink-0 px-4 py-1.5 text-sm font-medium text-[#d95353] hover:text-[#b83f3f] hover:bg-[#fff5f5] rounded-full transition-all'
                             >
                                 More Categories →
                             </Link>
                         )}
                     </div>
-                    
+
                     {/* Gradient Fade for Scroll Indication (Right) */}
                     <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden" />
                 </div>

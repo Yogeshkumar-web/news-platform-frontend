@@ -62,7 +62,7 @@ export function HeroArticleCard({ article, priority = false }: ArticleCardProps)
         <article className='grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8'>
             <div className='order-2 flex flex-col justify-center md:order-1 md:col-span-5'>
                 <Link href={`/articles/${article.slug}`} className='group block'>
-                    <h2 className='mb-4 font-serif text-3xl font-bold leading-tight text-gray-950 transition-colors group-hover:text-blue-600 md:text-4xl lg:text-5xl'>
+                    <h2 className='mb-4 font-serif text-3xl font-bold leading-tight text-gray-950 transition-colors group-hover:text-[#d95353] md:text-4xl lg:text-5xl'>
                         {article.title}
                     </h2>
                 </Link>
@@ -96,7 +96,7 @@ export function SplitArticleCard({ article }: ArticleCardProps) {
         >
             <article className='col-span-7'>
                 <ArticleCategory article={article} />
-                <h3 className='mb-2 font-serif text-xl font-bold leading-snug text-gray-950 transition-colors group-hover:text-blue-600'>
+                <h3 className='mb-2 font-serif text-xl font-bold leading-snug text-gray-950 transition-colors group-hover:text-[#d95353]'>
                     {article.title}
                 </h3>
                 {article.excerpt && (
@@ -121,7 +121,7 @@ export function GridArticleCard({ article }: ArticleCardProps) {
         <Link href={`/articles/${article.slug}`} className='group block'>
             <article>
                 <ArticleImage article={article} className='mb-3 aspect-video rounded-sm' />
-                <h4 className='mb-2 font-serif text-lg font-bold leading-tight text-gray-950 transition-colors group-hover:text-blue-600'>
+                <h4 className='mb-2 font-serif text-lg font-bold leading-tight text-gray-950 transition-colors group-hover:text-[#d95353]'>
                     {article.title}
                 </h4>
                 <time className='text-xs text-gray-500' dateTime={article.createdAt}>
@@ -145,7 +145,7 @@ export function SidebarArticleCard({ article }: ArticleCardProps) {
                     <span className='mb-1 block text-xs text-gray-500'>
                         {article.author.name}
                     </span>
-                    <h4 className='font-serif text-lg font-medium leading-snug text-gray-950 transition-colors group-hover:text-blue-600'>
+                    <h4 className='font-serif text-lg font-medium leading-snug text-gray-950 transition-colors group-hover:text-[#d95353]'>
                         {article.title}
                     </h4>
                 </div>

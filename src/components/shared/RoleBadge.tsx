@@ -17,7 +17,7 @@ const roleConfig: Record<
     },
     ADMIN: {
         label: "Admin",
-        colors: "bg-blue-100 text-blue-800 border border-blue-200",
+        colors: "bg-[#fde2e2] text-[#9d3333] border border-[#efb0b0]",
     },
     WRITER: {
         label: "Writer",

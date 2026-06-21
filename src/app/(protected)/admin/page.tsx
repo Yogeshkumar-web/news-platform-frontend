@@ -65,8 +65,8 @@ export default async function AdminDashboardPage() {
                                     <span className="text-gray-600 capitalize">{status.replace('_', ' ').toLowerCase()}</span>
                                     <div className="flex items-center gap-3">
                                         <div className="w-32 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                            <div 
-                                                className="h-full bg-blue-500 rounded-full"
+                                            <div
+                                                className="h-full bg-[#fff5f5]0 rounded-full"
                                                 style={{ width: `${stats.totalArticles ? (count / stats.totalArticles) * 100 : 0}%` }}
                                             />
                                         </div>
@@ -90,7 +90,7 @@ export default async function AdminDashboardPage() {
                                     <span className="text-gray-600 capitalize">{role.toLowerCase()}</span>
                                     <div className="flex items-center gap-3">
                                         <div className="w-32 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                            <div 
+                                            <div
                                                 className="h-full bg-purple-500 rounded-full"
                                                 style={{ width: `${stats.totalUsers ? (count / stats.totalUsers) * 100 : 0}%` }}
                                             />

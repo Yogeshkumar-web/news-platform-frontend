@@ -3,11 +3,17 @@
 import { useEffect } from "react";
 import { ForbiddenAccess } from "@/components/shared/ForbiddenAccess";
 
+type ErrorWithStatus = Error & {
+    digest?: string;
+    status?: number;
+    code?: string;
+};
+
 export default function Error({
     error,
     reset,
 }: {
-    error: Error & { digest?: string };
+    error: ErrorWithStatus;
     reset: () => void;
 }) {
     useEffect(() => {
@@ -21,8 +27,8 @@ export default function Error({
     const isPermissionError =
         error.message.includes("Insufficient permissions") ||
         error.message.includes("403") ||
-        (error as any).status === 403 ||
-        (error as any).code === "INSUFFICIENT_PERMISSIONS";
+        error.status === 403 ||
+        error.code === "INSUFFICIENT_PERMISSIONS";
 
     if (isPermissionError) {
         return <ForbiddenAccess />;
@@ -41,7 +47,7 @@ export default function Error({
                     // Attempt to recover by trying to re-render the segment
                     () => reset()
                 }
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-6 py-2 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f] transition-colors"
             >
                 Try again
             </button>

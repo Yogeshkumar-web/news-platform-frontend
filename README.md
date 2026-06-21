@@ -37,7 +37,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 Abhi scrool karne par header scrool ho raha hai jo thik hai but jaise hi user scrool down kare to header dikhe, na ki pura page down hone ka wait kare. aur dusri bat ye ki jaise hi user scrool kare ye dono matlab header and tagline
-Meaupost18
-Democracy Dies in Darkness"
+The PM Post
+Public Mat. Public Awaaz.
 "
 sticky ho jaye top par aur inhi height thodi kam ho yaye. aur jaise hi user scrool down kare to ye apni normao height mein aa jaye.
+
+/home/kumarpc/projects/meaupost18

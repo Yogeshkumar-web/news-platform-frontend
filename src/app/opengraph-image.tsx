@@ -1,8 +1,9 @@
 import { ImageResponse } from "next/og";
+import { BRAND } from "@/lib/brand";
 
 export const runtime = "edge";
 
-export const alt = "Meaupost18 - Stay Updated";
+export const alt = `${BRAND.name} - ${BRAND.tagline}`;
 export const size = {
     width: 1200,
     height: 630,
@@ -15,8 +16,7 @@ export default async function Image() {
         (
             <div
                 style={{
-                    fontSize: 128,
-                    background: "linear-gradient(to bottom right, #2563eb, #7c3aed)",
+                    background: "#000000",
                     width: "100%",
                     height: "100%",
                     display: "flex",
@@ -27,8 +27,12 @@ export default async function Image() {
                     flexDirection: "column",
                 }}
             >
-                <div style={{ fontSize: 64, marginBottom: 20 }}>Meaupost18</div>
-                <div style={{ fontSize: 32, opacity: 0.8 }}>News & Insights</div>
+                <div style={{ display: "flex", fontSize: 82, marginBottom: 24 }}>
+                    <span>THE&nbsp;</span>
+                    <span style={{ color: "#ef7777" }}>PM</span>
+                    <span>&nbsp;POST</span>
+                </div>
+                <div style={{ fontSize: 30, opacity: 0.82 }}>{BRAND.tagline.toUpperCase()}</div>
             </div>
         ),
         {

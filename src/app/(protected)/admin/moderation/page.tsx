@@ -5,6 +5,17 @@ import { ModerationTabs } from "@/features/admin/components/ModerationTabs";
 import { formatDate } from "@/lib/utils/format";
 import Link from "next/link";
 
+type ModerationArticle = {
+    id: string;
+    title: string;
+    slug: string;
+    status: string;
+    createdAt: string | Date;
+    author?: {
+        name?: string | null;
+    } | null;
+};
+
 export const metadata = {
     title: "Content Moderation",
 };
@@ -23,17 +34,17 @@ export default async function ModerationPage({
     let content;
 
     if (tab === "comments") {
-        const { comments, pagination } = await getAdminComments(page, 20, status).catch(() => ({ 
-            comments: [], 
-            pagination: { page: 1, totalPages: 1 } 
+        const { comments } = await getAdminComments(page, 20, status).catch(() => ({
+            comments: [],
+            pagination: { page: 1, totalPages: 1 }
         }));
         content = <CommentsTable initialComments={comments} />;
     } else {
-        const { articles, pagination } = await getAdminArticles(page, 20, status).catch(() => ({ 
-            articles: [], 
-            pagination: { page: 1, totalPages: 1 } 
+        const { articles } = await getAdminArticles(page, 20, status).catch(() => ({
+            articles: [],
+            pagination: { page: 1, totalPages: 1 }
         }));
-        
+
         // Simple Article List for now
         content = (
             <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -51,7 +62,7 @@ export default async function ModerationPage({
                         {articles.length === 0 ? (
                             <tr><td colSpan={5} className="px-6 py-4 text-center text-gray-500">No articles found</td></tr>
                         ) : (
-                            articles.map((article: any) => (
+                            (articles as ModerationArticle[]).map((article) => (
                                 <tr key={article.id}>
                                     <td className="px-6 py-4">
                                         <div className="text-sm font-medium text-gray-900">{article.title}</div>
@@ -59,7 +70,7 @@ export default async function ModerationPage({
                                     <td className="px-6 py-4 text-sm text-gray-500">{article.author?.name}</td>
                                     <td className="px-6 py-4">
                                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                            article.status === 'PUBLISHED' ? 'bg-green-100 text-green-800' : 
+                                            article.status === 'PUBLISHED' ? 'bg-green-100 text-green-800' :
                                             article.status === 'PENDING_REVIEW' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
                                         }`}>
                                             {article.status}
@@ -67,7 +78,7 @@ export default async function ModerationPage({
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">{formatDate(article.createdAt)}</td>
                                     <td className="px-6 py-4 text-sm font-medium">
-                                        <Link href={`/articles/${article.slug}`} className="text-blue-600 hover:text-blue-900 mr-4">View</Link>
+                                        <Link href={`/articles/${article.slug}`} className="text-[#d95353] hover:text-[#7d2929] mr-4">View</Link>
                                         {/* Add Review/Approve actions later */}
                                     </td>
                                 </tr>

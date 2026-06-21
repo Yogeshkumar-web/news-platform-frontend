@@ -3,6 +3,7 @@
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
 import { serverPost } from "@/lib/api/server";
+import { getErrorMessage } from "@/lib/utils/error";
 
 type ActionResult = {
     success: boolean;
@@ -35,13 +36,13 @@ export async function toggleLikeAction(
             isLiked: result.isLiked,
             likeCount: result.likeCount,
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[Toggle Like Action] Error:", error);
         return {
             success: false,
             isLiked: false,
             likeCount: 0,
-            message: error.message || "An unexpected error occurred",
+            message: getErrorMessage(error),
         };
     }
 }

@@ -1,22 +1,23 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import type { Metadata } from "next";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
     title: "Privacy Policy",
-    description: "Privacy Policy for Meaupost18",
+    description: `Privacy Policy for ${BRAND.name}`,
 };
 
 export default function PrivacyPage() {
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-white">
             <Header />
             <main className="max-w-4xl mx-auto px-4 py-12">
-                <div className="bg-white rounded-xl p-8 md:p-12 shadow-sm">
+                <div className="border-t-4 border-gray-950 bg-white p-4 md:p-10">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
                         Privacy Policy
                     </h1>
-                    
+
                     <div className="prose prose-lg max-w-none text-gray-600">
                         <p className="mb-6">
                             Last updated: {new Date().toLocaleDateString()}
@@ -25,8 +26,8 @@ export default function PrivacyPage() {
                         <section className="mb-8">
                             <h2 className="text-xl font-bold text-gray-900 mb-4">1. Introduction</h2>
                             <p>
-                                Welcome to Meaupost18. We respect your privacy and are committed to protecting your personal data. 
-                                This privacy policy will inform you as to how we look after your personal data when you visit our website 
+                                Welcome to {BRAND.name}. We respect your privacy and are committed to protecting your personal data.
+                                This privacy policy will inform you as to how we look after your personal data when you visit our website
                                 and tell you about your privacy rights and how the law protects you.
                             </p>
                         </section>
@@ -59,7 +60,7 @@ export default function PrivacyPage() {
                         <section className="mb-8">
                             <h2 className="text-xl font-bold text-gray-900 mb-4">4. Cookies</h2>
                             <p>
-                                You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. 
+                                You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies.
                                 If you disable or refuse cookies, please note that some parts of this website may become inaccessible or not function properly.
                             </p>
                         </section>
@@ -67,8 +68,8 @@ export default function PrivacyPage() {
                         <section className="mb-8">
                             <h2 className="text-xl font-bold text-gray-900 mb-4">5. Contact Us</h2>
                             <p>
-                                If you have any questions about this privacy policy or our privacy practices, please contact us at: 
-                                <a href="mailto:contact@meaupost18.com" className="text-blue-600 hover:underline ml-1">contact@meaupost18.com</a>
+                                If you have any questions about this privacy policy or our privacy practices, please contact us at:
+                                <a href={`mailto:${BRAND.contactEmail}`} className="ml-1 text-[#b83f3f] hover:underline">{BRAND.contactEmail}</a>
                             </p>
                         </section>
                     </div>

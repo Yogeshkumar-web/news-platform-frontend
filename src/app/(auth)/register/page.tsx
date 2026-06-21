@@ -2,7 +2,7 @@ import { RegisterForm } from "@/features/auth/components/RegisterForm";
 import { GoogleLoginButton } from "@/features/auth/components/oauth-components";
 import { getSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
-import Link from "next/link";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 export const metadata = {
     title: "Register",
@@ -17,15 +17,13 @@ export default async function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-6">
                 {/* Header */}
                 <div>
-                    <Link href="/" className="flex justify-center">
-                        <h1 className="text-4xl font-bold text-blue-600">
-                            Meaupost18
-                        </h1>
-                    </Link>
+                    <div className="flex justify-center">
+                        <BrandLogo compact showTagline />
+                    </div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                         Create your account
                     </h2>
@@ -35,7 +33,7 @@ export default async function RegisterPage() {
                 </div>
 
                 {/* Registration Card */}
-                <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 space-y-6">
+                <div className="space-y-6 border border-gray-200 bg-white px-4 py-8 shadow-sm sm:rounded-md sm:px-10">
                     {/* Google OAuth Button */}
                     <div>
                         <GoogleLoginButton

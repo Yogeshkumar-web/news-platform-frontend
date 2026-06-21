@@ -54,7 +54,7 @@ export function ChangeRoleButton({
                 } else {
                     toast.error(result.message || "Failed to change role");
                 }
-            } catch (error) {
+            } catch {
                 toast.error("An error occurred");
             }
         });
@@ -67,7 +67,7 @@ export function ChangeRoleButton({
                 disabled={isPending || !isSuperAdmin}
                 className={`px-3 py-1 text-sm rounded disabled:opacity-50 ${
                     isSuperAdmin
-                        ? "text-blue-600 hover:bg-blue-50"
+                        ? "text-[#d95353] hover:bg-[#fff5f5]"
                         : "text-gray-400 cursor-not-allowed"
                 }`}
                 title={!isSuperAdmin ? "Only SUPERADMIN can change roles" : ""}
@@ -90,7 +90,7 @@ export function ChangeRoleButton({
                                     disabled={isPending}
                                     className={`w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-100 disabled:opacity-50 ${
                                         role === currentRole
-                                            ? "bg-blue-50 text-blue-600 font-medium"
+                                            ? "bg-[#fff5f5] text-[#d95353] font-medium"
                                             : ""
                                     }`}
                                 >
@@ -148,7 +148,7 @@ export function SuspendUserButton({
                 } else {
                     toast.error(result.message || "Failed to update user");
                 }
-            } catch (error) {
+            } catch {
                 toast.error("An error occurred");
             }
         });

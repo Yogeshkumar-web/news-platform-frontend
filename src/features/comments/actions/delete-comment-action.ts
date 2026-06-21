@@ -3,6 +3,7 @@
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
 import { serverDelete } from "@/lib/api/server";
+import { getErrorMessage } from "@/lib/utils/error";
 
 type ActionResult = {
     success: boolean;
@@ -32,11 +33,11 @@ export async function deleteCommentAction(
             success: true,
             message: "Comment deleted successfully",
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[Delete Comment Action] Error:", error);
         return {
             success: false,
-            message: error.message || "An unexpected error occurred",
+            message: getErrorMessage(error),
         };
     }
 }

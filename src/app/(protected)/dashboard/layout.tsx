@@ -2,6 +2,7 @@ import { getSession } from "@/lib/auth/session";
 import { AuthStatus } from "@/components/layout/AuthStatus";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 export default async function DashboardLayout({
     children,
@@ -13,14 +14,14 @@ export default async function DashboardLayout({
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <header className="bg-white border-b sticky top-0 z-40">
+            <header className="sticky top-0 z-40 border-b border-gray-800 bg-black text-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center gap-4">
                             {/* Home Button */}
                             <Link
                                 href="/"
-                                className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                className="rounded-lg p-2 text-gray-300 transition-colors hover:bg-gray-900 hover:text-[#ef7777]"
                                 title="Go to Homepage"
                             >
                                 <svg
@@ -39,9 +40,8 @@ export default async function DashboardLayout({
                             </Link>
 
                             {/* Dashboard Title */}
-                            <h1 className="text-2xl font-bold text-gray-900">
-                                Dashboard
-                            </h1>
+                            <BrandLogo compact inverse showTagline={false} />
+                            <span className="hidden text-sm font-semibold text-gray-400 sm:inline">Dashboard</span>
                         </div>
 
                         {/* User Button */}
@@ -51,10 +51,10 @@ export default async function DashboardLayout({
                     </div>
                 </div>
             </header>
-            
+
             {/* Role-based Navigation */}
             {user && <DashboardNav userRole={user.role} />}
-            
+
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {children}
             </main>

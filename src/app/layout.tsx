@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { QueryProvider } from "@/lib";
 import { GoogleAdSense } from "@/components/ads/GoogleAdSense";
 import { env } from "@/lib/env";
+import { BRAND } from "@/lib/brand";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -25,16 +26,15 @@ const adsenseId = env.NEXT_PUBLIC_ADSENSE_ID;
 
 export const metadata: Metadata = {
     title: {
-        template: "%s | Meaupost18",
-        default: "Meaupost18 - Latest News, Analysis, and Opinions",
+        template: `%s | ${BRAND.name}`,
+        default: `${BRAND.name} - Public Mat. Public Awaaz.`,
     },
-    description:
-        "Read the latest news, analysis, opinions, and category-based coverage from Meaupost18.",
+    description: BRAND.description,
     keywords: ["news", "analysis", "opinions", "politics", "culture", "health"],
-    authors: [{ name: "Meaupost18" }],
-    creator: "Meaupost18",
-    publisher: "Meaupost18",
-    metadataBase: new URL(env.FRONTEND_URL || "https://meaupost18.com"),
+    authors: [{ name: BRAND.name }],
+    creator: BRAND.name,
+    publisher: BRAND.name,
+    metadataBase: new URL(env.FRONTEND_URL || BRAND.url),
     alternates: {
         canonical: "/",
     },
@@ -42,26 +42,23 @@ export const metadata: Metadata = {
         type: "website",
         locale: "en_US",
         url: "/",
-        siteName: "Meaupost18",
-        title: "Meaupost18 - Latest News, Analysis, and Opinions",
-        description:
-            "Read the latest news, analysis, opinions, and category-based coverage from Meaupost18.",
+        siteName: BRAND.name,
+        title: `${BRAND.name} - ${BRAND.tagline}`,
+        description: BRAND.description,
         images: [
             {
-                url: "/icon-512x512.png",
-                width: 512,
-                height: 512,
-                alt: "Meaupost18",
+                url: "/opengraph-image",
+                width: 1200,
+                height: 630,
+                alt: BRAND.name,
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        site: "@meaupost18",
-        title: "Meaupost18 - Latest News, Analysis, and Opinions",
-        description:
-            "Read the latest news, analysis, opinions, and category-based coverage from Meaupost18.",
-        images: ["/icon-512x512.png"],
+        title: `${BRAND.name} - ${BRAND.tagline}`,
+        description: BRAND.description,
+        images: ["/opengraph-image"],
     },
 };
 
@@ -81,15 +78,15 @@ export default function RootLayout({
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "WebSite",
-                            name: "Meaupost18",
-                            url: env.FRONTEND_URL || "https://meaupost18.com",
+                            name: BRAND.name,
+                            url: env.FRONTEND_URL || BRAND.url,
                             potentialAction: {
                                 "@type": "SearchAction",
                                 target: {
                                     "@type": "EntryPoint",
                                     urlTemplate: `${
                                         env.FRONTEND_URL ||
-                                        "https://meaupost18.com"
+                                        BRAND.url
                                     }/search?q={search_term_string}`,
                                 },
                                 "query-input":
@@ -104,23 +101,16 @@ export default function RootLayout({
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "Organization",
-                            name: "Meaupost18",
-                            url: env.FRONTEND_URL || "https://meaupost18.com",
-                            logo: `${
-                                env.FRONTEND_URL || "https://meaupost18.com"
-                            }/logo.png`,
-                            sameAs: [
-                                "https://facebook.com/meaupost18",
-                                "https://twitter.com/meaupost18",
-                                "https://instagram.com/meaupost18",
-                                "https://linkedin.com/company/meaupost18",
-                            ],
+                            name: BRAND.name,
+                            url: env.FRONTEND_URL || BRAND.url,
+                            logo: `${env.FRONTEND_URL || BRAND.url}/the-pm-post-icon.svg`,
                             contactPoint: {
                                 "@type": "ContactPoint",
                                 telephone: "+91-XXXXXXXXXX",
                                 contactType: "customer service",
                                 areaServed: "IN",
                                 availableLanguage: ["en", "hi"],
+                                email: BRAND.contactEmail,
                             },
                         }),
                     }}

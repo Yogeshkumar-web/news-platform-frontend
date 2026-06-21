@@ -23,13 +23,13 @@ export function AuthStatus({ user }: AuthStatusProps) {
             <div className='flex items-center gap-3'>
                 <Link
                     href='/login'
-                    className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
+                    className='font-medium text-gray-300 transition-colors hover:text-[#ef7777]'
                 >
                     Login
                 </Link>
                 <Link
                     href='/register'
-                    className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors'
+                    className='rounded-md bg-[#ef7777] px-4 py-2 font-semibold text-gray-950 transition-colors hover:bg-[#e46262]'
                 >
                     Sign Up
                 </Link>
@@ -52,9 +52,9 @@ export function AuthStatus({ user }: AuthStatusProps) {
             {/* User Menu Button */}
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className='flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors'
+                className='flex items-center gap-2 rounded-lg px-3 py-2 text-gray-200 transition-colors hover:bg-gray-900 hover:text-white'
             >
-                <div className='w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold overflow-hidden'>
+                <div className='flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-[#ef7777] font-semibold text-gray-950'>
                     {user.profileImage ? (
                         <Image
                             src={user.profileImage}
@@ -66,17 +66,17 @@ export function AuthStatus({ user }: AuthStatusProps) {
                         />
                     ) : (
                         <div
-                            className={`w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center`}
+                            className='flex h-8 w-8 items-center justify-center bg-[#ef7777]'
                         >
                             {user.name.charAt(0).toUpperCase()}
                         </div>
                     )}
                 </div>
-                <span className='hidden md:block text-sm font-medium text-gray-700'>
+                <span className='hidden text-sm font-medium md:block'>
                     {user.name}
                 </span>
                 <svg
-                    className={`w-4 h-4 text-gray-500 transition-transform ${
+                    className={`h-4 w-4 text-gray-400 transition-transform ${
                         isMenuOpen ? "rotate-180" : ""
                     }`}
                     fill='none'
@@ -113,7 +113,7 @@ export function AuthStatus({ user }: AuthStatusProps) {
                                     {user.email}
                                 </div>
                                 <div className='mt-1'>
-                                    <span className='inline-block px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full'>
+                                    <span className='inline-block rounded-full bg-[#fde2e2] px-2 py-0.5 text-xs text-[#9d3333]'>
                                         {user.role}
                                     </span>
                                 </div>

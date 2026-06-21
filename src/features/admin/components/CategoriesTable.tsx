@@ -6,6 +6,7 @@ import { DataTable } from "@/components/admin/DataTable";
 import { Modal } from "@/components/ui/Modal";
 import { createCategoryAction, updateCategoryAction, deleteCategoryAction } from "@/features/admin/actions/admin-actions";
 import { formatDate } from "@/lib/utils/format";
+import { getErrorMessage } from "@/lib/utils/error";
 import { toast } from "sonner";
 
 interface CategoriesTableProps {
@@ -58,9 +59,9 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
                     toast.error(result.message || "Failed to create category");
                 }
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Category action error:", error);
-            toast.error(error.message || "Failed to save category");
+            toast.error(getErrorMessage(error, "Failed to save category"));
         } finally {
             setIsLoading(false);
         }
@@ -77,9 +78,9 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
             } else {
                 toast.error(result.message || "Failed to delete category");
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Delete category error:", error);
-            toast.error(error.message || "Failed to delete category");
+            toast.error(getErrorMessage(error, "Failed to delete category"));
         } finally {
             setIsLoading(false);
         }
@@ -106,7 +107,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
                 <div className="flex gap-3">
                     <button
                         onClick={(e) => { e.stopPropagation(); openEditModal(cat); }}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="text-[#d95353] hover:text-[#7d2929]"
                     >
                         Edit
                     </button>
@@ -126,7 +127,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
             <div className="flex justify-end mb-4">
                 <button
                     onClick={openCreateModal}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    className="px-4 py-2 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f]"
                 >
                     + Add Category
                 </button>
@@ -154,7 +155,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
                             required
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#fff5f5]0 focus:ring-[#fff5f5]0 sm:text-sm p-2 border"
                         />
                     </div>
                     <div>
@@ -164,7 +165,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
                             required
                             value={formData.slug}
                             onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#fff5f5]0 focus:ring-[#fff5f5]0 sm:text-sm p-2 border"
                         />
                     </div>
                     <div>
@@ -172,7 +173,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#fff5f5]0 focus:ring-[#fff5f5]0 sm:text-sm p-2 border"
                             rows={3}
                         />
                     </div>
@@ -187,7 +188,7 @@ export function CategoriesTable({ initialCategories }: CategoriesTableProps) {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                            className="px-4 py-2 bg-[#d95353] text-white rounded-md hover:bg-[#b83f3f] disabled:opacity-50"
                         >
                             {isLoading ? "Saving..." : "Save"}
                         </button>

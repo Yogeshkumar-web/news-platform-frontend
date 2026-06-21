@@ -5,7 +5,7 @@ export const metadata = {
 };
 
 export default async function SecurityPage() {
-    const user = await requireAuth();
+    await requireAuth();
 
     return (
         <div className="space-y-6">
@@ -30,7 +30,7 @@ export default async function SecurityPage() {
                         </label>
                         <input
                             type="password"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="Enter current password"
                         />
                     </div>
@@ -41,7 +41,7 @@ export default async function SecurityPage() {
                         </label>
                         <input
                             type="password"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="Enter new password"
                         />
                     </div>
@@ -52,7 +52,7 @@ export default async function SecurityPage() {
                         </label>
                         <input
                             type="password"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="Confirm new password"
                         />
                     </div>

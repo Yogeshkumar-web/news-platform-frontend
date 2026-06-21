@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib";
-import { env } from "@/lib/env";
 import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { getPublicApiBaseUrl } from "@/lib/api/base-url";
 
 interface GoogleLoginButtonProps {
     redirectTo?: string;
@@ -32,16 +32,7 @@ export function GoogleLoginButton({
     const handleGoogleLogin = () => {
         setIsLoading(true);
 
-        const backendUrl =
-            process.env.NODE_ENV === "production"
-                ? env.NEXT_PUBLIC_API_BASE_URL
-                : "http://localhost:5000";
-
-        if (!backendUrl) {
-            console.error("API Base URL is not configured");
-            setIsLoading(false);
-            return;
-        }
+        const backendUrl = getPublicApiBaseUrl();
 
         // Build OAuth URL with redirect parameter
         const oauthUrl = new URL(API_ENDPOINTS.auth.google, backendUrl);
@@ -76,7 +67,7 @@ export function GoogleLoginButton({
             className={cn(
                 "w-full flex items-center justify-center gap-3 rounded-lg font-medium transition-all duration-200",
                 "disabled:opacity-50 disabled:cursor-not-wait",
-                "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+                "focus:outline-none focus:ring-2 focus:ring-[#fff5f5]0 focus:ring-offset-2",
                 sizeClasses[size],
                 variantClasses[variant],
                 className,

@@ -2,7 +2,6 @@
 
 import { requireAuth } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 import { serverPut } from "@/lib/api/server";
 import { ActionState } from "@/types";

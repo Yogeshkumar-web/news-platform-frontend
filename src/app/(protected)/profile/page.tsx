@@ -14,7 +14,7 @@ export default async function ProfilePage() {
             {/* Welcome Section */}
             <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                    <div className="w-20 h-20 bg-gradient-to-r from-[#fff5f5]0 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
                         {user.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="flex-1">
@@ -50,7 +50,7 @@ export default async function ProfilePage() {
             )}
 
             {isWriter && (
-                <div className="bg-gradient-to-r from-green-400 to-blue-500 rounded-lg shadow p-6 text-white">
+                <div className="bg-gradient-to-r from-green-400 to-[#fff5f5]0 rounded-lg shadow p-6 text-white">
                     <div className="flex items-center justify-between">
                         <div>
                             <h3 className="text-lg font-bold">Content Creator</h3>
@@ -69,17 +69,17 @@ export default async function ProfilePage() {
             )}
 
             {user.role === "USER" && (
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow p-6 text-white">
+                <div className="bg-gradient-to-r from-[#fff5f5]0 to-purple-600 rounded-lg shadow p-6 text-white">
                     <div className="flex items-center justify-between">
                         <div>
                             <h3 className="text-lg font-bold">Upgrade Your Account</h3>
-                            <p className="mt-1 text-blue-100">
+                            <p className="mt-1 text-[#fde2e2]">
                                 Unlock premium features and exclusive content
                             </p>
                         </div>
                         <Link
                             href="/pricing"
-                            className="px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-gray-100 font-medium transition-colors"
+                            className="px-4 py-2 bg-white text-[#d95353] rounded-lg hover:bg-gray-100 font-medium transition-colors"
                         >
                             View Plans
                         </Link>

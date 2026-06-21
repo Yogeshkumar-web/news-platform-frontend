@@ -6,7 +6,7 @@ type BadgeVariant = "default" | "muted" | "blue" | "outline";
 const variantClasses: Record<BadgeVariant, string> = {
     default: "bg-gray-950 text-white",
     muted: "bg-gray-100 text-gray-700",
-    blue: "bg-blue-50 text-blue-700",
+    blue: "bg-[#fff5f5] text-[#b83f3f]",
     outline: "border border-gray-200 bg-white text-gray-700",
 };
 

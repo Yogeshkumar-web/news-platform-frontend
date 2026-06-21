@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+
+declare global {
+    interface Window {
+        adsbygoogle?: unknown[];
+    }
+}
 
 interface AdUnitProps {
     slot: string;
@@ -21,11 +27,8 @@ export function AdUnit({
     responsive = true,
     adClient,
 }: AdUnitProps) {
-    const adRef = useRef<HTMLModElement>(null);
-
     useEffect(() => {
         try {
-            // @ts-ignore
             (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (err) {
             console.error("AdSense error:", err);

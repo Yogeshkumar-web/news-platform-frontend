@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useScrollHeader } from "./useScrollHeader";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 export function PublicMasthead() {
     const { isCompact } = useScrollHeader();
@@ -9,27 +10,22 @@ export function PublicMasthead() {
     return (
         <section
             className={cn(
-                "border-b border-gray-200 bg-white text-center transition-[padding] duration-300 ease-out",
+                "border-b-2 border-gray-950 bg-white text-center transition-[padding] duration-300 ease-out",
                 isCompact ? "py-2 md:py-3" : "py-5 md:py-6"
             )}
         >
-            <div className="mx-auto max-w-7xl px-4">
-                <h1
-                    className={cn(
-                        "font-serif tracking-tight text-gray-900 transition-all duration-200",
-                        isCompact ? "text-2xl md:text-3xl" : "text-4xl md:text-6xl"
+            <div className="mx-auto flex max-w-7xl justify-center px-4">
+                <BrandLogo
+                    href="/"
+                    wordmarkClassName={cn(
+                        "transition-all duration-200",
+                        isCompact ? "text-3xl md:text-4xl" : "text-5xl md:text-7xl",
                     )}
-                >
-                    Meaupost18
-                </h1>
-                <p
-                    className={cn(
-                        "font-serif text-sm italic text-gray-500 transition-all duration-200",
-                        isCompact ? "mt-0 text-xs" : "mt-2"
+                    taglineClassName={cn(
+                        "transition-all duration-200",
+                        isCompact ? "mt-1 text-[10px]" : "mt-3 text-xs md:text-sm",
                     )}
-                >
-                    Democracy Dies in Darkness
-                </p>
+                />
             </div>
         </section>
     );

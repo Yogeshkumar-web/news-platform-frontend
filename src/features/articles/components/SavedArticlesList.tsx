@@ -22,7 +22,7 @@ export function SavedArticlesList({ articles }: SavedArticlesListProps) {
                                 href={`/articles/${article.slug}`}
                                 className="group"
                             >
-                                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#d95353] transition-colors">
                                     {article.title}
                                 </h3>
                             </Link>
@@ -44,7 +44,7 @@ export function SavedArticlesList({ articles }: SavedArticlesListProps) {
                                 {article.categories && article.categories.length > 0 && (
                                     <>
                                         <span>•</span>
-                                        <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                                        <span className="px-2 py-1 bg-[#fde2e2] text-[#9d3333] rounded-full text-xs">
                                             {article.categories[0].label}
                                         </span>
                                     </>

@@ -12,7 +12,7 @@ export const env = createEnv({
             .default("development"),
 
         // Private backend API URL (Used in Server Components/Actions)
-        API_BASE_URL: z.string().url(),
+        API_BASE_URL: z.string().url().optional(),
 
         // Private Frontend URL (Used for canonical URLs, sitemaps, etc.)
         FRONTEND_URL: z.string().url(),
@@ -37,7 +37,7 @@ export const env = createEnv({
         NEXT_PUBLIC_ADSENSE_ID: z.string().min(1),
 
         // Public API Base URL (Used by client-side hooks/Axios)
-        NEXT_PUBLIC_API_BASE_URL: z.string().url(),
+        NEXT_PUBLIC_API_BASE_URL: z.string().url().optional(),
     },
     /**
      * Next.js requires manual destructuring in runtimeEnv for Next.js to inject these variables.

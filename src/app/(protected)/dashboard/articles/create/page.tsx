@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function CreateArticlePage() {
     // Require Writer, Admin, or Superadmin role
-    const user = await requireWriter();
+    await requireWriter();
 
     return (
         <div className="space-y-6">

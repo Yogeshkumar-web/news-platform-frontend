@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AdminComment } from "@/types";
+import { AdminComment, CommentStatus } from "@/types";
 import { DataTable } from "@/components/admin/DataTable";
 import { updateCommentStatusAction } from "@/features/admin/actions/admin-actions";
 import { formatDate } from "@/lib/utils/format";
@@ -14,14 +14,14 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
     const [comments, setComments] = useState<AdminComment[]>(initialComments);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleStatusChange = async (commentId: string, newStatus: string) => {
+    const handleStatusChange = async (commentId: string, newStatus: CommentStatus) => {
         setIsLoading(true);
         try {
             const result = await updateCommentStatusAction(commentId, newStatus);
             if (result.success) {
-                setComments(comments.map(c => c.id === commentId ? { ...c, status: newStatus as any } : c));
+                setComments(comments.map(c => c.id === commentId ? { ...c, status: newStatus } : c));
             }
-        } catch (error) {
+        } catch {
             alert("Failed to update comment status");
         } finally {
             setIsLoading(false);

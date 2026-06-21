@@ -2,13 +2,14 @@ import { MetadataRoute } from "next";
 import { serverGet } from "@/lib/api/server";
 import type { Article } from "@/types";
 import { getPublicCategories } from "@/features/categories/queries";
+import { BRAND } from "@/lib/brand";
 // import { env } from "@/lib/env";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl =
         process.env.FRONTEND_URL ||
         process.env.NEXT_PUBLIC_DOMAIN ||
-        "https://meaupost18.com";
+        BRAND.url;
 
     // Fetch all articles
     const articles = await serverGet<Article[]>(
@@ -19,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const categories = await getPublicCategories();
 
     // Static routes
-    const routes = ["", "/privacy", "/terms"].map((route) => ({
+    const routes = ["", "/about", "/privacy", "/terms"].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
         changeFrequency: "daily" as const,

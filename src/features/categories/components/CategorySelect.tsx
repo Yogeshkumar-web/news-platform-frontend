@@ -15,18 +15,14 @@ interface CategorySelectProps {
     maxSelections?: number;
 }
 
-export function CategorySelect({ 
-    value, 
-    onChange, 
-    maxSelections = 5 
+export function CategorySelect({
+    value,
+    onChange,
+    maxSelections = 5
 }: CategorySelectProps) {
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
-
-    useEffect(() => {
-        fetchCategories();
-    }, []);
 
     const fetchCategories = async () => {
         try {
@@ -40,6 +36,14 @@ export function CategorySelect({
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        const timeoutId = window.setTimeout(() => {
+            void fetchCategories();
+        }, 0);
+
+        return () => window.clearTimeout(timeoutId);
+    }, []);
 
     const toggleCategory = (categoryKey: string) => {
         if (value.includes(categoryKey)) {
@@ -74,7 +78,7 @@ export function CategorySelect({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search categories..."
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
             />
 
             {/* Category List */}
@@ -89,7 +93,7 @@ export function CategorySelect({
                             key={category.key}
                             className={`flex items-center space-x-3 p-2 rounded-lg cursor-pointer transition-colors ${
                                 value.includes(category.key)
-                                    ? 'bg-blue-50 border border-blue-200'
+                                    ? 'bg-[#fff5f5] border border-[#efb0b0]'
                                     : 'hover:bg-gray-50'
                             }`}
                         >
@@ -98,7 +102,7 @@ export function CategorySelect({
                                 checked={value.includes(category.key)}
                                 onChange={() => toggleCategory(category.key)}
                                 disabled={!value.includes(category.key) && value.length >= maxSelections}
-                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 disabled:opacity-50"
+                                className="w-4 h-4 text-[#d95353] border-gray-300 rounded focus:ring-[#fff5f5]0 disabled:opacity-50"
                             />
                             <span className="flex-1 text-sm font-medium text-gray-700">
                                 {category.label}
@@ -131,13 +135,13 @@ export function CategorySelect({
                         return category ? (
                             <span
                                 key={key}
-                                className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                                className="inline-flex items-center gap-1 px-3 py-1 bg-[#fde2e2] text-[#9d3333] text-sm rounded-full"
                             >
                                 {category.label}
                                 <button
                                     type="button"
                                     onClick={() => toggleCategory(key)}
-                                    className="hover:text-blue-900"
+                                    className="hover:text-[#7d2929]"
                                 >
                                     ×
                                 </button>

@@ -38,7 +38,7 @@ export default async function AuthorProfilePage() {
                         <input
                             type="text"
                             defaultValue={user.name}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="Your display name"
                         />
                     </div>
@@ -50,7 +50,7 @@ export default async function AuthorProfilePage() {
                         <textarea
                             rows={4}
                             defaultValue={user.bio || ""}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="Tell readers about yourself..."
                         />
                         <p className="text-sm text-gray-500 mt-1">
@@ -65,7 +65,7 @@ export default async function AuthorProfilePage() {
                         <input
                             type="url"
                             defaultValue={user.profileImage || ""}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="https://example.com/image.jpg"
                         />
                     </div>
@@ -91,7 +91,7 @@ export default async function AuthorProfilePage() {
                         </label>
                         <input
                             type="url"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="https://twitter.com/username"
                         />
                     </div>
@@ -102,7 +102,7 @@ export default async function AuthorProfilePage() {
                         </label>
                         <input
                             type="url"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="https://linkedin.com/in/username"
                         />
                     </div>
@@ -113,7 +113,7 @@ export default async function AuthorProfilePage() {
                         </label>
                         <input
                             type="url"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent"
                             placeholder="https://yourwebsite.com"
                         />
                     </div>
@@ -133,8 +133,8 @@ export default async function AuthorProfilePage() {
                     Author Statistics
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                        <p className="text-3xl font-bold text-blue-600">0</p>
+                    <div className="text-center p-4 bg-[#fff5f5] rounded-lg">
+                        <p className="text-3xl font-bold text-[#d95353]">0</p>
                         <p className="text-sm text-gray-600 mt-1">Articles</p>
                     </div>
                     <div className="text-center p-4 bg-green-50 rounded-lg">

@@ -2,9 +2,8 @@
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useEffect } from 'react';
-import { $createTextNode, $getSelection, $isRangeSelection, TextNode } from 'lexical';
+import { $createTextNode, TextNode } from 'lexical';
 import { $createYouTubeNode } from '../nodes/YouTubeNode';
-import { INSERT_YOUTUBE_COMMAND } from './YouTubePlugin';
 
 const YOUTUBE_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
 

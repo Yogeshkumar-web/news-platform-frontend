@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Category } from "@/types";
 import { CategoryLinks } from "./CategoryLinks";
 import { Container } from "@/components/ui/Container";
+import { BrandLogo } from "@/components/brand/BrandLogo";
+import { BRAND } from "@/lib/brand";
 
 interface FooterProps {
     categories?: Category[];
@@ -9,18 +11,21 @@ interface FooterProps {
 
 export function Footer({ categories = [] }: FooterProps) {
     return (
-        <footer className='bg-gray-950 text-white py-12'>
+        <footer className='border-t-4 border-[#ef7777] bg-black py-12 text-white'>
             <Container>
                 <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
                     <div>
-                        <h3 className='text-2xl font-bold mb-3'>
-                            Meaupost18
-                        </h3>
-                        <p className='text-sm italic text-gray-400'>
-                            Democracy Dies in Darkness
-                        </p>
+                        <BrandLogo
+                            inverse
+                            showTagline
+                            wordmarkClassName="text-3xl"
+                            taglineClassName="text-[11px]"
+                        />
                         <p className='mt-4 text-gray-400'>
-                            Your trusted source for news and insights.
+                            {BRAND.positioning}
+                        </p>
+                        <p className="mt-2 text-sm text-gray-500">
+                            {BRAND.promise}
                         </p>
                     </div>
 
@@ -96,8 +101,14 @@ export function Footer({ categories = [] }: FooterProps) {
                     </div>
                 </div>
 
-                <div className='border-t border-gray-800 mt-8 pt-8 text-center text-gray-400'>
-                    <p>&copy; 2024 Meaupost18. All rights reserved.</p>
+                <div className='mt-8 flex flex-col gap-3 border-t border-gray-800 pt-8 text-sm text-gray-400 md:flex-row md:items-center md:justify-between'>
+                    <p>&copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.</p>
+                    <a
+                        href={`mailto:${BRAND.contactEmail}`}
+                        className="transition-colors hover:text-[#ef7777]"
+                    >
+                        {BRAND.contactEmail}
+                    </a>
                 </div>
             </Container>
         </footer>

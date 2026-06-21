@@ -1,12 +1,13 @@
 "use client";
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $insertNodes } from 'lexical';
+import { $insertNodes, COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand } from 'lexical';
 import { useEffect } from 'react';
 import * as React from 'react';
 import { $createYouTubeNode, YouTubeNode } from '../nodes/YouTubeNode';
 
-export const INSERT_YOUTUBE_COMMAND = 'INSERT_YOUTUBE_COMMAND';
+export const INSERT_YOUTUBE_COMMAND: LexicalCommand<string> =
+    createCommand('INSERT_YOUTUBE_COMMAND');
 
 function extractYouTubeID(url: string): string | null {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -23,7 +24,7 @@ export default function YouTubePlugin(): React.JSX.Element | null {
         }
 
         return editor.registerCommand(
-            INSERT_YOUTUBE_COMMAND as any,
+            INSERT_YOUTUBE_COMMAND,
             (url: string) => {
                 const videoID = extractYouTubeID(url);
                 if (videoID) {
@@ -33,7 +34,7 @@ export default function YouTubePlugin(): React.JSX.Element | null {
                 }
                 return false;
             },
-            0, // COMMAND_PRIORITY_EDITOR
+            COMMAND_PRIORITY_EDITOR,
         );
     }, [editor]);
 

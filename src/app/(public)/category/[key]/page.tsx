@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { GridArticleCard } from "@/components/article/ArticleCards";
 import { CategoryLinks } from "@/components/layout/CategoryLinks";
 import { getPublicCategories } from "@/features/categories/queries";
+import { BRAND } from "@/lib/brand";
 
 export async function generateMetadata({
     params,
@@ -31,7 +32,7 @@ export async function generateMetadata({
     }
 
     const title = `${category.label} Articles`;
-    const description = `Read the latest ${category.label.toLowerCase()} news, analysis, and opinions on Meaupost18.`;
+    const description = `Read the latest ${category.label.toLowerCase()} news, analysis, and opinions on ${BRAND.name}.`;
 
     return {
         title,
@@ -87,7 +88,7 @@ export default async function CategoryPage({
                         className='mb-8 flex flex-wrap items-center gap-2 text-sm text-gray-500'
                         aria-label='Breadcrumb'
                     >
-                        <Link href='/' className='hover:text-blue-600'>
+                        <Link href='/' className='hover:text-[#d95353]'>
                             Home
                         </Link>
                         <span aria-hidden='true'>/</span>

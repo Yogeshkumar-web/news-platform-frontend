@@ -1,24 +1,21 @@
 import { MetadataRoute } from "next";
+import { BRAND } from "@/lib/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: "Meaupost18",
-        short_name: "meau",
-        description: "Stay updated with latest news, articles, and insights",
+        name: BRAND.name,
+        short_name: BRAND.shortName,
+        description: BRAND.description,
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
-        theme_color: "#ffffff",
+        theme_color: "#000000",
         icons: [
             {
-                src: "/icon-192x192.png",
-                sizes: "192x192",
-                type: "image/png",
-            },
-            {
-                src: "/icon-512x512.png",
-                sizes: "512x512",
-                type: "image/png",
+                src: "/the-pm-post-icon.svg",
+                sizes: "any",
+                type: "image/svg+xml",
+                purpose: "any",
             },
         ],
     };

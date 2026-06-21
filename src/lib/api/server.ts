@@ -1,11 +1,9 @@
 import type { ApiResponse } from "@/types";
 import { CustomAxiosError } from "./client";
+import { getServerApiBaseUrl } from "./base-url";
 
 // Server-side API base URL (can be internal)
-const API_BASE_URL =
-    process.env.API_BASE_URL ||
-    process.env.NEXT_PUBLIC_API_BASE_URL ||
-    "http://localhost:5000";
+const API_BASE_URL = getServerApiBaseUrl();
 
 if (!API_BASE_URL) {
     throw new Error("CRITICAL: Server API URL not configured");
@@ -109,7 +107,7 @@ export async function serverFetchResponse<T = unknown>(
         if (token) {
             headers.Cookie = `token=${token}`;
             headers.Authorization = `Bearer ${token}`;
-            
+
             // Debug logging
             if (process.env.NODE_ENV === "development") {
                 console.log(`[Server Fetch Auth] Token present: ${token.substring(0, 20)}...`);

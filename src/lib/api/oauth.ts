@@ -1,23 +1,19 @@
 import { ApiResponse, OAuthError, User } from "@/types";
 import { axiosInstance, extractData } from "./client";
 import { API_ENDPOINTS } from "./endpoints";
+import { getPublicApiBaseUrl } from "./base-url";
 
 /**
  * Initiate Google OAuth login
  * Redirects the browser to the backend OAuth endpoint
- * 
+ *
  * @param redirectTo - Optional URL to redirect to after successful login
  */
 export function initiateGoogleLogin(redirectTo?: string) {
-    const backendUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    
-    if (!backendUrl) {
-        console.error("API Base URL is not configured");
-        return;
-    }
+    const backendUrl = getPublicApiBaseUrl();
 
     const url = new URL(API_ENDPOINTS.auth.google, backendUrl);
-    
+
     if (redirectTo) {
         url.searchParams.set("redirect", redirectTo);
     }
@@ -52,7 +48,7 @@ export async function logoutUser(): Promise<void> {
  */
 export function getOAuthErrorFromUrl(searchParams: URLSearchParams): OAuthError | null {
     const error = searchParams.get("error");
-    
+
     if (!error) return null;
 
     const errorMap: Record<string, OAuthError> = {

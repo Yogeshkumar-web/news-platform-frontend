@@ -2,8 +2,9 @@
 // You can safely delete this file.
 import { NextRequest, NextResponse } from "next/server";
 import { isProtectedRoute, getRedirectUrl } from "@/lib/auth/middleware-helper";
+import { getServerApiBaseUrl } from "@/lib/api/base-url";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+const BACKEND_URL = getServerApiBaseUrl();
 
 /**
  * Next.js Middleware

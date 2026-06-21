@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function ModerationTabs() {
@@ -24,7 +23,7 @@ export function ModerationTabs() {
                         className={`
                             whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
                             ${currentTab === tab.id
-                                ? "border-blue-500 text-blue-600"
+                                ? "border-[#fff5f5]0 text-[#d95353]"
                                 : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                             }
                         `}

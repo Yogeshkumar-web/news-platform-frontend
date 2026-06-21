@@ -65,7 +65,7 @@ export function getValidationErrors(
         typeof error === "object" &&
         error !== null &&
         "errors" in error &&
-        Array.isArray((error as any).errors)
+        Array.isArray(error.errors)
     ) {
         return (error as CustomAxiosError).errors || [];
     }
@@ -131,7 +131,7 @@ export function isNetworkError(error: unknown): boolean {
 /**
  * Log error to console (development) or monitoring service (production)
  */
-export function logError(error: unknown, context?: Record<string, any>) {
+export function logError(error: unknown, context?: Record<string, unknown>) {
     if (process.env.NODE_ENV === "development") {
         console.error("[Error]", error, context);
     } else {

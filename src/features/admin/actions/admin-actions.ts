@@ -4,6 +4,7 @@ import { requireAdmin } from "@/lib/auth/session";
 import { revalidatePath } from "next/cache";
 import { serverPatch, serverPost, serverPut, serverDelete } from "@/lib/api/server";
 import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { getErrorMessage } from "@/lib/utils/error";
 
 import { ActionState, AdminCategory } from "@/types";
 
@@ -26,7 +27,7 @@ export async function updateUserStatusAction(userId: string, status: string): Pr
 export async function createCategoryAction(data: { name: string; slug: string; description?: string }): Promise<ActionState<AdminCategory>> {
     try {
         const user = await requireAdmin();
-        
+
         // Debug logging
         console.log('[DEBUG createCategoryAction] User authenticated:', {
             id: user.id,
@@ -34,25 +35,25 @@ export async function createCategoryAction(data: { name: string; slug: string; d
             role: user.role,
             name: user.name
         });
-        
+
         // Backend expects 'label' and 'key' fields
-        const category = await serverPost<AdminCategory>("/api/categories", { 
+        const category = await serverPost<AdminCategory>("/api/categories", {
             label: data.name,
-            key: data.slug 
+            key: data.slug
         });
-        
+
         revalidatePath("/admin/categories");
-        
+
         return {
             success: true,
             data: category,
             message: "Category created successfully"
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('[createCategoryAction] Error:', error);
         return {
             success: false,
-            message: error.message || "Failed to create category"
+            message: getErrorMessage(error, "Failed to create category")
         };
     }
 }

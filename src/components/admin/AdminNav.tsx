@@ -24,7 +24,7 @@ export function AdminNav({ userRole }: AdminNavProps) {
     const pathname = usePathname();
 
     // Add System tab for SUPERADMIN only
-    const navItems = userRole === "SUPERADMIN" 
+    const navItems = userRole === "SUPERADMIN"
         ? [...baseNavItems, ...superAdminNavItems]
         : baseNavItems;
 
@@ -40,7 +40,7 @@ export function AdminNav({ userRole }: AdminNavProps) {
                                 href={item.href}
                                 className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                                     isActive
-                                        ? "bg-blue-50 text-blue-700"
+                                        ? "bg-[#fde2e2] text-[#9d3333]"
                                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                                 }`}
                             >

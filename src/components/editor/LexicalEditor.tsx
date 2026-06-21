@@ -22,7 +22,6 @@ import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
 import {
     $isRangeSelection,
     FORMAT_TEXT_COMMAND,
-    $createParagraphNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import { ImageNode } from "./nodes/ImageNode";
@@ -37,9 +36,6 @@ import { uploadArticleImageAction } from "@/features/articles/actions/upload-art
 // Toolbar Component
 function ToolbarPlugin() {
     const [editor] = useLexicalComposerContext();
-    const [isBold, setIsBold] = useState(false);
-    const [isItalic, setIsItalic] = useState(false);
-    const [isUnderline, setIsUnderline] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -97,7 +93,7 @@ function ToolbarPlugin() {
             const result = await uploadArticleImageAction({ success: false }, formData);
 
             if (result.success && result.url) {
-                editor.dispatchCommand(INSERT_IMAGE_COMMAND as any, {
+                editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
                     src: result.url,
                     altText: file.name,
                 });
@@ -122,9 +118,7 @@ function ToolbarPlugin() {
                 <button
                     type="button"
                     onClick={formatBold}
-                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                        isBold ? "bg-blue-100 text-blue-700" : "text-gray-700"
-                    }`}
+                    className="p-2 rounded hover:bg-gray-200 transition-colors text-gray-700"
                     title='Bold (Ctrl+B)'
                 >
                     <svg
@@ -139,9 +133,7 @@ function ToolbarPlugin() {
                 <button
                     type="button"
                     onClick={formatItalic}
-                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                        isItalic ? "bg-blue-100 text-blue-700" : "text-gray-700"
-                    }`}
+                    className="p-2 rounded hover:bg-gray-200 transition-colors text-gray-700"
                     title='Italic (Ctrl+I)'
                 >
                     <svg
@@ -156,11 +148,7 @@ function ToolbarPlugin() {
                 <button
                     type="button"
                     onClick={formatUnderline}
-                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                        isUnderline
-                            ? "bg-blue-100 text-blue-700"
-                            : "text-gray-700"
-                    }`}
+                    className="p-2 rounded hover:bg-gray-200 transition-colors text-gray-700"
                     title='Underline (Ctrl+U)'
                 >
                     <svg
@@ -326,12 +314,12 @@ const LexicalEditor: React.FC<LexicalEditorProps> = ({
             listitem: "mb-1",
         },
         image: "max-w-full h-auto",
-        link: "text-blue-600 hover:text-blue-800 underline",
+        link: "text-[#d95353] hover:text-[#9d3333] underline",
         text: {
             bold: "font-semibold",
             italic: "italic",
             overflowed: "overflow-hidden",
-            hashtag: "text-blue-500",
+            hashtag: "text-[#fff5f5]0",
             underline: "underline",
             strikethrough: "line-through",
             underlineStrikethrough: "underline line-through",
@@ -340,7 +328,7 @@ const LexicalEditor: React.FC<LexicalEditorProps> = ({
         code: "bg-gray-100 border border-gray-300 rounded p-4 font-mono text-sm overflow-auto mb-4",
         codeHighlight: {
             atrule: "text-purple-600",
-            attr: "text-blue-600",
+            attr: "text-[#d95353]",
             boolean: "text-red-600",
             builtin: "text-purple-600",
             cdata: "text-gray-500",
@@ -352,7 +340,7 @@ const LexicalEditor: React.FC<LexicalEditorProps> = ({
             deleted: "text-red-600",
             doctype: "text-gray-500",
             entity: "text-orange-600",
-            function: "text-blue-600",
+            function: "text-[#d95353]",
             important: "text-red-600",
             inserted: "text-green-600",
             keyword: "text-purple-600",
@@ -360,14 +348,14 @@ const LexicalEditor: React.FC<LexicalEditorProps> = ({
             number: "text-red-600",
             operator: "text-gray-700",
             prolog: "text-gray-500",
-            property: "text-blue-600",
+            property: "text-[#d95353]",
             punctuation: "text-gray-700",
             regex: "text-green-600",
             selector: "text-yellow-600",
             string: "text-green-600",
             symbol: "text-red-600",
             tag: "text-red-600",
-            url: "text-blue-600",
+            url: "text-[#d95353]",
             variable: "text-orange-600",
         },
     };
@@ -398,7 +386,7 @@ const LexicalEditor: React.FC<LexicalEditorProps> = ({
     const handleChange = useCallback(
         (editorState: EditorState, editor: LexicalEditorType) => {
             editorState.read(() => {
-                const html = $generateHtmlFromNodes(editor as any);
+                const html = $generateHtmlFromNodes(editor);
                 const json = JSON.stringify(editorState);
                 if (onChange) {
                     onChange(html, json);

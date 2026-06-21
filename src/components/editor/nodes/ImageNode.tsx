@@ -11,7 +11,6 @@ import type {
 
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import * as React from 'react';
-import Image from 'next/image';
 import { ImageResizer } from '../components/ImageResizer';
 
 export interface ImagePayload {
@@ -78,7 +77,7 @@ export class ImageNode extends DecoratorNode<React.JSX.Element> {
 
     static importDOM(): DOMConversionMap | null {
         return {
-            img: (node: Node) => ({
+            img: () => ({
                 conversion: convertImageElement,
                 priority: 0,
             }),

@@ -26,7 +26,7 @@ export function MobileNav({ user, categories }: MobileNavProps) {
             {/* Hamburger Button */}
             <button
                 onClick={toggleMenu}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-950 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-200 hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#ef7777]"
                 aria-expanded={isOpen}
                 aria-label="Toggle menu"
             >
@@ -39,19 +39,19 @@ export function MobileNav({ user, categories }: MobileNavProps) {
 
             {/* Mobile Menu Overlay */}
             {isOpen && (
-                <div className="absolute left-0 top-full w-full bg-white border-b shadow-lg z-50 animate-in slide-in-from-top-5 duration-200 max-h-[80vh] overflow-y-auto">
+                <div className="absolute left-0 top-full z-50 max-h-[80vh] w-full overflow-y-auto border-b border-gray-800 bg-black text-white shadow-lg animate-in slide-in-from-top-5 duration-200">
                     <div className="px-4 py-4 space-y-3">
-                        <div className="font-semibold text-gray-900 px-4 pb-2 border-b">
+                        <div className="border-b border-gray-800 px-4 pb-2 font-semibold text-white">
                             Menu
                         </div>
-                        
+
                         <Link
                             href="/articles"
                             onClick={closeMenu}
                             className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                                 isActive("/articles")
-                                    ? "bg-blue-50 text-blue-600"
-                                    : "text-gray-700 hover:bg-gray-50"
+                                    ? "bg-[#ef7777] text-gray-950"
+                                    : "text-gray-200 hover:bg-gray-900"
                             }`}
                         >
                             All Articles
@@ -63,15 +63,15 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                                 onClick={closeMenu}
                                 className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                                     isActive("/dashboard")
-                                        ? "bg-blue-50 text-blue-600"
-                                        : "text-gray-700 hover:bg-gray-50"
+                                        ? "bg-[#ef7777] text-gray-950"
+                                        : "text-gray-200 hover:bg-gray-900"
                                 }`}
                             >
                                 Dashboard
                             </Link>
                         )}
 
-                        <div className="font-semibold text-gray-900 px-4 pt-2 pb-2 border-b mt-4">
+                        <div className="mt-4 border-b border-gray-800 px-4 pb-2 pt-2 font-semibold text-white">
                             Categories
                         </div>
 
@@ -82,8 +82,8 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                                 onClick={closeMenu}
                                 className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                                     isActive(`/category/${category.key}`)
-                                        ? "bg-blue-50 text-blue-600"
-                                        : "text-gray-700 hover:bg-gray-50"
+                                        ? "bg-[#ef7777] text-gray-950"
+                                        : "text-gray-200 hover:bg-gray-900"
                                 }`}
                             >
                                 {category.label}
@@ -91,7 +91,7 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                         ))}
 
                         {!user && (
-                            <div className="pt-4 border-t grid grid-cols-2 gap-4 mt-4">
+                            <div className="mt-4 grid grid-cols-2 gap-4 border-t border-gray-800 pt-4">
                                 <LinkButton
                                     href="/login"
                                     onClick={closeMenu}

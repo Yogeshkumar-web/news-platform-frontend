@@ -4,7 +4,6 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { useEffect } from 'react';
 import { INSERT_IMAGE_COMMAND } from './ImagePlugin';
 import { uploadArticleImageAction } from '@/features/articles/actions/upload-article-image-action';
-import { $getSelection, $isRangeSelection } from 'lexical';
 
 export default function PasteImagePlugin(): null {
     const [editor] = useLexicalComposerContext();
@@ -30,10 +29,12 @@ export default function PasteImagePlugin(): null {
 
                     const result = await uploadArticleImageAction({ success: false }, formData);
 
-                    if (result.success && result.url) {
+                    const imageUrl = result.url;
+
+                    if (result.success && imageUrl) {
                         editor.update(() => {
-                            editor.dispatchCommand(INSERT_IMAGE_COMMAND as any, {
-                                src: result.url,
+                            editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
+                                src: imageUrl,
                                 altText: `Pasted image ${Date.now()}`,
                             });
                         });

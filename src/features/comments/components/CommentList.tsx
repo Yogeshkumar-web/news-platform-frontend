@@ -77,7 +77,7 @@ function CommentItem({
     return (
         <div className='bg-white border border-gray-200 rounded-lg p-4'>
             <div className='flex items-start gap-3'>
-                <div className='w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold'>
+                <div className='w-10 h-10 bg-gradient-to-r from-[#fff5f5]0 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold'>
                     {comment.author.name.charAt(0).toUpperCase()}
                 </div>
 
@@ -87,7 +87,7 @@ function CommentItem({
                             {comment.author.name}
                         </span>
                         {comment.author.role !== "USER" && (
-                            <span className='px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full'>
+                            <span className='px-2 py-0.5 text-xs bg-[#fde2e2] text-[#9d3333] rounded-full'>
                                 {comment.author.role}
                             </span>
                         )}
@@ -109,7 +109,7 @@ function CommentItem({
                         {currentUser && (
                             <button
                                 onClick={() => setIsReplying(!isReplying)}
-                                className='text-sm text-blue-600 hover:text-blue-700 font-medium'
+                                className='text-sm text-[#d95353] hover:text-[#b83f3f] font-medium'
                             >
                                 {isReplying ? "Cancel" : "Reply"}
                             </button>

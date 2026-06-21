@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { AdUnit } from "@/components/ads/AdUnit";
 import { env } from "@/lib/env";
+import { BRAND } from "@/lib/brand";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -77,7 +78,7 @@ export default async function ArticleDetailPage({
 
     const readingTime = calculateReadingTime(article.content);
 
-    const domain = env.FRONTEND_URL || "http://localhost:3000";
+    const domain = env.FRONTEND_URL || BRAND.url;
     const adClient = env.NEXT_PUBLIC_ADSENSE_ID;
 
     // JSON-LD Structured Data
@@ -95,10 +96,10 @@ export default async function ArticleDetailPage({
         },
         publisher: {
             "@type": "Organization",
-            name: "Meaupost18",
+            name: BRAND.name,
             logo: {
                 "@type": "ImageObject",
-                url: `${domain}/logo.png`,
+                url: `${domain}/the-pm-post-icon.svg`,
             },
         },
     };
@@ -157,7 +158,7 @@ export default async function ArticleDetailPage({
                                 <Link
                                     key={category.key}
                                     href={`/category/${category.key}`}
-                                    className='px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full hover:bg-blue-200 transition-colors'
+                                    className='px-3 py-1 bg-[#fde2e2] text-[#9d3333] text-sm rounded-full hover:bg-[#efb0b0] transition-colors'
                                 >
                                     {category.label}
                                 </Link>
@@ -180,7 +181,7 @@ export default async function ArticleDetailPage({
                     {/* Author & Meta */}
                     <div className='flex items-center gap-4 text-gray-600'>
                         <div className='flex items-center gap-3'>
-                            <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg'>
+                            <div className='w-12 h-12 bg-gradient-to-r from-[#fff5f5]0 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg'>
                                 {article.author.name.charAt(0).toUpperCase()}
                             </div>
                             <div>

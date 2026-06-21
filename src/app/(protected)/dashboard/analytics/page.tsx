@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function AnalyticsDashboard() {
-    const user = await requireWriter();
+    await requireWriter();
 
     // Fetch user's articles with stats
     const articles = await serverGet<Article[]>(
@@ -58,7 +58,7 @@ export default async function AnalyticsDashboard() {
                         </h1>
                         <Link
                             href='/dashboard'
-                            className='text-blue-600 hover:text-blue-700'
+                            className='text-[#d95353] hover:text-[#b83f3f]'
                         >
                             ← Back to Dashboard
                         </Link>
@@ -117,13 +117,13 @@ export default async function AnalyticsDashboard() {
                                         key={article.id}
                                         className='flex items-start gap-3'
                                     >
-                                        <span className='flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-semibold'>
+                                        <span className='flex-shrink-0 w-8 h-8 bg-[#fde2e2] text-[#d95353] rounded-full flex items-center justify-center font-semibold'>
                                             {index + 1}
                                         </span>
                                         <div className='flex-1'>
                                             <Link
                                                 href={`/articles/${article.slug}`}
-                                                className='font-medium text-gray-900 hover:text-blue-600 line-clamp-1'
+                                                className='font-medium text-gray-900 hover:text-[#d95353] line-clamp-1'
                                             >
                                                 {article.title}
                                             </Link>
@@ -178,7 +178,7 @@ export default async function AnalyticsDashboard() {
                                             <div className='flex-1'>
                                                 <Link
                                                     href={`/articles/${article.slug}`}
-                                                    className='font-medium text-gray-900 hover:text-blue-600 line-clamp-1'
+                                                    className='font-medium text-gray-900 hover:text-[#d95353] line-clamp-1'
                                                 >
                                                     {article.title}
                                                 </Link>
@@ -243,7 +243,7 @@ export default async function AnalyticsDashboard() {
                                         <td className='px-6 py-4'>
                                             <Link
                                                 href={`/articles/${article.slug}`}
-                                                className='font-medium text-gray-900 hover:text-blue-600'
+                                                className='font-medium text-gray-900 hover:text-[#d95353]'
                                             >
                                                 {article.title}
                                             </Link>
@@ -297,7 +297,7 @@ function StatCard({
     const colorClasses = {
         gray: "bg-gray-50 text-gray-900",
         green: "bg-green-50 text-green-900",
-        blue: "bg-blue-50 text-blue-900",
+        blue: "bg-[#fff5f5] text-[#7d2929]",
         red: "bg-red-50 text-red-900",
         purple: "bg-purple-50 text-purple-900",
     };

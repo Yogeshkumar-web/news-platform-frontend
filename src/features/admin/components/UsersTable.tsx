@@ -18,28 +18,28 @@ export function UsersTable({ initialUsers, currentUserRole }: UsersTableProps) {
 
     const isSuperAdmin = currentUserRole === "SUPERADMIN";
 
-    const handleRoleChange = async (userId: string, newRole: string) => {
+    const handleRoleChange = async (userId: string, newRole: UserRole) => {
         if (!isSuperAdmin) {
             alert("Only SUPERADMIN can change user roles");
             return;
         }
 
         if (!confirm(`Are you sure you want to change this user's role to ${newRole}?`)) return;
-        
+
         setIsLoading(true);
         try {
             const result = await updateUserRoleAction(userId, newRole);
             if (result.success) {
-                setUsers(users.map(u => u.id === userId ? { ...u, role: newRole as any } : u));
+                setUsers(users.map(u => u.id === userId ? { ...u, role: newRole } : u));
             }
-        } catch (error) {
+        } catch {
             alert("Failed to update role");
         } finally {
             setIsLoading(false);
         }
     };
 
-    const handleStatusChange = async (userId: string, currentStatus: string) => {
+    const handleStatusChange = async (userId: string, currentStatus: AdminUser["status"]) => {
         const newStatus = currentStatus === 'ACTIVE' ? 'BANNED' : 'ACTIVE';
         if (!confirm(`Are you sure you want to ${newStatus === 'BANNED' ? 'ban' : 'unban'} this user?`)) return;
 
@@ -47,9 +47,9 @@ export function UsersTable({ initialUsers, currentUserRole }: UsersTableProps) {
         try {
             const result = await updateUserStatusAction(userId, newStatus);
             if (result.success) {
-                setUsers(users.map(u => u.id === userId ? { ...u, status: newStatus as any } : u));
+                setUsers(users.map(u => u.id === userId ? { ...u, status: newStatus } : u));
             }
-        } catch (error) {
+        } catch {
             alert("Failed to update status");
         } finally {
             setIsLoading(false);
@@ -63,9 +63,9 @@ export function UsersTable({ initialUsers, currentUserRole }: UsersTableProps) {
                 <div className="flex items-center">
                     <div className="h-10 w-10 flex-shrink-0">
                         {user.profileImage ? (
-                            <NextImage 
-                                className="rounded-full object-cover" 
-                                src={user.profileImage} 
+                            <NextImage
+                                className="rounded-full object-cover"
+                                src={user.profileImage}
                                 alt={`${user.name}'s profile`}
                                 width={40}
                                 height={40}
@@ -88,9 +88,9 @@ export function UsersTable({ initialUsers, currentUserRole }: UsersTableProps) {
             accessor: (user: AdminUser) => (
                 <select
                     value={user.role}
-                    onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                    onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
                     disabled={isLoading || user.role === 'SUPERADMIN' || !isSuperAdmin}
-                    className="text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="text-sm border-gray-300 rounded-md shadow-sm focus:border-[#fff5f5]0 focus:ring-[#fff5f5]0 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     title={!isSuperAdmin ? "Only SUPERADMIN can change roles" : ""}
                 >
                     <option value="USER">User</option>
@@ -105,7 +105,7 @@ export function UsersTable({ initialUsers, currentUserRole }: UsersTableProps) {
             header: "Status",
             accessor: (user: AdminUser) => (
                 <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    user.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 
+                    user.status === 'ACTIVE' ? 'bg-green-100 text-green-800' :
                     user.status === 'BANNED' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
                 }`}>
                     {user.status}
@@ -136,8 +136,8 @@ export function UsersTable({ initialUsers, currentUserRole }: UsersTableProps) {
                     onClick={() => handleStatusChange(user.id, user.status)}
                     disabled={isLoading || user.role === 'SUPERADMIN'}
                     className={`text-sm font-medium ${
-                        user.status === 'ACTIVE' 
-                            ? 'text-red-600 hover:text-red-900' 
+                        user.status === 'ACTIVE'
+                            ? 'text-red-600 hover:text-red-900'
                             : 'text-green-600 hover:text-green-900'
                     }`}
                 >

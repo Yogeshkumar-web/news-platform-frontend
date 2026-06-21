@@ -7,7 +7,7 @@ type ButtonSize = "sm" | "md" | "lg";
 
 const variantClasses: Record<ButtonVariant, string> = {
     primary:
-        "bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-500",
+        "bg-[#ef7777] text-gray-950 hover:bg-[#e46262] focus-visible:ring-[#ef7777]",
     secondary:
         "bg-gray-950 text-white hover:bg-gray-800 focus-visible:ring-gray-500",
     ghost:

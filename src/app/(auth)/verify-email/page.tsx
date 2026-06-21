@@ -27,7 +27,7 @@ export default async function VerifyEmailPage({
                     </p>
                     <ResendVerification />
                     <div className="mt-6">
-                        <Link href="/login" className="text-blue-600 hover:underline">
+                        <Link href="/login" className="text-[#b83f3f] hover:underline">
                             Back to Login
                         </Link>
                     </div>
@@ -52,7 +52,7 @@ export default async function VerifyEmailPage({
                         </p>
                         <Link
                             href="/login"
-                            className="inline-block w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                            className="inline-block w-full rounded-md bg-[#ef7777] px-4 py-2 font-semibold text-gray-950 transition-colors hover:bg-[#e46262]"
                         >
                             Continue to Login
                         </Link>
@@ -70,7 +70,7 @@ export default async function VerifyEmailPage({
                             <p className="text-sm text-gray-500 mb-2">Did the link expire?</p>
                             <ResendVerification />
                         </div>
-                        <Link href="/login" className="text-blue-600 hover:underline">
+                        <Link href="/login" className="text-[#b83f3f] hover:underline">
                             Back to Login
                         </Link>
                     </>

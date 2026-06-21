@@ -1,12 +1,18 @@
 "use client";
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $insertNodes } from 'lexical';
+import { $insertNodes, COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand } from 'lexical';
 import { useEffect } from 'react';
 import * as React from 'react';
 import { $createImageNode, ImageNode } from '../nodes/ImageNode';
 
-export const INSERT_IMAGE_COMMAND = 'INSERT_IMAGE_COMMAND';
+export type InsertImagePayload = {
+    altText: string;
+    src: string;
+};
+
+export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =
+    createCommand('INSERT_IMAGE_COMMAND');
 
 export default function ImagePlugin(): React.JSX.Element | null {
     const [editor] = useLexicalComposerContext();
@@ -17,13 +23,13 @@ export default function ImagePlugin(): React.JSX.Element | null {
         }
 
         return editor.registerCommand(
-            INSERT_IMAGE_COMMAND as any,
-            (payload: { altText: string; src: string }) => {
+            INSERT_IMAGE_COMMAND,
+            (payload) => {
                 const imageNode = $createImageNode(payload);
                 $insertNodes([imageNode]);
                 return true;
             },
-            0, // COMMAND_PRIORITY_EDITOR
+            COMMAND_PRIORITY_EDITOR,
         );
     }, [editor]);
 

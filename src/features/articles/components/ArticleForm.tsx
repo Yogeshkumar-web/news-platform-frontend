@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { CategorySelect } from "@/features/categories/components/CategorySelect";
 import Image from "next/image";
+import { getErrorMessage } from "@/lib/utils/error";
 
 // Dynamically import Lexical to avoid SSR issues
 const LexicalEditor = dynamic(
@@ -108,8 +109,8 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
             // Set the uploaded URL
             setThumbnail(uploadResult.url);
             toast.success('Thumbnail uploaded successfully!');
-        } catch (error: any) {
-            toast.error(error.message || 'Failed to upload thumbnail');
+        } catch (error: unknown) {
+            toast.error(getErrorMessage(error, 'Failed to upload thumbnail'));
         } finally {
             setIsUploadingThumbnail(false);
         }
@@ -121,9 +122,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
         setThumbnail("");
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const submitArticle = async (nextStatus = status) => {
         if (!title.trim() || !contentHtml.trim()) {
             toast.error("Title and content are required");
             return;
@@ -135,17 +134,18 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
             const formData = new FormData();
             formData.append("title", title.trim());
             formData.append("content", contentHtml);
+            formData.append("contentJson", contentJson);
             formData.append("excerpt", excerpt.trim());
             if (thumbnail) {
                 formData.append("thumbnail", thumbnail);
             }
-            formData.append("status", status);
+            formData.append("status", nextStatus);
             formData.append("categories", JSON.stringify(categories));
             formData.append("featured", String(featured));
             formData.append("isPremium", String(isPremium));
 
             let result;
-            
+
             if (isEditMode) {
                 // Update existing article
                 result = await updateArticleAction(articleId, formData);
@@ -162,8 +162,8 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
             toast.success(`Article ${isEditMode ? 'updated' : 'created'} successfully!`);
             router.push("/dashboard/articles");
             router.refresh();
-        } catch (error: any) {
-            toast.error(error.message || "An unexpected error occurred");
+        } catch (error: unknown) {
+            toast.error(getErrorMessage(error));
         } finally {
             setIsSubmitting(false);
         }
@@ -172,7 +172,13 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
     const charCount = contentHtml.replace(/<[^>]*>/g, "").length;
 
     return (
-        <form onSubmit={handleSubmit} className='space-y-6'>
+        <form
+            onSubmit={(event) => {
+                event.preventDefault();
+                void submitArticle();
+            }}
+            className='space-y-6'
+        >
             {/* Title */}
             <div>
                 <label
@@ -189,7 +195,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                     required
                     minLength={5}
                     maxLength={255}
-                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-semibold'
+                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent text-lg font-semibold'
                     placeholder='Enter article title...'
                 />
                 <p className='mt-1 text-sm text-gray-500'>{title.length}/255</p>
@@ -209,7 +215,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                     onChange={(e) => setExcerpt(e.target.value)}
                     maxLength={500}
                     rows={3}
-                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent'
                     placeholder='Brief summary of the article...'
                 />
                 <p className='mt-1 text-sm text-gray-500'>
@@ -260,24 +266,24 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                             type='file'
                             accept='image/*'
                             onChange={handleThumbnailChange}
-                            className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer'
+                            className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#fff5f5] file:text-[#b83f3f] hover:file:bg-[#fde2e2] cursor-pointer'
                         />
                         <p className='text-xs text-gray-500'>
                             JPG, PNG or WebP. Max 5MB.
                         </p>
-                        
+
                         {/* Upload Button */}
                         {thumbnailFile && !thumbnail && (
                             <button
                                 type='button'
                                 onClick={handleUploadThumbnail}
                                 disabled={isUploadingThumbnail}
-                                className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium'
+                                className='px-4 py-2 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f] disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium'
                             >
                                 {isUploadingThumbnail ? 'Uploading...' : 'Upload Thumbnail'}
                             </button>
                         )}
-                        
+
                         {/* Success Message with URL */}
                         {thumbnail && (
                             <div className='p-3 bg-green-50 border border-green-200 rounded-lg'>
@@ -319,8 +325,8 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                 <label className='block text-sm font-medium text-gray-700 mb-2'>
                     Categories (Optional)
                 </label>
-                <CategorySelect 
-                    value={categories} 
+                <CategorySelect
+                    value={categories}
                     onChange={setCategories}
                     maxSelections={5}
                 />
@@ -333,7 +339,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                         type='checkbox'
                         checked={featured}
                         onChange={(e) => setFeatured(e.target.checked)}
-                        className='w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500'
+                        className='w-4 h-4 text-[#d95353] border-gray-300 rounded focus:ring-[#fff5f5]0'
                     />
                     <span className='text-sm font-medium text-gray-700'>
                         Featured Article
@@ -345,7 +351,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                         type='checkbox'
                         checked={isPremium}
                         onChange={(e) => setIsPremium(e.target.checked)}
-                        className='w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500'
+                        className='w-4 h-4 text-[#d95353] border-gray-300 rounded focus:ring-[#fff5f5]0'
                     />
                     <span className='text-sm font-medium text-gray-700'>
                         Premium Content
@@ -361,7 +367,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                 <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fff5f5]0 focus:border-transparent'
                 >
                     <option value='DRAFT'>Draft</option>
                     <option value='PUBLISHED'>Published</option>
@@ -384,10 +390,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                         type='button'
                         onClick={() => {
                             setStatus("DRAFT");
-                            setTimeout(
-                                () => handleSubmit(new Event("submit") as any),
-                                0
-                            );
+                            void submitArticle("DRAFT");
                         }}
                         disabled={
                             isSubmitting || !title.trim() || charCount < 50
@@ -402,7 +405,7 @@ export function ArticleForm({ initialData, articleId }: ArticleFormProps) {
                         disabled={
                             isSubmitting || !title.trim() || charCount < 50
                         }
-                        className='px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium'
+                        className='px-6 py-3 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f] disabled:opacity-50 disabled:cursor-not-allowed font-medium'
                     >
                         {isSubmitting
                             ? isEditMode ? "Updating..." : "Creating..."

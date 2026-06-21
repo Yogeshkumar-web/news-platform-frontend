@@ -16,7 +16,7 @@ export default async function SettingsPage() {
                 <div className="p-6">
                     <h3 className="text-lg font-medium text-gray-900">General Settings</h3>
                     <p className="mt-1 text-sm text-gray-500">Platform configuration and defaults.</p>
-                    
+
                     <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                         <div className="sm:col-span-4">
                             <label htmlFor="site-name" className="block text-sm font-medium text-gray-700">
@@ -29,7 +29,7 @@ export default async function SettingsPage() {
                                     id="site-name"
                                     defaultValue="News Platform"
                                     disabled
-                                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50"
+                                    className="shadow-sm focus:ring-[#fff5f5]0 focus:border-[#fff5f5]0 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50"
                                 />
                             </div>
                             <p className="mt-2 text-sm text-gray-500">
@@ -50,7 +50,7 @@ export default async function SettingsPage() {
                                     type="checkbox"
                                     defaultChecked
                                     disabled
-                                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                                    className="focus:ring-[#fff5f5]0 h-4 w-4 text-[#d95353] border-gray-300 rounded"
                                 />
                             </div>
                             <div className="ml-3 text-sm">

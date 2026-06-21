@@ -29,7 +29,7 @@ export function SaveArticleButton({
                         : "Article saved successfully"
                 );
                 router.refresh();
-            } catch (error) {
+            } catch {
                 toast.error("An error occurred");
             }
         });
@@ -41,7 +41,7 @@ export function SaveArticleButton({
             disabled={isPending}
             className={`p-2 rounded-lg transition-colors disabled:opacity-50 ${
                 isSaved
-                    ? "text-blue-600 hover:bg-blue-50"
+                    ? "text-[#d95353] hover:bg-[#fff5f5]"
                     : "text-gray-400 hover:bg-gray-100"
             }`}
             title={isSaved ? "Remove from saved" : "Save article"}

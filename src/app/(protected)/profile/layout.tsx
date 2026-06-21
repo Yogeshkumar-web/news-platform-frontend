@@ -20,7 +20,7 @@ export default async function ProfileLayout({
                             {/* Home Button */}
                             <Link
                                 href="/"
-                                className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                className="p-2 text-gray-600 hover:text-[#d95353] hover:bg-[#fff5f5] rounded-lg transition-colors"
                                 title="Go to Homepage"
                             >
                                 <svg

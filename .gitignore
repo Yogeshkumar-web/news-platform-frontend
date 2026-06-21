@@ -22,6 +22,7 @@
 
 # misc
 .DS_Store
+*:Zone.Identifier
 *.pem
 
 # debug
@@ -46,7 +47,7 @@ PHASE2_COMPLETE.md
 PHASE3_COMPLETE.md
 PHASE4_COMPLETE.md
 PHASE5_COMPLETE.md
-PHASE6_COMPLETE.md  
+PHASE6_COMPLETE.md
 
 IMPLEMENTATION_PLAN.md
 

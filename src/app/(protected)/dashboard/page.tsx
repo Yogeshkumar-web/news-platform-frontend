@@ -2,6 +2,7 @@ import { requireAuth } from "@/lib/auth/session";
 import { serverGet } from "@/lib/api/server";
 import type { Article } from "@/types";
 import Link from "next/link";
+import Image from "next/image";
 import { RoleBadge } from "@/components/shared/RoleBadge";
 
 export const metadata = {
@@ -28,13 +29,15 @@ export default async function DashboardPage() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         {user.profileImage ? (
-                            <img
+                            <Image
                                 src={user.profileImage}
                                 alt={user.name}
+                                width={64}
+                                height={64}
                                 className="w-16 h-16 rounded-full object-cover border-2 border-gray-100"
                             />
                         ) : (
-                            <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-bold">
+                            <div className="w-16 h-16 rounded-full bg-[#fde2e2] flex items-center justify-center text-[#d95353] text-2xl font-bold">
                                 {user.name.charAt(0).toUpperCase()}
                             </div>
                         )}
@@ -47,7 +50,7 @@ export default async function DashboardPage() {
                                     <span className="flex items-center gap-1">
                                         Signed in with Google
                                         <svg
-                                            className="w-4 h-4 text-blue-500"
+                                            className="w-4 h-4 text-[#fff5f5]0"
                                             viewBox="0 0 24 24"
                                             fill="currentColor"
                                         >
@@ -106,12 +109,12 @@ function AdminDashboardView({
                 {/* Admin Panel Quick Access */}
                 <Link
                     href="/admin"
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow"
+                    className="bg-gradient-to-r from-[#fff5f5]0 to-purple-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow"
                 >
                     <div className="flex items-center justify-between">
                         <div>
                             <h3 className="text-xl font-bold">Admin Panel</h3>
-                            <p className="mt-2 text-blue-100">
+                            <p className="mt-2 text-[#fde2e2]">
                                 Manage users, content, and system settings
                             </p>
                         </div>
@@ -144,7 +147,7 @@ function AdminDashboardView({
                             </span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div className="w-2 h-2 bg-[#fff5f5]0 rounded-full"></div>
                             <span className="text-sm text-gray-600">
                                 {user.role === "SUPERADMIN"
                                     ? "Full access enabled"
@@ -174,7 +177,7 @@ function AdminDashboardView({
                     <div className="px-6 py-4 bg-gray-50">
                         <Link
                             href="/dashboard/articles"
-                            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                            className="text-sm text-[#d95353] hover:text-[#b83f3f] font-medium"
                         >
                             View all articles →
                         </Link>
@@ -233,7 +236,7 @@ function WriterDashboardView({ articles }: { articles: Article[] }) {
                     </h3>
                     <Link
                         href="/dashboard/analytics"
-                        className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                        className="text-sm text-[#d95353] hover:text-[#b83f3f] font-medium"
                     >
                         View detailed analytics →
                     </Link>
@@ -264,7 +267,7 @@ function WriterDashboardView({ articles }: { articles: Article[] }) {
                     </h3>
                     <Link
                         href="/dashboard/articles/create"
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors"
+                        className="px-4 py-2 bg-[#d95353] text-white rounded-lg hover:bg-[#b83f3f] font-medium transition-colors"
                     >
                         Create New
                     </Link>
@@ -357,24 +360,24 @@ function UserDashboardView() {
     return (
         <>
             {/* Upgrade Prompt */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-gradient-to-r from-[#fff5f5]0 to-purple-600 rounded-lg shadow-lg p-8 text-white">
                 <h3 className="text-2xl font-bold">
                     Unlock Premium Features
                 </h3>
-                <p className="mt-3 text-blue-100">
+                <p className="mt-3 text-[#fde2e2]">
                     Get unlimited access to premium articles, save your
                     favorites, and enjoy an ad-free experience.
                 </p>
                 <div className="mt-6 flex gap-4">
                     <Link
                         href="/pricing"
-                        className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 font-semibold transition-colors"
+                        className="px-6 py-3 bg-white text-[#d95353] rounded-lg hover:bg-gray-100 font-semibold transition-colors"
                     >
                         View Plans
                     </Link>
                     <Link
                         href="/articles"
-                        className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 font-semibold transition-colors"
+                        className="px-6 py-3 bg-[#b83f3f] text-white rounded-lg hover:bg-[#9d3333] font-semibold transition-colors"
                     >
                         Browse Articles
                     </Link>

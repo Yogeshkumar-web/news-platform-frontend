@@ -1,11 +1,12 @@
 import { MetadataRoute } from "next";
+import { BRAND } from "@/lib/brand";
 // import { env } from "@/lib/env";
 
 export default function robots(): MetadataRoute.Robots {
     const baseUrl =
         process.env.FRONTEND_URL ||
         process.env.NEXT_PUBLIC_DOMAIN ||
-        "https://meaupost18.com";
+        BRAND.url;
 
     return {
         rules: {
