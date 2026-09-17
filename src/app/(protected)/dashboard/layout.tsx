@@ -14,14 +14,14 @@ export default async function DashboardLayout({
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <header className="sticky top-0 z-40 border-b border-gray-800 bg-black text-white">
+            <header className="sticky top-0 z-40 border-b border-red-900 bg-primary text-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center gap-4">
                             {/* Home Button */}
                             <Link
                                 href="/"
-                                className="rounded-lg p-2 text-gray-300 transition-colors hover:bg-gray-900 hover:text-[#ef7777]"
+                                className="rounded-lg p-2 text-white/85 transition-colors hover:bg-white/15 hover:text-white"
                                 title="Go to Homepage"
                             >
                                 <svg
@@ -41,7 +41,7 @@ export default async function DashboardLayout({
 
                             {/* Dashboard Title */}
                             <BrandLogo compact inverse showTagline={false} />
-                            <span className="hidden text-sm font-semibold text-gray-400 sm:inline">Dashboard</span>
+                            <span className="hidden text-sm font-semibold text-white/75 sm:inline">Dashboard</span>
                         </div>
 
                         {/* User Button */}

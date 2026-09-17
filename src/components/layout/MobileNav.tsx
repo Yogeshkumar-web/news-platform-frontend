@@ -26,7 +26,7 @@ export function MobileNav({ user, categories }: MobileNavProps) {
             {/* Hamburger Button */}
             <button
                 onClick={toggleMenu}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-200 hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#ef7777]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white"
                 aria-expanded={isOpen}
                 aria-label="Toggle menu"
             >
@@ -39,9 +39,9 @@ export function MobileNav({ user, categories }: MobileNavProps) {
 
             {/* Mobile Menu Overlay */}
             {isOpen && (
-                <div className="absolute left-0 top-full z-50 max-h-[80vh] w-full overflow-y-auto border-b border-gray-800 bg-black text-white shadow-lg animate-in slide-in-from-top-5 duration-200">
+                <div className="absolute left-0 top-full z-50 max-h-[80vh] w-full overflow-y-auto border-b border-red-200 bg-white text-gray-950 shadow-lg animate-in slide-in-from-top-5 duration-200">
                     <div className="px-4 py-4 space-y-3">
-                        <div className="border-b border-gray-800 px-4 pb-2 font-semibold text-white">
+                        <div className="border-b border-red-100 px-4 pb-2 font-semibold text-primary">
                             Menu
                         </div>
 
@@ -50,8 +50,8 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                             onClick={closeMenu}
                             className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                                 isActive("/articles")
-                                    ? "bg-[#ef7777] text-gray-950"
-                                    : "text-gray-200 hover:bg-gray-900"
+                                    ? "bg-red-50 text-primary"
+                                    : "text-gray-800 hover:bg-red-50 hover:text-primary"
                             }`}
                         >
                             All Articles
@@ -63,15 +63,15 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                                 onClick={closeMenu}
                                 className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                                     isActive("/dashboard")
-                                        ? "bg-[#ef7777] text-gray-950"
-                                        : "text-gray-200 hover:bg-gray-900"
+                                        ? "bg-red-50 text-primary"
+                                        : "text-gray-800 hover:bg-red-50 hover:text-primary"
                                 }`}
                             >
                                 Dashboard
                             </Link>
                         )}
 
-                        <div className="mt-4 border-b border-gray-800 px-4 pb-2 pt-2 font-semibold text-white">
+                        <div className="mt-4 border-b border-red-100 px-4 pb-2 pt-2 font-semibold text-primary">
                             Categories
                         </div>
 
@@ -82,8 +82,8 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                                 onClick={closeMenu}
                                 className={`block px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                                     isActive(`/category/${category.key}`)
-                                        ? "bg-[#ef7777] text-gray-950"
-                                        : "text-gray-200 hover:bg-gray-900"
+                                        ? "bg-red-50 text-primary"
+                                        : "text-gray-800 hover:bg-red-50 hover:text-primary"
                                 }`}
                             >
                                 {category.label}
@@ -91,7 +91,7 @@ export function MobileNav({ user, categories }: MobileNavProps) {
                         ))}
 
                         {!user && (
-                            <div className="mt-4 grid grid-cols-2 gap-4 border-t border-gray-800 pt-4">
+                            <div className="mt-4 grid grid-cols-2 gap-4 border-t border-red-100 pt-4">
                                 <LinkButton
                                     href="/login"
                                     onClick={closeMenu}

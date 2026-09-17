@@ -52,7 +52,7 @@ export default async function VerifyEmailPage({
                         </p>
                         <Link
                             href="/login"
-                            className="inline-block w-full rounded-md bg-[#ef7777] px-4 py-2 font-semibold text-gray-950 transition-colors hover:bg-[#e46262]"
+                            className="inline-block w-full rounded-md bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-[#a9151c]"
                         >
                             Continue to Login
                         </Link>

@@ -10,7 +10,7 @@ export function PublicMasthead() {
     return (
         <section
             className={cn(
-                "border-b-2 border-gray-950 bg-white text-center transition-[padding] duration-300 ease-out",
+                "border-b-2 border-primary bg-white text-center transition-[padding] duration-300 ease-out",
                 isCompact ? "py-2 md:py-3" : "py-5 md:py-6"
             )}
         >

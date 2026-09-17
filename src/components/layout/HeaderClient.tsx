@@ -20,7 +20,7 @@ export function HeaderClient({ categories, user }: HeaderClientProps) {
     return (
         <header
             className={cn(
-                "sticky top-0 z-50 border-b border-gray-800 bg-black text-white transition-transform duration-300 ease-out",
+                "sticky top-0 z-50 border-b border-red-900 bg-primary text-white transition-transform duration-300 ease-out",
                 isHidden ? "-translate-y-full" : "translate-y-0"
             )}
         >
@@ -38,7 +38,7 @@ export function HeaderClient({ categories, user }: HeaderClientProps) {
                             variant='header'
                             includeAllArticles
                             className='contents'
-                            linkClassName="text-gray-200 hover:text-[#ef7777]"
+                            linkClassName="text-white/90 hover:text-white"
                         />
                     </nav>
 

@@ -38,7 +38,7 @@ export function CategoryNav({ categories }: CategoryNavProps) {
                   flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border
                   ${
                       pathname === "/articles"
-                          ? "bg-gray-900 text-white border-gray-900 shadow-sm"
+                          ? "border-primary bg-primary text-white shadow-sm"
                           : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                   }
                 `}
@@ -58,7 +58,7 @@ export function CategoryNav({ categories }: CategoryNavProps) {
                       flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border
                       ${
                           isActive
-                              ? "bg-gray-900 text-white border-gray-900 shadow-sm"
+                              ? "border-primary bg-primary text-white shadow-sm"
                               : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                       }
                     `}

@@ -16,7 +16,7 @@ export default async function Image() {
         (
             <div
                 style={{
-                    background: "#000000",
+                    background: "#c81d25",
                     width: "100%",
                     height: "100%",
                     display: "flex",
@@ -29,7 +29,7 @@ export default async function Image() {
             >
                 <div style={{ display: "flex", fontSize: 82, marginBottom: 24 }}>
                     <span>THE&nbsp;</span>
-                    <span style={{ color: "#ef7777" }}>PM</span>
+                    <span style={{ color: "#ffffff" }}>PM</span>
                     <span>&nbsp;POST</span>
                 </div>
                 <div style={{ fontSize: 30, opacity: 0.82 }}>{BRAND.tagline.toUpperCase()}</div>

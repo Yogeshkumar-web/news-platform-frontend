@@ -15,7 +15,7 @@ export default function AboutPage() {
             <Header />
             <main>
                 <Container className="py-12 md:py-16">
-                    <header className="max-w-4xl border-b-4 border-gray-950 pb-10">
+                    <header className="max-w-4xl border-b-4 border-primary pb-10">
                         <p className="text-sm font-bold uppercase text-[#d95353]">About {BRAND.name}</p>
                         <h1 className="mt-3 font-serif text-4xl font-black leading-tight md:text-6xl">
                             Janta ki awaaz ko vichaar ka roop dena.
@@ -38,7 +38,7 @@ export default function AboutPage() {
                         <h2 className="font-serif text-3xl font-black">Editorial Pillars</h2>
                         <div className="mt-8 grid gap-x-10 md:grid-cols-2">
                             {EDITORIAL_PILLARS.map((pillar) => (
-                                <article key={pillar.title} className="border-t border-gray-950 py-6">
+                                <article key={pillar.title} className="border-t border-red-200 py-6">
                                     <h3 className="text-xl font-bold">{pillar.title}</h3>
                                     <p className="mt-2 leading-7 text-gray-600">{pillar.description}</p>
                                 </article>
@@ -46,7 +46,7 @@ export default function AboutPage() {
                         </div>
                     </section>
 
-                    <section className="border-y border-gray-950 py-8 text-center">
+                    <section className="border-y border-red-200 py-8 text-center">
                         <p className="font-serif text-2xl font-black">{BRAND.tagline}</p>
                         <p className="mt-2 text-gray-600">{BRAND.positioning}</p>
                     </section>

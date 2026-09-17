@@ -32,7 +32,7 @@ export function BrandLogo({
                 )}
             >
                 <span>THE </span>
-                <span className="text-[#ef7777]">PM</span>
+                <span className={inverse ? "text-white" : "text-primary"}>PM</span>
                 <span> POST</span>
             </span>
             {showTagline && (

@@ -13,7 +13,7 @@ export default function TermsPage() {
         <div className="min-h-screen bg-white">
             <Header />
             <main className="max-w-4xl mx-auto px-4 py-12">
-                <div className="border-t-4 border-gray-950 bg-white p-4 md:p-10">
+                <div className="border-t-4 border-primary bg-white p-4 md:p-10">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
                         Terms of Service
                     </h1>

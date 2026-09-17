@@ -23,14 +23,14 @@ export default async function AdminLayout({
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <header className="sticky top-0 z-40 border-b border-gray-800 bg-black text-white">
+            <header className="sticky top-0 z-40 border-b border-red-900 bg-primary text-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             {/* Home Button */}
                             <Link
                                 href="/"
-                                className="rounded-lg p-2 text-gray-300 transition-colors hover:bg-gray-900 hover:text-[#ef7777]"
+                                className="rounded-lg p-2 text-white/85 transition-colors hover:bg-white/15 hover:text-white"
                                 title="Go to Homepage"
                             >
                                 <svg
@@ -51,7 +51,7 @@ export default async function AdminLayout({
                             {/* Title and Badge */}
                             <div className="flex items-center gap-3">
                                 <BrandLogo compact inverse showTagline={false} />
-                                <span className="hidden text-sm font-semibold text-gray-400 sm:inline">Admin Portal</span>
+                                <span className="hidden text-sm font-semibold text-white/75 sm:inline">Admin Portal</span>
                                 <RoleBadge role={user.role} size="md" />
                             </div>
                         </div>

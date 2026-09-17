@@ -23,13 +23,13 @@ export function AuthStatus({ user }: AuthStatusProps) {
             <div className='flex items-center gap-3'>
                 <Link
                     href='/login'
-                    className='font-medium text-gray-300 transition-colors hover:text-[#ef7777]'
+                    className='font-medium text-white/90 transition-colors hover:text-white'
                 >
                     Login
                 </Link>
                 <Link
                     href='/register'
-                    className='rounded-md bg-[#ef7777] px-4 py-2 font-semibold text-gray-950 transition-colors hover:bg-[#e46262]'
+                    className='rounded-md bg-white px-4 py-2 font-semibold text-primary transition-colors hover:bg-red-50'
                 >
                     Sign Up
                 </Link>
@@ -52,9 +52,9 @@ export function AuthStatus({ user }: AuthStatusProps) {
             {/* User Menu Button */}
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className='flex items-center gap-2 rounded-lg px-3 py-2 text-gray-200 transition-colors hover:bg-gray-900 hover:text-white'
+                className='flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-colors hover:bg-white/15'
             >
-                <div className='flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-[#ef7777] font-semibold text-gray-950'>
+                <div className='flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-white font-semibold text-primary'>
                     {user.profileImage ? (
                         <Image
                             src={user.profileImage}
@@ -66,7 +66,7 @@ export function AuthStatus({ user }: AuthStatusProps) {
                         />
                     ) : (
                         <div
-                            className='flex h-8 w-8 items-center justify-center bg-[#ef7777]'
+                            className='flex h-8 w-8 items-center justify-center bg-white'
                         >
                             {user.name.charAt(0).toUpperCase()}
                         </div>
@@ -76,7 +76,7 @@ export function AuthStatus({ user }: AuthStatusProps) {
                     {user.name}
                 </span>
                 <svg
-                    className={`h-4 w-4 text-gray-400 transition-transform ${
+                    className={`h-4 w-4 text-white/75 transition-transform ${
                         isMenuOpen ? "rotate-180" : ""
                     }`}
                     fill='none'

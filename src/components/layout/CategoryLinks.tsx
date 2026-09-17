@@ -22,7 +22,7 @@ const variantClasses: Record<CategoryLinksVariant, string> = {
         "whitespace-nowrap text-sm font-bold text-gray-500 transition-colors hover:text-[#d95353]",
     sidebar:
         "rounded-full border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-700 transition-colors hover:border-[#efb0b0] hover:bg-[#fff5f5] hover:text-[#b83f3f]",
-    footer: "text-gray-400 transition-colors hover:text-white",
+    footer: "text-gray-600 transition-colors hover:text-primary",
     mobile:
         "block rounded-lg px-4 py-2 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50",
 };
@@ -66,7 +66,7 @@ export function CategoryLinks({
                     href={moreHref}
                     className={cn(
                         variantClasses[variant],
-                        variant === "footer" ? "text-gray-300" : "text-[#d95353] hover:text-[#b83f3f]",
+                        variant === "footer" ? "text-primary" : "text-[#d95353] hover:text-[#b83f3f]",
                         linkClassName
                     )}
                 >
