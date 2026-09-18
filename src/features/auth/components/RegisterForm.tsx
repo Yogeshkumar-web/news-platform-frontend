@@ -26,11 +26,11 @@ export function RegisterForm() {
         }
 
         setSuccess(true);
-        toast.success("Registration successful! Redirecting...");
+        toast.success(result.message || "Registration successful! Redirecting...");
 
-        // Redirect to check-email after 1 second
+        // Email verification is currently detached; send users to login.
         setTimeout(() => {
-            router.push("/check-email");
+            router.push("/login?registered=true");
         }, 1000);
     }
 
@@ -38,7 +38,7 @@ export function RegisterForm() {
         return (
             <div className='bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-lg text-center'>
                 <h3 className='font-semibold mb-2'>Registration Successful!</h3>
-                <p className='text-sm'>Redirecting to verification page...</p>
+                <p className='text-sm'>Redirecting to login...</p>
             </div>
         );
     }
