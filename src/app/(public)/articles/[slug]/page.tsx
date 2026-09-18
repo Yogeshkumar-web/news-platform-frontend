@@ -10,7 +10,6 @@ import Image from "next/image";
 import { ArticleContent } from "@/components/article/ArticleContent";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { AdUnit } from "@/components/ads/AdUnit";
 import { env } from "@/lib/env";
 import { BRAND } from "@/lib/brand";
 
@@ -79,7 +78,6 @@ export default async function ArticleDetailPage({
     const readingTime = calculateReadingTime(article.content);
 
     const domain = env.FRONTEND_URL || BRAND.url;
-    const adClient = env.NEXT_PUBLIC_ADSENSE_ID;
 
     // JSON-LD Structured Data
     const newsArticleJsonLd = {
@@ -219,17 +217,8 @@ export default async function ArticleDetailPage({
                 {/* Content */}
                 <ArticleContent content={article.content} />
 
-                {/* Bottom Ad */}
-                <AdUnit
-                    slot='6666666666'
-                    format='auto'
-                    className='my-8'
-                    style={{ minHeight: "100px" }}
-                    adClient={adClient}
-                />
-
                 {/* Article Footer */}
-                <footer className='border-t border-gray-200 pt-8 mb-12'>
+                <footer className='border-t border-gray-200 pt-5 mb-6'>
                     <div className='flex items-center justify-between'>
                         <div className='flex gap-4 text-gray-600'>
                             <span>❤️ {article._count?.likes || 0} likes</span>

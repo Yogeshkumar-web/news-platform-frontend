@@ -10,7 +10,7 @@ export function ArticleContent({ content }: ArticleContentProps) {
     // Handle empty or invalid content
     if (!content || content.trim() === '') {
         return (
-            <div className="article-content mb-12">
+            <div className="article-content mb-6">
                 <p className="text-red-500">No content available</p>
             </div>
         );
@@ -56,7 +56,7 @@ export function ArticleContent({ content }: ArticleContentProps) {
 
     return (
         <div
-            className="article-content mb-12
+            className="article-content mb-6
                        [&_iframe]:max-w-full [&_iframe]:w-full [&_iframe]:h-auto [&_iframe]:min-h-[400px] [&_iframe]:aspect-video [&_iframe]:rounded-lg [&_iframe]:my-6 [&_iframe]:shadow-lg"
             dangerouslySetInnerHTML={{ __html: finalContent }}
         />
