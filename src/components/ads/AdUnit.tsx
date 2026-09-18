@@ -28,12 +28,18 @@ export function AdUnit({
     adClient,
 }: AdUnitProps) {
     useEffect(() => {
+        if (!adClient) return;
+
         try {
             (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (err) {
             console.error("AdSense error:", err);
         }
-    }, []);
+    }, [adClient]);
+
+    if (!adClient) {
+        return null;
+    }
 
     // Development placeholder
     if (process.env.NODE_ENV === "development") {

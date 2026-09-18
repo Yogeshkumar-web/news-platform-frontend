@@ -204,7 +204,7 @@ export default async function ArticleDetailPage({
 
                 {/* Thumbnail */}
                 {article.thumbnail && (
-                    <div className='mb-8 rounded-xl overflow-hidden'>
+                    <div className='mb-5 rounded-xl overflow-hidden'>
                         <Image
                             src={article.thumbnail}
                             alt={article.title}
@@ -220,8 +220,8 @@ export default async function ArticleDetailPage({
                 <AdUnit
                     slot='5555555555'
                     format='auto'
-                    className='mb-8'
-                    style={{ minHeight: "100px" }}
+                    className='mb-6'
+                    style={{ minHeight: "80px" }}
                     adClient={adClient}
                 />
 
