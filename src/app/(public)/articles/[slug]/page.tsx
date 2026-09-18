@@ -216,15 +216,6 @@ export default async function ArticleDetailPage({
                     </div>
                 )}
 
-                {/* Top Ad */}
-                <AdUnit
-                    slot='5555555555'
-                    format='auto'
-                    className='mb-6'
-                    style={{ minHeight: "80px" }}
-                    adClient={adClient}
-                />
-
                 {/* Content */}
                 <ArticleContent content={article.content} />
 
