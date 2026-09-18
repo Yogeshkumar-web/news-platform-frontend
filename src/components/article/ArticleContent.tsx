@@ -7,17 +7,10 @@ interface ArticleContentProps {
 }
 
 export function ArticleContent({ content }: ArticleContentProps) {
-    // Debug: Check what content we're receiving
-    console.log('ArticleContent received:', {
-        contentLength: content?.length,
-        contentPreview: content?.substring(0, 100),
-        contentType: typeof content
-    });
-
     // Handle empty or invalid content
     if (!content || content.trim() === '') {
         return (
-            <div className="prose prose-lg max-w-none mb-12">
+            <div className="article-content mb-12">
                 <p className="text-red-500">No content available</p>
             </div>
         );
@@ -31,7 +24,6 @@ export function ArticleContent({ content }: ArticleContentProps) {
     };
 
     const decodedContent = decodeHtmlEntities(content);
-    console.log('Content preview after decode:', decodedContent.substring(0, 200));
 
     // Extract YouTube iframes before sanitization
     const iframeRegex = /<iframe[^>]*src=["'](https?:\/\/(?:www\.)?(?:youtube\.com\/embed\/|youtu\.be\/)[^"']+)["'][^>]*>.*?<\/iframe>/gi;
@@ -62,19 +54,9 @@ export function ArticleContent({ content }: ArticleContentProps) {
         finalContent = finalContent.replace(placeholder, iframe);
     });
 
-    console.log('Original iframes found:', iframes.length);
-    console.log('Final content has iframe:', finalContent.includes('<iframe'));
-
     return (
         <div
-            className="prose prose-lg max-w-none mb-12
-                       prose-headings:font-bold prose-headings:text-gray-900
-                       prose-p:text-gray-700 prose-p:leading-relaxed
-                       prose-a:text-[#d95353] prose-a:no-underline hover:prose-a:underline
-                       prose-img:rounded-lg prose-img:shadow-md
-                       prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                       prose-pre:bg-gray-900 prose-pre:text-gray-100
-                       prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic
+            className="article-content mb-12
                        [&_iframe]:max-w-full [&_iframe]:w-full [&_iframe]:h-auto [&_iframe]:min-h-[400px] [&_iframe]:aspect-video [&_iframe]:rounded-lg [&_iframe]:my-6 [&_iframe]:shadow-lg"
             dangerouslySetInnerHTML={{ __html: finalContent }}
         />
